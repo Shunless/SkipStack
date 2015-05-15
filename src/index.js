@@ -22,7 +22,7 @@ var game = new Phaser.Game(Editor_Width, Editor_Height, Phaser.AUTO, '', {
 //-----$ CLASSES $-----
 //-----$*********$-----
 
-var color = Color();
+var color = new Color();
 //Grid(cellsX,cellsY,CellWidth,CellHeight,Color of the grid)
 var grid = new Grid(cellsCntX, cellsCntY, cellWidth, cellHeight, '#333', '#ffffff');
 
