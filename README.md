@@ -2,7 +2,7 @@
 
 # SkipStack
 ___
-<h3>Beta Goals</h3>
+<h3>Alpha Goals</h3>
 
 1) A single navigable level, no enemies or obstacles but nearly finalised character controls
 
