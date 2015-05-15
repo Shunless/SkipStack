@@ -10,11 +10,12 @@ function Grid(cellCntX, cellCntY, cellW, cellH, _color1,_color2){
     this.cellHeight = cellH;//height of every cell in px .
 
     this.grid;
-    this.cell=new Array();
+    this.cell = new Array();
+    this.cellId = new Array();
 }
 
 Grid.prototype.init = function(){
-    var w = this.cellsCountX * this.cellWidth  + 2 * this.cellsCountX + 2;//The
+    var w = this.cellsCountX * this.cellWidth  + 2 * this.cellsCountX + 2;
     var h = this.cellsCountY * this.cellHeight + 2 * this.cellsCountY + 2;
     this.grid = new Phaser.Rectangle((Editor_Width-w)/2, (Editor_Height-h)/2, w, h);
 
@@ -25,13 +26,13 @@ Grid.prototype.init = function(){
             var posX = w + (2 * (x + 1)) + (this.cellWidth * x);
             var posY = h + (2 * (y + 1)) + (this.cellHeight * y);
             this.cell.push(new Phaser.Rectangle(posX, posY, this.cellWidth, this.cellHeight));
+            this.cellId.push(x.toString() + '-' + y.toString());
         }
     }
 };
 
 Grid.prototype.render = function(){
     game.debug.geom(this.grid,this.c);
-
 
     for(var i=0;i<this.cell.length;i++){
         game.debug.geom(this.cell[i],this.c2);
