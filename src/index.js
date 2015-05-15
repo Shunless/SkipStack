@@ -40,6 +40,11 @@ function preload() {
 function create() {
     game.add.plugin(Phaser.Plugin.Debug);
 
+    // Set up handlers for mouse events
+    game.input.onDown.add(mouseDragStart, this);
+    game.input.addMoveCallback(mouseDragMove, this);
+    game.input.onUp.add(mouseDragEnd, this);
+
     grid.init();
     actor.init();
 }

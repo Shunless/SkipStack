@@ -19,6 +19,12 @@ Actor.prototype.init = function(){
     this.actor = new Phaser.Rectangle(posX, posY, grid.cellWidth, grid.cellHeight);
 };
 
+Actor.prototype.move = function(SwipeType){
+    switch(SwipeType){
+
+    }
+};
+
 Actor.prototype.render = function(){
     game.debug.geom(this.actor,this.c);
 };
