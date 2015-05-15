@@ -6,10 +6,10 @@ var aspect_ratio = Editor_Width/Editor_Height;
 var World_bounds_x = 10000;
 var World_bounds_y = 2000;
 
-var cellsCntX = 12;
-var cellsCntY = 12;
-var cellWidth = (Editor_Width/1.1)/cellsCntX;
-var cellHeight = (Editor_Width/1.1)/cellsCntY;
+var cellsCntX = 21;
+var cellsCntY = 21;
+var cellWidth = (Editor_Width/1.2)/cellsCntX;
+var cellHeight = (Editor_Width/1.2)/cellsCntY;
 //$ phaser game instance
 var game = new Phaser.Game(Editor_Width, Editor_Height, Phaser.AUTO, '', {
   preload: preload,
@@ -24,7 +24,7 @@ var game = new Phaser.Game(Editor_Width, Editor_Height, Phaser.AUTO, '', {
 
 var color = Color();
 //Grid(cellsX,cellsY,CellWidth,CellHeight,Color of the grid)
-var grid = new Grid(cellsCntX, cellsCntY, cellWidth, cellHeight, '#ffffff');
+var grid = new Grid(cellsCntX, cellsCntY, cellWidth, cellHeight, '#ffffff','#333');
 
 /*~~~~~$*********$~~~~~*/
 /*~~~~~$ CLASSES $~~~~~*/
