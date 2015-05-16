@@ -57,5 +57,4 @@ function update() {
 //$ render loop $
 function render() {
     grid.render();
-    actor.render();
 }

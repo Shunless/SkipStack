@@ -10,6 +10,7 @@ function Grid(cellCntX, cellCntY, cellW, cellH, _color1,_color2){
     this.cellHeight = cellH;//height of every cell in px .
 
     this.grid;
+
     //the cells of the grid
     this.cell = new Array();
 }
@@ -26,15 +27,26 @@ Grid.prototype.init = function(){
       var posX = w + (2 * (x + 1)) + (this.cellWidth * x);
       var posY = h + (2 * (y + 1)) + (this.cellHeight * y);
 
-      this.cell.push(new Cell(posX, posY,x.toString() + '-' + y.toString() ) );
+      this.cell.push(new Cell(posX, posY,x.toString() + '-' + y.toString(), this.c2) );
     }
   }
 };
 
+//$   GET CELL FUNCTION    $
+///   return a pointer to the cell
+Grid.prototype.getCell = function(_id){
+    for(var i=0;i<this.cell.length;i++){
+        if(this.cell[i].HashId == _id){
+          return i;
+        }
+    }
+};
+
+//$   GRID RENDER FUNCTION    $
 Grid.prototype.render = function(){
     game.debug.geom(this.grid,this.c);
 
     for(var i=0;i<this.cell.length;i++){
-        game.debug.geom(this.cell[i].rect,this.c2);
+        this.cell[i].render();
     }
 };
