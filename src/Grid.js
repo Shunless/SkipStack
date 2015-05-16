@@ -10,6 +10,7 @@ function Grid(cellCntX, cellCntY, cellW, cellH, _color1,_color2){
     this.cellHeight = cellH;//height of every cell in px .
 
     this.grid;
+    //the cells of the grid
     this.cell = new Array();
 }
 
@@ -25,8 +26,7 @@ Grid.prototype.init = function(){
       var posX = w + (2 * (x + 1)) + (this.cellWidth * x);
       var posY = h + (2 * (y + 1)) + (this.cellHeight * y);
 
-      this.cell.push(new Cell(posX, posY, this.cellWidth, this.cellHeight,
-                      x.toString() + '-' + y.toString() ) );
+      this.cell.push(new Cell(posX, posY,x.toString() + '-' + y.toString() ) );
     }
   }
 };

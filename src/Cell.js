@@ -1,8 +1,6 @@
-function Cell(_posX,_posY,_cW,_cH,_name){
+function Cell(_posX,_posY,_name){
   this.positionX = _posX;
   this.positionY = _posY;
-  this.width = _cW;
-  this.height = _cH;
 
   this.rect;
 
@@ -10,5 +8,5 @@ function Cell(_posX,_posY,_cW,_cH,_name){
 }
 
 Cell.prototype.init = function(){
-    this.rect = new Phaser.Rectangle(this.positionX, this.positionY, this.width,  this.height);
+    this.rect = new Phaser.Rectangle(this.positionX, this.positionY, grid.cellWidth,  grid.cellWidth);
 };

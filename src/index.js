@@ -1,17 +1,19 @@
 //editor/runtime window scale
-var Editor_Width = 720/2;   //GALAXY S3 Neo res divided by 3
-var Editor_Height = 1280/2;
+var Editor_Width = 720/2;   //GALAXY S3 Neo res divided by 2
+var Editor_Height = 720/2;
+//the aspect ratio of the screen
 var aspect_ratio = Editor_Width/Editor_Height;
-
-var World_bounds_x = 10000;
-var World_bounds_y = 2000;
-
+//world bounds
+var World_bounds_x = Editor_Width;
+var World_bounds_y = Editor_Height;
+//amount of cells in grid
 var cellsCntX = 7;
 var cellsCntY = 7;
-var cellWidth = (Editor_Width/1.2)/cellsCntX;
-var cellHeight = (Editor_Width/1.2)/cellsCntY;
+//cell scale in pixels
+var cellWidth = (Editor_Width/1.05)/cellsCntX;
+var cellHeight = (Editor_Width/1.05)/cellsCntY;
 //$ phaser game instance
-var game = new Phaser.Game(Editor_Width, Editor_Height, Phaser.AUTO, '', {
+var game = new Phaser.Game(Editor_Width, Editor_Height, Phaser.AUTO, 'SkipStack', {
   preload: preload,
   create: create,
   update: update,
@@ -25,7 +27,7 @@ var game = new Phaser.Game(Editor_Width, Editor_Height, Phaser.AUTO, '', {
 var color = new Color();
 //Grid(cellsX,cellsY,CellWidth,CellHeight,Color of the grid)
 var grid = new Grid(cellsCntX, cellsCntY, cellWidth, cellHeight, '#333', '#ffffff');
-
+//Actor(color of the actor)
 var actor = new Actor('#ff0000');
 
 /*~~~~~$*********$~~~~~*/
