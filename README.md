@@ -1,6 +1,6 @@
 [![Project Status: WIP - The project has not reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/0.1.0/wip.svg)](http://www.repostatus.org/#wip)
 
-# SkipStack
+# SkipStack [![Join Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Shunless)
 ___
 <h3>Alpha Goals</h3>
 
