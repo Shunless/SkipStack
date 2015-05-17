@@ -117,7 +117,7 @@ function prepRepurpose(cella, cellb, className) {
 }
 
 function createGameObject() {
-    return $('<div id="SkipStack" style="position:relative;top:0;width:' + cellSize * 7 + ';height:' + cellSize * 7 + '" >GameGoesHere</div>')
+    return $('<div id="SkipStack" style="background-color:#fff;position:relative;top:0;width:' + cellSize * 7 + ';height:' + cellSize * 7 + '" >GameGoesHere</div>')
 }
 
 function playButton() {
@@ -127,7 +127,8 @@ function playButton() {
 function addPlayButton() {
     var midCell = selectCell('7-4');
     var playBtn = playButton();
-    midCell.append(playBtn)
+    midCell.append(playBtn);
+	midCell.css('border-color', '#000')
 }
 
 function cacheHash(className, hash) {
