@@ -1,7 +1,10 @@
+/**
+ * @author Alex Mourtziapis
+ */
+
 function Grid(cellCntX, cellCntY, cellW, cellH, _color1,_color2){
     this.c = _color1;
     this.c2 = _color2;
-
 
     this.cellsCountX = cellCntX;//cells in x dimension .
     this.cellsCountY = cellCntY;//cells in y dimension .

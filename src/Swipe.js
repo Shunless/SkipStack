@@ -1,3 +1,7 @@
+/**
+ * @author Alex Mourtziapis
+ */
+
 var onDownPosX,onDownPosY,onEndPosX,onEndPosY;
 
 function mouseDragStart() {
@@ -24,26 +28,29 @@ function mouseDragEnd() {
     if(isSwipeY == true){
       if(Math.abs(diffY) > Math.abs(diffX)){
         if(diffY>0){
-          //actor.move(true,false,false,false);
           actor.move('top');
-          alert('Detected: Top Swipe');
+
+          //alert('Detected: Top Swipe');
         }
         else{
           //actor.move(false,true,false,false);
           actor.move('bottom');
-          alert('Detected: Bottom Swipe');
+
+          //alert('Detected: Bottom Swipe');
         }
       }
       else{
         if(diffX>0){
           //actor.move(false,false,false,true);
           actor.move('left');
-          alert('Detected: Left Swipe');
+
+          //alert('Detected: Left Swipe');
         }
         else{
           //actor.move(false,false,true,false);
           actor.move('right');
-          alert('Detected: Right Swipe');
+
+          //alert('Detected: Right Swipe');
         }
       }
     }
@@ -51,12 +58,14 @@ function mouseDragEnd() {
       if(diffX>0){
         //actor.move(false,false,false,true);
         actor.move('left');
-        alert('Detected: Left Swipe');
+
+        //alert('Detected: Left Swipe');
       }
       else{
         //actor.move(false,false,true,false);
         actor.move('right');
-        alert('Detected: Right Swipe');
+
+        //alert('Detected: Right Swipe');
       }
     }
   }

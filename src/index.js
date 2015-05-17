@@ -1,3 +1,7 @@
+/**
+ * @author Alex Mourtziapis
+ */
+
 //editor/runtime window scale
 var Editor_Width = 720/2;   //GALAXY S3 Neo res divided by 2
 var Editor_Height = 720/2;
