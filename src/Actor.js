@@ -2,11 +2,14 @@
  * @author Alex Mourtziapis
  */
 
-function Actor(_color1){
+function Actor(_color1,blockID){
   //the color of the actor
   this.c = _color1;
   //
-  this.block  = Math.floor(grid.cellsCountX/2);
+  if (typeof(blockID)==='undefined')
+    this.block = Math.floor(grid.cellsCountX/2);
+  else
+    this.block = blockID;
 
   this._c ;
 }
