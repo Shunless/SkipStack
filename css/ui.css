@@ -1,0 +1,26 @@
+@font-face {
+    font-family: SquareF;
+    src: url("../fonts/Square.ttf");
+}
+.cell {
+    box-sizing: border-box;
+    background-color: #fff;
+}
+.row {} .gamecont {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+body {
+    font-family: SquareF;
+    width: 100%;
+    margin: 0;
+    background-color: #555;
+}
+.center {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)!important;
+}
