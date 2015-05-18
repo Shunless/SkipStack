@@ -1,44 +1,3 @@
-var wwidth = $(window).width();
-var wheight = $(window).height();
-var cellSize;
-var hashCache = [];
-
-$(document).ready(function() {
-    compareSize();
-    prepCell();
-    addPlayButton();
-    $('#PlayBtn').click(function() {
-        prepRepurpose('4-1', '10-1', '');
-		$('#gameobj').flip(true);
-    })
-});
-
-function prepCell() {
-    var border = Math.floor(wheight * 0.00781634663 / 2);
-    $('.cell').css('border', border + 'px solid #bbb');
-    $('.gamecont').css('border', border + 'px solid #bbb');
-    $('.gamecont').css('width', cellSize * 7);
-    $('.gamecont').css('height', cellSize * 13);
-};
-
-function setCellSize(width) {
-    $('.cell').css('width', width);
-    $('.cell').css('height', width);
-}
-
-function compareSize() {
-    var neww = Math.floor(wwidth / 7);
-    var newh = Math.floor(wheight / 13);
-    var size;
-    if (neww > newh) {
-        size = newh;
-    } else {
-        size = neww;
-    }
-    cellSize = size - 1;
-    setCellSize(cellSize);
-}
-
 /*******************************/
 /****** UI Grid selectors ******/
 /*******************************/
@@ -46,17 +5,58 @@ function compareSize() {
 /* Cell Coordinates are represented as x-y, with x representing the herizontal location and y the vertical */
 
 function selectCell(cellCoords) {
+    //Returns jQuery object of a single cell
+	//Inputs the coordinates of a single cell
     var x = cellCoords.split('-')[0];
     var y = cellCoords.split('-')[1];
-    return $('.row:nth-child(' + x + ') .cell:nth-child(' + y + ')')
+    return $('#' + x + '-' + y)
 }
 
-function selectRow(cellCoords) {
-    var x = cellCoords.split('-')[0];
-    var y = cellCoords.split('-')[1];
-    return $('.row:nth-child(' + x + ')')
+function selectRow(x) {
+	//Returns jQuery object of a single row
+	//Inputs the coordinate of a single row
+    var y = 1;
+    var row = $('');
+    for (; y <= 7; y++) {
+        row = row.add(selectCell(x + '-' + y));
+    }
+    return row;
 }
 
+function selectCol(y) {
+	//Returns jQuery object of a single column
+	//Inputs the coordinate of a single column
+    var x = 1;
+    var col = $('');
+    for (; x <= 13; x++) {
+        col = col.add(selectCell(x + '-' + y));
+    }
+    return col;
+}
+
+function selectAreaComplimentary(tly, bry, tlx, area) {
+	//Complements the selectArea() function
+    for (; tly <= bry + 1; tly++) {
+        area = area.add(selectCell(tlx + '-' + tly));
+    }
+	return area;
+}
+
+function selectArea(topleft, bottomright) {
+	//Returns jQuery object of an area shape
+	//Inputs top left and bottom right coordinates
+    var area = $('');
+    var tlx = Number(topleft.split('-')[0]);
+    var tly = Number(topleft.split('-')[1]);
+    var brx = Number(bottomright.split('-')[0]);
+    var bry = Number(bottomright.split('-')[1]);
+    for (; tlx <= brx; tlx++) {
+        area = selectAreaComplimentary(tly, bry, tlx, area);
+    }
+    return area;
+}
+
+/*EVERYTHING BELLOW THIS LINE IS ABSOLUTELY USELESS*//*
 function multipleCellSelector(cella, cellb) {
     var s = $('');
     var sum = Number(cellb.split('-')[1] - cella.split('-')[1]);
@@ -97,7 +97,7 @@ function randomString(length, chars) {
 }
 
 /* Add the back to the newly created roundUps
-WIll use .append() and change roundup so it gets a unique hash id for each .new div*/
+WIll use .append() and change roundup so it gets a unique hash id for each .new div
 
 function prepRepurpose(cella, cellb, className) {
     var hash;
@@ -109,28 +109,15 @@ function prepRepurpose(cella, cellb, className) {
     var reptag = $('#' + hash);
     reptag.addClass('front');
     var gameobj = createGameObject().addClass('back');
-    $(reptag.add(gameobj)).wrapAll('<div id="gameobj" style="height:' + cellSize * 7 + ';"/>')
-    $("#gameobj").flip({
-        trigger: 'manual'
-    });
+    $(reptag.add(gameobj)).wrapAll('<div id="gameobj" style="height:378px;"/>')
+    $("#gameobj").flip();
     return reptag
 }
 
 function createGameObject() {
-    return $('<div id="SkipStack" style="background-color:#fff;position:relative;top:0;width:' + cellSize * 7 + ';height:' + cellSize * 7 + '" >GameGoesHere</div>')
-}
-
-function playButton() {
-    return $('<i id="PlayBtn" class="center fa fa-play fa-2x" />')
-}
-
-function addPlayButton() {
-    var midCell = selectCell('7-4');
-    var playBtn = playButton();
-    midCell.append(playBtn);
-	midCell.css('border-color', '#000')
+    return $('<canvas style="position:relative;top:0;width:' + cellSize * 7 + ';height:' + cellSize * 7 + '" />')
 }
 
 function cacheHash(className, hash) {
     hashCache[className] = hash;
-}
+}*/
