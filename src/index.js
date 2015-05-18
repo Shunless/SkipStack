@@ -2,7 +2,7 @@
  * @author Alex Mourtziapis
  */
 var blips_sfx = jsfxlib.createWave(["square",16.0000,1.0000,0.0000,0.1480,0.0000,0.1480,20.0000,750.0000,2400.0000,0.0000,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.5000,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.1000,0.0000]);
-sound.play();
+blips_sfx.play();
 
 //editor/runtime window scale
 var Editor_Width = 720 / 2;   //GALAXY S3 Neo res divided by 2
