@@ -1,6 +1,7 @@
 var wwidth = $(window).width(); //Grabs the screen's width
 var wheight = $(window).height(); //Grabs the screen's height
 var cellSize; //Global cell size variable
+var border; //Global border width variable
 
 $(document).ready(function() {
     compareSize();
@@ -35,7 +36,7 @@ function rowCreator(x) {
 
 function prepCell() {
     //Visually prepares the game area
-    var border = Math.floor(wheight * 0.00781634663 / 2);
+    border = Math.floor(wheight * 0.00781634663 / 2);
     $('.cell').css('border', border + 'px solid #bbb');
     $('.gamecont').css('border', border + 'px solid #bbb');
     $('.gamecont').css('width', cellSize * 7);
@@ -59,4 +60,26 @@ function compareSize() {
         size = neww;
     }
     cellSize = size - 1;
+}
+
+/*******************************/
+/**** UI Primitive Creators ****/
+/*******************************/
+
+function createArea(topleft, bottomright, classname) {
+    //Returns a div that spans between the input cells
+    var top = Number(topleft.split('-')[0]);
+    var left = Number(topleft.split('-')[1]);
+    var x = Number(bottomright.split('-')[1]) - left;
+    var y = Number(bottomright.split('-')[0]) - top;
+    var div = $('<div />');
+    div.css({
+        'position': 'fixed',
+        'width': ((x + 1) * cellSize),
+        'height': ((y + 1) * cellSize),
+        'top': ((top - 1) * cellSize),
+        'left': ((left - 1) * cellSize)
+    });
+    $('.gamecont').append(div.addClass(classname));
+    return $('.' + classname);
 }

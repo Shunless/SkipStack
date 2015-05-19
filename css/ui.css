@@ -4,20 +4,34 @@
 }
 .cell {
     box-sizing: border-box;
-	background-color: #fff;
-	position: fixed;
-}
-.row {
+    background-color: #fff;
+    position: fixed;
 }
 .gamecont {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    perspective: 800px;
 }
 body {
-	font-family: SquareF;
+    font-family: SquareF;
     width: 100%;
     margin: 0;
-	background-color: #555;
+    background-color: #555;
+}
+.flipcard {
+    transform-style: preserve-3d;
+    transition: transform 1s;
+}
+.flipcard * {
+    backface-visibility: hidden;
+}
+.flipcard .front {}
+.flipcard .back {
+	background-color: aqua;
+    transform: rotateY(180deg);
+}
+.flipcard.flipped {
+  transform: rotateY( 180deg );
 }

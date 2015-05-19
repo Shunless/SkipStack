@@ -6,15 +6,15 @@
 
 function selectCell(cellCoords) {
     //Returns jQuery object of a single cell
-	//Inputs the coordinates of a single cell
+    //Inputs the coordinates of a single cell
     var x = cellCoords.split('-')[0];
     var y = cellCoords.split('-')[1];
     return $('#' + x + '-' + y)
 }
 
 function selectRow(x) {
-	//Returns jQuery object of a single row
-	//Inputs the coordinate of a single row
+    //Returns jQuery object of a single row
+    //Inputs the coordinate of a single row
     var y = 1;
     var row = $('');
     for (; y <= 7; y++) {
@@ -24,8 +24,8 @@ function selectRow(x) {
 }
 
 function selectCol(y) {
-	//Returns jQuery object of a single column
-	//Inputs the coordinate of a single column
+    //Returns jQuery object of a single column
+    //Inputs the coordinate of a single column
     var x = 1;
     var col = $('');
     for (; x <= 13; x++) {
@@ -35,28 +35,72 @@ function selectCol(y) {
 }
 
 function selectAreaComplimentary(tly, bry, tlx, area) {
-	//Complements the selectArea() function
+    //Complements the selectArea() function
     for (; tly <= bry + 1; tly++) {
         area = area.add(selectCell(tlx + '-' + tly));
     }
-	return area;
+    return area;
 }
 
 function selectArea(topleft, bottomright) {
-	//Returns jQuery object of an area shape
-	//Inputs top left and bottom right coordinates
+    //Returns jQuery object of an area shape
+    //Inputs top left and bottom right coordinates
     var area = $('');
     var tlx = Number(topleft.split('-')[0]);
     var tly = Number(topleft.split('-')[1]);
     var brx = Number(bottomright.split('-')[0]);
-    var bry = Number(bottomright.split('-')[1]);
+    var bry = Number(bottomright.split('-')[1]) - 1;
     for (; tlx <= brx; tlx++) {
         area = selectAreaComplimentary(tly, bry, tlx, area);
     }
     return area;
 }
 
-/*EVERYTHING BELLOW THIS LINE IS ABSOLUTELY USELESS*//*
+function roundUp(topleft, bottomright, classname) {
+    selectArea(topleft, bottomright).wrapAll('<div class="' + classname + '"/>');
+    return $('.' + classname);
+}
+
+function breakToFlipCard(topleft, bottomright, classname) {
+    var hash = hashId();
+    var gridarea = roundUp(topleft, bottomright, hash);
+	gridarea.addClass('front');
+	gridarea.addClass(classname);
+	//hash breaks entire logic-considers both items as selected and adds .back to both
+
+    var newdiv = createArea(topleft, bottomright, hash);
+    var top = newdiv.css('top');
+    var left = newdiv.css('left');
+    var width = newdiv.css('width');
+    var height = newdiv.css('height');
+    newdiv.addClass('back');
+    newdiv.addClass(classname);
+
+    gridarea.css({
+        'top': top,
+        'left': left,
+        'width': width,
+        'height': height
+    });
+
+    $('.' + hash).wrapAll('<div style="position:fixed; top:' + top + '; left:' + left + ';width:' + width + ';height:' + height + ';" class="flipcard ' + classname + '"/>');
+    $('.' + classname + ' > *').removeClass(hash);
+
+    return $('.flipcard.' + classname);
+}
+
+function hashId() {
+    var text = "";
+    var possible = "abcdefghijklmnopqrstuvwxyz";
+
+    for (var i = 0; i < 5; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+
+/*EVERYTHING BELLOW THIS LINE IS ABSOLUTELY USELESS*/
+/*
 function multipleCellSelector(cella, cellb) {
     var s = $('');
     var sum = Number(cellb.split('-')[1] - cella.split('-')[1]);
