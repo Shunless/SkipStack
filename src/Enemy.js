@@ -14,6 +14,7 @@ function Enemy(_color1,blockID){
   this._c ;
 }
 
+//$    INITIALIZATION    $
 Enemy.prototype.init = function(){
   this._c =  grid.getCell(this.block);
 
@@ -21,6 +22,12 @@ Enemy.prototype.init = function(){
   grid.cell[this._c].setCellType('Enemy');
 };
 
+//$   POSITION UPDATE FUNCTION    $
+Enemy.prototype.update = function(){
+
+};
+
+//$   MOVE FUNCTION    $
 Enemy.prototype.move = function(SwipeType){
   switch(SwipeType){
     case 'top':

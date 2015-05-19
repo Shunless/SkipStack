@@ -2,11 +2,11 @@
  * @author Alex Mourtziapis
  */
 var blips_sfx = jsfxlib.createWave(["square",16.0000,1.0000,0.0000,0.1480,0.0000,0.1480,20.0000,750.0000,2400.0000,0.0000,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.5000,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.1000,0.0000]);
-blips_sfx.play();
+//blips_sfx.play();
 
 //editor/runtime window scale
-var Editor_Width = 720 / 2;   //GALAXY S3 Neo res divided by 2
-var Editor_Height = 720 / 2;
+var Editor_Width = 512;
+var Editor_Height = 512;
 //the aspect ratio of the screen
 var aspect_ratio = Editor_Width / Editor_Height;
 //world bounds
@@ -16,8 +16,8 @@ var World_bounds_y = Editor_Height;
 var cellsCntX = 7;
 var cellsCntY = 7;
 //cell scale in pixels
-var cellWidth = (Editor_Width / 1.05) / cellsCntX;
-var cellHeight = (Editor_Width / 1.05) / cellsCntY;
+var cellWidth = (Editor_Width - (2*cellsCntX + 2)) / (cellsCntX);
+var cellHeight = (Editor_Width - (2*cellsCntY + 2)) / (cellsCntY);
 //$ phaser game instance
 var game = new Phaser.Game(Editor_Width, Editor_Height, Phaser.AUTO, 'SkipStack', {
   preload: preload,
@@ -35,6 +35,11 @@ var color = new Color();
 var grid = new Grid(cellsCntX, cellsCntY, cellWidth, cellHeight, '#333', '#ffffff');
 //Actor(color of the actor)
 var actor = new Actor('#006400');
+//Enemy(color of the enemy,spawning cell)
+var enemiesColor = '#b50000';
+var enemy = [new Enemy(enemiesColor,'0-0'),
+             new Enemy(enemiesColor,(cellsCntX-1)+'-0'),
+             new Enemy(enemiesColor,(cellsCntX-2)+'-'+(cellsCntY-2))];
 
 /*~~~~~$*********$~~~~~*/
 /*~~~~~$ CLASSES $~~~~~*/
@@ -55,6 +60,8 @@ function create() {
 
     grid.init();
     actor.init();
+    for(var i=0;i<enemy.length;i++)
+      enemy[i].init();
 }
 //$ game loop $
 function update() {
