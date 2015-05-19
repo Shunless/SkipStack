@@ -71,22 +71,30 @@ Cell.prototype.checkCell = function(_direction,_currentPos){
 
       break;
     case 'left':
-      if(_currentPos==0){
-        result = false;
+      for(var i=0;i<grid.cellsCountX;i++){
+        if(_currentPos === grid.cellsCountX*i){
+            result = false;
+        }
       }
-      else{
+      if(result==false)
+        break;
+      else
         result = true;
-      }
+
       //grid.cell[_currentPos-1]
 
       break;
     case 'right':
-      if(_currentPos==grid){
-        result = false;
+      for(var i=0;i<grid.cellsCountX;i++){
+        if(_currentPos === (grid.cellsCountX*i-1)){
+            result = false;
+        }
       }
-      else{
+      if(result==false)
+        break;
+      else
         result = true;
-      }
+
       //grid.cell[_currentPos+1]
 
       break;
