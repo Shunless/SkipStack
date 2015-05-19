@@ -70,7 +70,7 @@ Enemy.prototype.move = function(SwipeType){
         grid.cell[this._c].setCellType('Normal');
         grid.cell[this._c].setColor(grid.c2);
 
-        this._c = this._c - grid.cellsCountX;
+        this._c = this._c - cellsCntX;
         grid.cell[this._c].setColor(this.color);
         grid.cell[this._c].setCellType('Enemy');
       }
@@ -82,7 +82,7 @@ Enemy.prototype.move = function(SwipeType){
         grid.cell[this._c].setCellType('Normal');
         grid.cell[this._c].setColor(grid.c2);
 
-        this._c = this._c + grid.cellsCountX;
+        this._c = this._c + cellsCntX;
         grid.cell[this._c].setColor(this.color);
         grid.cell[this._c].setCellType('Enemy');
       }

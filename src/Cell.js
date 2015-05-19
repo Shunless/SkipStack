@@ -50,25 +50,25 @@ Cell.prototype.checkCell = function(_direction,_currentPos){
 
   switch(_direction){
     case 'top':
-      if(_currentPos<grid.cellsCountX||grid.cell[_currentPos - grid.cellsCountX].type === 'Enemy'){
+      if(_currentPos<cellsCntX||grid.cell[_currentPos - cellsCntX].type === 'Enemy'){
         result = false;
       }
       else{
         result = true;
       }
-      //grid.cell[_currentPos - grid.cellsCountX]
+      //grid.cell[_currentPos - cellsCntX]
 
       break;
     case 'bottom':
       //if > CellsCountX*CellsCountY-CellsCountX
-      if(_currentPos>(grid.cellsCountX*grid.cellsCountY)-grid.cellsCountX
-        ||grid.cell[_currentPos + grid.cellsCountX].type === 'Enemy'){
+      if(_currentPos>(cellsCntX*grid.cellsCountY)-cellsCntX
+        ||grid.cell[_currentPos + cellsCntX].type === 'Enemy'){
         result = false;
       }
       else{
         result = true;
       }
-      //grid.cell[_currentPos + grid.cellsCountX]
+      //grid.cell[_currentPos + cellsCntX]
 
       break;
     case 'left':
@@ -77,8 +77,8 @@ Cell.prototype.checkCell = function(_direction,_currentPos){
         break;
       }
 
-      for(var i=0;i<grid.cellsCountX;i++){
-        if(_currentPos === grid.cellsCountX*i){
+      for(var i=0;i<cellsCntX;i++){
+        if(_currentPos === cellsCntX*i){
             result = false;
         }
       }
@@ -96,8 +96,8 @@ Cell.prototype.checkCell = function(_direction,_currentPos){
         break;
       }
 
-      for(var i=0;i<grid.cellsCountX;i++){
-        if(_currentPos === (grid.cellsCountX*i-1)){
+      for(var i=0;i<cellsCntX;i++){
+        if(_currentPos === (cellsCntX*i-1)){
             result = false;
         }
       }

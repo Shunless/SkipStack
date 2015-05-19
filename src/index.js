@@ -1,8 +1,16 @@
 /**
  * @author Alex Mourtziapis
  */
-var blips_sfx = jsfxlib.createWave(["square",16.0000,1.0000,0.0000,0.1480,0.0000,0.1480,20.0000,750.0000,2400.0000,0.0000,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.5000,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.1000,0.0000]);
-//blips_sfx.play();
+/*
+* 1-$ Normal      # w/h beatlock
+* 2-$ Endless     # w/h beatlock
+* 3-$ SkipSmash   # w/h beatlock
+* 4-$ PaintStack  # w/h beatlock
+*/
+
+var GameType = 'Normal';
+
+var blips_sfx = jsfxlib.createWave(["sine",0.0000,0.4000,0.0000,0.0920,0.0000,0.2080,20.0000,286.0000,2400.0000,-0.6740,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0480,0.0000]);
 
 var EnemyMoveTimeout = 0;
 
@@ -20,13 +28,7 @@ var cellsCntY = 7;
 //cell scale in pixels
 var cellWidth = (Editor_Width - (2*cellsCntX + 2)) / (cellsCntX);
 var cellHeight = (Editor_Width - (2*cellsCntY + 2)) / (cellsCntY);
-//$ phaser game instance
-var game = new Phaser.Game(Editor_Width, Editor_Height, Phaser.AUTO, 'SkipStack', {
-  preload: preload,
-  create: create,
-  update: update,
-  render: render
-});
+
 
 //-----$*********$-----
 //-----$ CLASSES $-----
@@ -46,6 +48,20 @@ var enemy = [new Enemy(enemiesColor,'0-0'),
 /*~~~~~$*********$~~~~~*/
 /*~~~~~$ CLASSES $~~~~~*/
 /*~~~~~$*********$~~~~~*/
+
+//$ phaser game instance
+var game = new Phaser.Game(Editor_Width, Editor_Height, Phaser.AUTO, 'SkipStack', {
+  preload: preload,
+  create: create,
+  update: update,
+  render: render
+});
+
+
+if(GameType === 'Normal'){
+  //Do Something
+}
+
 
 //$ preload function $
 function preload() {
@@ -73,7 +89,8 @@ function update() {
     for(var i=0;i<enemy.length;i++)
       enemy[i].update();
 
-    EnemyMoveTimeout= game.time.time+2000;
+    blips_sfx.play();
+    EnemyMoveTimeout= game.time.time+1000;
   }
 
 

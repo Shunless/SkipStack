@@ -7,7 +7,7 @@ function Actor(_color1,blockID){
   this.color = _color1;
   //
   if (typeof(blockID)==='undefined')
-    this.block = Math.floor(grid.cellsCountX/2)+ '-' + Math.floor(grid.cellsCountX/2);
+    this.block = Math.floor(cellsCntX/2)+ '-' + Math.floor(cellsCntX/2);
   else
     this.block = blockID;
 
@@ -29,7 +29,7 @@ Actor.prototype.move = function(SwipeType){
         grid.cell[this._c].setCellType('Normal');
         grid.cell[this._c].setColor(grid.c2);
 
-        this._c = this._c - grid.cellsCountX;
+        this._c = this._c - cellsCntX;
         grid.cell[this._c].setColor(this.color);
         grid.cell[this._c].setCellType('Actor');
       }
@@ -41,7 +41,7 @@ Actor.prototype.move = function(SwipeType){
         grid.cell[this._c].setCellType('Normal');
         grid.cell[this._c].setColor(grid.c2);
 
-        this._c = this._c + grid.cellsCountX;
+        this._c = this._c + cellsCntX;
         grid.cell[this._c].setColor(this.color);
         grid.cell[this._c].setCellType('Actor');
       }
