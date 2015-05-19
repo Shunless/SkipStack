@@ -15,43 +15,43 @@ function Enemy(_color1,blockID){
 }
 
 Enemy.prototype.init = function(){
-  this._c =  grid.getCell(this.block.toString()+'-'+this.block.toString());
+  this._c =  grid.getCell(this.block);
 
   grid.cell[this._c].setColor(this.c);
   grid.cell[this._c].setCellType('Enemy');
 };
 
 Enemy.prototype.move = function(SwipeType){
-    switch(SwipeType){
-      case 'top':
-        if(grid.cell[this._c].checkCell(SwipeType,this._c)){
-          //Handle Top Swap
+  switch(SwipeType){
+    case 'top':
+      if(grid.cell[this._c].checkCell(SwipeType,this._c)){
+        //Handle Top Swap
 
-        }
+      }
 
-        break;
-      case 'bottom':
-        if(grid.cell[this._c].checkCell(SwipeType,this._c)==true){
-          //Handle Bottom Swap
+      break;
+    case 'bottom':
+      if(grid.cell[this._c].checkCell(SwipeType,this._c)==true){
+        //Handle Bottom Swap
 
-        }
+      }
 
-        break;
-      case 'left':
-        if(grid.cell[this._c].checkCell(SwipeType,this._c)==true){
-          //Handle Left Swap
+      break;
+    case 'left':
+      if(grid.cell[this._c].checkCell(SwipeType,this._c)==true){
+        //Handle Left Swap
 
-        }
+      }
 
-        break;
-      case 'right':
-        if(grid.cell[this._c].checkCell(SwipeType,this._c)==true){
-          //Handle Right Swap
+      break;
+    case 'right':
+      if(grid.cell[this._c].checkCell(SwipeType,this._c)==true){
+        //Handle Right Swap
 
-        }
+      }
 
-        break;
-      default:
-        break;
-    }
+      break;
+    default:
+      break;
+  }
 };

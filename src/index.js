@@ -1,12 +1,14 @@
 /**
  * @author Alex Mourtziapis
  */
+var blips_sfx = jsfxlib.createWave(["square",16.0000,1.0000,0.0000,0.1480,0.0000,0.1480,20.0000,750.0000,2400.0000,0.0000,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.5000,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.1000,0.0000]);
+sound.play();
 
 //editor/runtime window scale
-var Editor_Width = 720/2;   //GALAXY S3 Neo res divided by 2
-var Editor_Height = 720/2;
+var Editor_Width = 720 / 2;   //GALAXY S3 Neo res divided by 2
+var Editor_Height = 720 / 2;
 //the aspect ratio of the screen
-var aspect_ratio = Editor_Width/Editor_Height;
+var aspect_ratio = Editor_Width / Editor_Height;
 //world bounds
 var World_bounds_x = Editor_Width;
 var World_bounds_y = Editor_Height;
@@ -14,8 +16,8 @@ var World_bounds_y = Editor_Height;
 var cellsCntX = 7;
 var cellsCntY = 7;
 //cell scale in pixels
-var cellWidth = (Editor_Width/1.05)/cellsCntX;
-var cellHeight = (Editor_Width/1.05)/cellsCntY;
+var cellWidth = (Editor_Width / 1.05) / cellsCntX;
+var cellHeight = (Editor_Width / 1.05) / cellsCntY;
 //$ phaser game instance
 var game = new Phaser.Game(Editor_Width, Editor_Height, Phaser.AUTO, 'SkipStack', {
   preload: preload,
