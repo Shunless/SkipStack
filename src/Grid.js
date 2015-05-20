@@ -53,3 +53,15 @@ Grid.prototype.render = function(){
         this.cell[i].render();
     }
 };
+
+//$   CELL GET ROW FUNCTION    $
+Grid.prototype.getRow = function(_currentPos){
+  var _y = grid.cellsCountX;
+  for(var x=0;x<grid.cellsCountX;x++){
+    if(_currentPos<_y)
+    {
+      return x;
+    }
+    _y += grid.cellsCountX;
+  }
+};

@@ -4,6 +4,8 @@
 var blips_sfx = jsfxlib.createWave(["square",16.0000,1.0000,0.0000,0.1480,0.0000,0.1480,20.0000,750.0000,2400.0000,0.0000,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.5000,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.1000,0.0000]);
 //blips_sfx.play();
 
+var EnemyMoveTimeout = 0;
+
 //editor/runtime window scale
 var Editor_Width = 512;
 var Editor_Height = 512;
@@ -51,23 +53,32 @@ function preload() {
 }
 //$ create function $
 function create() {
-    game.add.plugin(Phaser.Plugin.Debug);
+  game.add.plugin(Phaser.Plugin.Debug);
 
-    // Set up handlers for mouse events
-    game.input.onDown.add(mouseDragStart, this);
-    game.input.addMoveCallback(mouseDragMove, this);
-    game.input.onUp.add(mouseDragEnd, this);
+  // Set up handlers for mouse events
+  game.input.onDown.add(mouseDragStart, this);
+  game.input.addMoveCallback(mouseDragMove, this);
+  game.input.onUp.add(mouseDragEnd, this);
 
-    grid.init();
-    actor.init();
-    for(var i=0;i<enemy.length;i++)
-      enemy[i].init();
+  grid.init();
+  actor.init();
+  for(var i=0;i<enemy.length;i++)
+    enemy[i].init();
+
+
 }
 //$ game loop $
 function update() {
+  if (game.time.time> EnemyMoveTimeout) {
+    for(var i=0;i<enemy.length;i++)
+      enemy[i].update();
+
+    EnemyMoveTimeout= game.time.time+2000;
+  }
+
 
 }
 //$ render loop $
 function render() {
-    grid.render();
+  grid.render();
 }
