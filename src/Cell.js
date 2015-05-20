@@ -50,7 +50,7 @@ Cell.prototype.checkCell = function(_direction,_currentPos){
 
   switch(_direction){
     case 'top':
-      if(_currentPos<grid.cellsCountX){
+      if(_currentPos<grid.cellsCountX||grid.cell[_currentPos - grid.cellsCountX].type === 'Enemy'){
         result = false;
       }
       else{
@@ -61,7 +61,8 @@ Cell.prototype.checkCell = function(_direction,_currentPos){
       break;
     case 'bottom':
       //if > CellsCountX*CellsCountY-CellsCountX
-      if(_currentPos>(grid.cellsCountX*grid.cellsCountY)-grid.cellsCountX){
+      if(_currentPos>(grid.cellsCountX*grid.cellsCountY)-grid.cellsCountX
+        ||grid.cell[_currentPos + grid.cellsCountX].type === 'Enemy'){
         result = false;
       }
       else{
@@ -71,6 +72,11 @@ Cell.prototype.checkCell = function(_direction,_currentPos){
 
       break;
     case 'left':
+      if(grid.cell[_currentPos - 1].type === 'Enemy'){
+        result = false;
+        break;
+      }
+
       for(var i=0;i<grid.cellsCountX;i++){
         if(_currentPos === grid.cellsCountX*i){
             result = false;
@@ -85,6 +91,11 @@ Cell.prototype.checkCell = function(_direction,_currentPos){
 
       break;
     case 'right':
+      if(grid.cell[_currentPos + 1].type === 'Enemy'){
+        result = false;
+        break;
+      }
+
       for(var i=0;i<grid.cellsCountX;i++){
         if(_currentPos === (grid.cellsCountX*i-1)){
             result = false;
