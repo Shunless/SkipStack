@@ -12,6 +12,8 @@ function Actor(_color1,blockID){
     this.block = blockID;
 
   this._c ;
+
+  this.enemiesKilled = 0;
 }
 
 Actor.prototype.init = function(){
@@ -36,7 +38,7 @@ Actor.prototype.move = function(SwipeType){
 
       break;
     case 'bottom':
-      if(grid.cell[this._c].checkCell(SwipeType,this._c)==true){
+      if(grid.cell[this._c].checkCell(SwipeType,this._c)){
         //Handle Bottom Swap
         grid.cell[this._c].setCellType('Normal');
         grid.cell[this._c].setColor(grid.c2);
@@ -48,7 +50,7 @@ Actor.prototype.move = function(SwipeType){
 
       break;
     case 'left':
-      if(grid.cell[this._c].checkCell(SwipeType,this._c)==true){
+      if(grid.cell[this._c].checkCell(SwipeType,this._c)){
         //Handle Left Swap
         grid.cell[this._c].setCellType('Normal');
         grid.cell[this._c].setColor(grid.c2);
@@ -60,7 +62,7 @@ Actor.prototype.move = function(SwipeType){
 
       break;
     case 'right':
-      if(grid.cell[this._c].checkCell(SwipeType,this._c)==true){
+      if(grid.cell[this._c].checkCell(SwipeType,this._c)){
         //Handle Right Swap
         grid.cell[this._c].setCellType('Normal');
         grid.cell[this._c].setColor(grid.c2);
