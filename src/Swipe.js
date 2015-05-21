@@ -1,5 +1,6 @@
 /**
  * @author Alex Mourtziapis
+ * @copyright 2015 Shunless Studio.
  */
 
 var onDownPosX,onDownPosY,onEndPosX,onEndPosY;

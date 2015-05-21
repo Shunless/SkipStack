@@ -1,5 +1,6 @@
 /**
  * @author Alex Mourtziapis
+ * @copyright 2015 Shunless Studio.
  */
 /*
 * 1-$ Normal      # w/h beatlock
@@ -9,14 +10,15 @@
 */
 
 var GameType = 'Normal';
+var beatRate = 1000;
 
 var blips_sfx = jsfxlib.createWave(["sine",0.0000,0.4000,0.0000,0.0920,0.0000,0.2080,20.0000,286.0000,2400.0000,-0.6740,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0480,0.0000]);
 
 var EnemyMoveTimeout = 0;
 
 //editor/runtime window scale
-var Editor_Width = 256;
-var Editor_Height = 256;
+var Editor_Width = 512;
+var Editor_Height = 512;
 //the aspect ratio of the screen
 var aspect_ratio = Editor_Width / Editor_Height;
 //world bounds
@@ -63,7 +65,6 @@ function preload() {
 }
 //$ create function $
 function create() {
-
   color = new Color();
   //Grid(cellsX,cellsY,CellWidth,CellHeight,Color of the grid)
   grid = new Grid(cellsCntX, cellsCntY, cellWidth, cellHeight, '#333', '#ffffff');
@@ -72,10 +73,6 @@ function create() {
   enemy = [new Enemy(enemiesColor,'0-0'),
              new Enemy(enemiesColor,(cellsCntX-1)+'-0'),
              new Enemy(enemiesColor,(cellsCntX-2)+'-'+(cellsCntY-2))];
-
-
-
-
 
   if(GameType === 'Normal'){
     //Do Something
@@ -115,7 +112,7 @@ function update() {
       enemy[i].update();
 
     blips_sfx.play();
-    EnemyMoveTimeout = game.time.time+1000;
+    EnemyMoveTimeout = game.time.time + beatRate;
   }
 
 }
@@ -123,4 +120,7 @@ function update() {
 function render() {
   //draws cells and grid $ 1st Draw Call $
   grid.render();
+  game.debug.text('grid: '+cellsCntX+'-'+cellsCntY,3,14,'#b1ff00');
+  game.debug.text('enemies: '+enemy.length,3,27,'#b1ff00');
+  game.debug.text('beat rate: '+beatRate+' ms',3,40,'#b1ff00');
 }

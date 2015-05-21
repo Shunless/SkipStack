@@ -1,5 +1,6 @@
 /**
  * @author Alex Mourtziapis
+ * @copyright 2015 Shunless Studio.
  */
 
 function Cell(_posX,_posY,_name,_color){

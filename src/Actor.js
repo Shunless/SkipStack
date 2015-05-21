@@ -1,5 +1,6 @@
 /**
  * @author Alex Mourtziapis
+ * @copyright 2015 Shunless Studio.
  */
 
 function Actor(_color1,blockID){

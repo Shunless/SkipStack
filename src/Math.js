@@ -1,3 +1,8 @@
+/**
+ * @author Alex Mourtziapis
+ * @copyright 2015 Shunless Studio.
+ */
+
 var randomBoolean = [
     function(){
         return Math.random()<.5; // Readable, succint

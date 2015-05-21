@@ -1,5 +1,6 @@
 /**
  * @author Alex Mourtziapis
+ * @copyright 2015 Shunless Studio.
  */
 
 function Grid(cellCntX, cellCntY, cellW, cellH, _color1,_color2){

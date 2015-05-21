@@ -1,5 +1,6 @@
 /**
  * @author Alex Mourtziapis
+ * @copyright 2015 Shunless Studio.
  */
 
 function Enemy(_color1,blockID){
@@ -48,9 +49,7 @@ Enemy.prototype.update = function(){
   }
   //Enemy has the same position with Enemy
   else if(CellsInt === 0){
-    alert("He's Dead, Romane!");
-    cellsCntX += 1;
-    cellsCntY += 1;
+    cellsCntY = cellsCntX += 1;
 
     gameStateRestarts ++;
     game.state.start(game.state.current);
