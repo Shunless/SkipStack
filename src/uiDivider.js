@@ -21,6 +21,7 @@ function gridToFlipCard(topleft, bottomright, classname) {
 
     newdiv.css('top', '0');
     newdiv.css('left', '0');
+    newdiv.css('background-color', 'aqua');
 
     newdiv.addClass('back');
     newdiv.addClass(classname);
@@ -55,6 +56,27 @@ function gridToFlipCard(topleft, bottomright, classname) {
     return $('.flipcard.' + classname);
 }
 
-function removeFlipcard(flipcard) {
 
+
+function removeFlipcard(flipcard) {
+    flipcard.children('.front').remove();
+    var top = flipcard.css('top');
+    var left = flipcard.css('left');
+    var tl = flipcard.data('tl');
+    var br = flipcard.data('br');
+    flipcard = flipcard.children('.back');
+
+    flipcard.attr({
+        'data-tl': tl,
+        'data-br': br
+    });
+
+    flipcard.css({
+        'top': top,
+        'left': left
+    });
+
+	flipcard.unwrap();
+	flipcard.removeClass('back');
+	return flipcard;
 }

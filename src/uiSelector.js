@@ -63,6 +63,9 @@ function roundUp(topleft, bottomright, classname) {
 
 function flip(jqtoflip) {
     jqtoflip.toggleClass('flipped');
+
+        return jqtoflip
+
 }
 
 function hashId() {
