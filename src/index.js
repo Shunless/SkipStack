@@ -73,8 +73,8 @@ function create() {
              new Enemy(enemiesColor,(cellsCntX-1)+'-0'),
              new Enemy(enemiesColor,(cellsCntX-2)+'-'+(cellsCntY-2))];
 
-  for(var i=0;i<gameStateRestarts;i++)
-    enemy.push(new Enemy(enemiesColor,getRandomInt(0,cellsCntX)+'-'+getRandomInt(0,cellsCntX)));
+
+
 
 
   if(GameType === 'Normal'){
@@ -94,9 +94,18 @@ function create() {
   grid.init();
   //actor initialization ("geometry draw call")
   actor.init();
+
+  for(var i=0;i<gameStateRestarts;i++){
+    var x =  getRandomInt(0,cellsCntX)+'-'+getRandomInt(0,cellsCntX);
+    if(grid.cell[grid.getCell(x)].type === 'Normal')
+      enemy.push(new Enemy(enemiesColor,x));
+    else
+      i--;
+  }
+
+  //enemy initialization ("geometry draw call")
   for(var i=0;i<enemy.length;i++)
     enemy[i].init();
-
 
 }
 //$ game loop $
@@ -105,7 +114,7 @@ function update() {
     for(var i=0;i<enemy.length;i++)
       enemy[i].update();
 
-    //blips_sfx.play();
+    blips_sfx.play();
     EnemyMoveTimeout = game.time.time+1000;
   }
 
