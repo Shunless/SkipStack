@@ -15,8 +15,8 @@ var blips_sfx = jsfxlib.createWave(["sine",0.0000,0.4000,0.0000,0.0920,0.0000,0.
 var EnemyMoveTimeout = 0;
 
 //editor/runtime window scale
-var Editor_Width = 512;
-var Editor_Height = 512;
+var Editor_Width = 256;
+var Editor_Height = 256;
 //the aspect ratio of the screen
 var aspect_ratio = Editor_Width / Editor_Height;
 //world bounds
@@ -26,24 +26,22 @@ var World_bounds_y = Editor_Height;
 var cellsCntX = 7;
 var cellsCntY = 7;
 //cell scale in pixels
-var cellWidth = (Editor_Width - (2*cellsCntX + 2)) / (cellsCntX);
-var cellHeight = (Editor_Width - (2*cellsCntY + 2)) / (cellsCntY);
+var cellWidth;
+var cellHeight;
 
+//Enemy(color of the enemy,spawning cell)
+var enemiesColor = '#b50000';
+
+var gameStateRestarts = 0 ;
 
 //-----$*********$-----
 //-----$ CLASSES $-----
 //-----$*********$-----
 
-var color = new Color();
-//Grid(cellsX,cellsY,CellWidth,CellHeight,Color of the grid)
-var grid = new Grid(cellsCntX, cellsCntY, cellWidth, cellHeight, '#333', '#ffffff');
-//Actor(color of the actor)
-var actor = new Actor('#006400');
-//Enemy(color of the enemy,spawning cell)
-var enemiesColor = '#b50000';
-var enemy = [new Enemy(enemiesColor,'0-0'),
-             new Enemy(enemiesColor,(cellsCntX-1)+'-0'),
-             new Enemy(enemiesColor,(cellsCntX-2)+'-'+(cellsCntY-2))];
+var color ;
+var grid ;
+var actor ;
+var enemy ;
 
 /*~~~~~$*********$~~~~~*/
 /*~~~~~$ CLASSES $~~~~~*/
@@ -58,17 +56,33 @@ var game = new Phaser.Game(Editor_Width, Editor_Height, Phaser.AUTO, 'SkipStack'
 });
 
 
-if(GameType === 'Normal'){
-  //Do Something
-}
-
-
 //$ preload function $
 function preload() {
-
+  cellWidth = (Editor_Width - (2*cellsCntX + 2)) / (cellsCntX);
+  cellHeight = (Editor_Width - (2*cellsCntY + 2)) / (cellsCntY);
 }
 //$ create function $
 function create() {
+
+  color = new Color();
+  //Grid(cellsX,cellsY,CellWidth,CellHeight,Color of the grid)
+  grid = new Grid(cellsCntX, cellsCntY, cellWidth, cellHeight, '#333', '#ffffff');
+  //Actor(color of the actor)
+  actor = new Actor('#006400');
+  enemy = [new Enemy(enemiesColor,'0-0'),
+             new Enemy(enemiesColor,(cellsCntX-1)+'-0'),
+             new Enemy(enemiesColor,(cellsCntX-2)+'-'+(cellsCntY-2))];
+
+  for(var i=0;i<gameStateRestarts;i++)
+    enemy.push(new Enemy(enemiesColor,getRandomInt(0,cellsCntX)+'-'+getRandomInt(0,cellsCntX)));
+
+
+  if(GameType === 'Normal'){
+    //Do Something
+  }
+
+  //add profiler
+  //- https://github.com/englercj/phaser-debug -
   game.add.plugin(Phaser.Plugin.Debug);
 
   // Set up handlers for mouse events
@@ -76,7 +90,9 @@ function create() {
   game.input.addMoveCallback(mouseDragMove, this);
   game.input.onUp.add(mouseDragEnd, this);
 
+  //grid initialization ("geometry draw call")
   grid.init();
+  //actor initialization ("geometry draw call")
   actor.init();
   for(var i=0;i<enemy.length;i++)
     enemy[i].init();
@@ -89,13 +105,13 @@ function update() {
     for(var i=0;i<enemy.length;i++)
       enemy[i].update();
 
-    blips_sfx.play();
-    EnemyMoveTimeout= game.time.time+1000;
+    //blips_sfx.play();
+    EnemyMoveTimeout = game.time.time+1000;
   }
-
 
 }
 //$ render loop $
 function render() {
+  //draws cells and grid $ 1st Draw Call $
   grid.render();
 }

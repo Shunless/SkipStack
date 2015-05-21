@@ -12,7 +12,7 @@ function Enemy(_color1,blockID){
     this.block = blockID;
 
 
-  this.isDead=true;
+  this.isDead=false;
   this._c ;
 }
 
@@ -49,6 +49,11 @@ Enemy.prototype.update = function(){
   //Enemy has the same position with Enemy
   else if(CellsInt === 0){
     alert("He's Dead, Romane!");
+    cellsCntX += 1;
+    cellsCntY += 1;
+
+    gameStateRestarts ++;
+    game.state.start(game.state.current);
   }
   //Enemy is behind you
   else{
@@ -131,7 +136,7 @@ Enemy.prototype.move = function(SwipeType){
 };
 
 Enemy.prototype.Nextmove = function(){
-  if(this.isDead==true)
+  if(this.isDead === true)
     return null;
 
   var CellsInt = actor._c - this._c;
