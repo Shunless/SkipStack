@@ -5,49 +5,53 @@ var border; //Global border width variable
 
 $(document).ready(function() {
     compareSize();
-    gridBuilder();
-    prepCell();
-    setCellSize(cellSize);
+    gridBuilder('1-1', '13-7');
+    prepGame();
 });
 
-function gridBuilder() {
+function gridBuilder(tl, br) {
     //Fills the game grid
-    var newcell;
-    var x = 0;
-    for (; x < 13; x++) {
-        rowCreator(x);
+    var cellection = $('');
+    var x = Number(tl.split('-')[0]) - 1;
+    var y = Number(tl.split('-')[1]) - 1;
+    var a = Number(br.split('-')[0]);
+    var b = Number(br.split('-')[1]);
+    for (; x < a; x++) {
+        cellection = rowCreator(x, y, b, cellection);
     }
+    return cellection;
 }
 
-function rowCreator(x) {
+function rowCreator(x, y, b, cellection) {
     //Creates a single row
-    var y = 0;
+    var newcell;
     var verloc;
     var horloc;
-    for (; y < 7; y++) {
+    for (; y < b; y++) {
         horloc = cellSize * x;
         verloc = cellSize * y;
         newcell = $('<div class="cell" id="' + Number(x + 1) + '-' + Number(y + 1) + '" />');
         newcell.css('left', verloc);
         newcell.css('top', horloc);
         $('.gamecont').append(newcell);
+        cellection = cellection.add('#' + Number(x + 1) + '-' + Number(y + 1))
     }
+    return cellection;
 }
 
 function prepCell() {
-    //Visually prepares the game area
-    border = Math.floor(wheight * 0.00781634663 / 2);
     $('.cell').css('border', border + 'px solid #bbb');
+    $('.cell').css('width', cellSize);
+    $('.cell').css('height', cellSize);
+}
+
+function prepGame() {
+    //Visually prepares the game area
+    prepCell()
     $('.gamecont').css('border', border + 'px solid #bbb');
     $('.gamecont').css('width', cellSize * 7);
     $('.gamecont').css('height', cellSize * 13);
 };
-
-function setCellSize(width) {
-    //Gives cells their canonical size
-    $('.cell').css('width', width);
-    $('.cell').css('height', width);
-}
 
 function compareSize() {
     //Calculates the tile size
@@ -60,6 +64,7 @@ function compareSize() {
         size = neww;
     }
     cellSize = size - 1;
+    border = Math.floor(wheight * 0.00781634663 / 2);
 }
 
 /*******************************/
@@ -79,7 +84,6 @@ function createArea(topleft, bottomright, classname) {
         'height': ((y + 1) * cellSize),
         'top': ((top - 1) * cellSize),
         'left': ((left - 1) * cellSize)
-
     });
     $('.gamecont').append(div.addClass(classname));
     return $('.' + classname);
