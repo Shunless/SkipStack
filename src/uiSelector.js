@@ -62,19 +62,32 @@ function roundUp(topleft, bottomright, classname) {
 }
 
 function breakToFlipCard(topleft, bottomright, classname) {
+    var hasha = hashId();
+    var hashb = hashId();
     var hash = hashId();
-    var gridarea = roundUp(topleft, bottomright, hash);
-	gridarea.addClass('front');
-	gridarea.addClass(classname);
-	//hash breaks entire logic-considers both items as selected and adds .back to both
+    var top = ((Number(topleft.split('-')[0]) - 1) * cellSize);
+    var left = ((Number(topleft.split('-')[1]) - 1) * cellSize);
 
-    var newdiv = createArea(topleft, bottomright, hash);
-    var top = newdiv.css('top');
-    var left = newdiv.css('left');
+    var gridarea = roundUp(topleft, bottomright, hasha);
+    gridarea.addClass('front');
+    gridarea.addClass(classname);
+    gridarea.addClass(hash);
+
+    gridarea.children('.cell').each(function() {
+        $(this).css('top', (Number($(this).css('top').split('px')[0]) - top) + 'px');
+        $(this).css('left', (Number($(this).css('left').split('px')[0]) - left) + 'px');
+    });
+
+    var newdiv = createArea(topleft, bottomright, hashb);
     var width = newdiv.css('width');
     var height = newdiv.css('height');
+
+    newdiv.css('top', '0');
+    newdiv.css('left', '0');
+
     newdiv.addClass('back');
     newdiv.addClass(classname);
+    newdiv.addClass(hash);
 
     gridarea.css({
         'top': top,
@@ -83,7 +96,9 @@ function breakToFlipCard(topleft, bottomright, classname) {
         'height': height
     });
 
-    $('.' + hash).wrapAll('<div style="position:fixed; top:' + top + '; left:' + left + ';width:' + width + ';height:' + height + ';" class="flipcard ' + classname + '"/>');
+    $('.' + hash).wrapAll('<div style="position: fixed; top: ' + top + 'px; left: ' + left + 'px; width: ' + width + '; height: ' + height + ';" class="flipcard ' + classname + '"/>');
+    $('.' + classname + ' > *').removeClass(hasha);
+    $('.' + classname + ' > *').removeClass(hashb);
     $('.' + classname + ' > *').removeClass(hash);
 
     return $('.flipcard.' + classname);
@@ -98,70 +113,3 @@ function hashId() {
 
     return text;
 }
-
-/*EVERYTHING BELLOW THIS LINE IS ABSOLUTELY USELESS*/
-/*
-function multipleCellSelector(cella, cellb) {
-    var s = $('');
-    var sum = Number(cellb.split('-')[1] - cella.split('-')[1]);
-    for (var i = 0; i < sum + 1; i++) {
-        s = s.add(selectCell(cella));
-        cella = cella.split('-')[0] + '-' + (Number(cella.split('-')[1]) + 1);
-    }
-    return s
-}
-
-function multipleRowSelector(cella, cellb) {
-    var s = $('');
-    var sum = Number(cellb.split('-')[0] - cella.split('-')[0]);
-    for (var i = 0; i < sum + 1; i++) {
-        s = s.add(selectRow(cella));
-        cella = (Number(cella.split('-')[0]) + 1) + '-' + cella.split('-')[1];
-    }
-    return s
-}
-
-function cellRoundUp(cella, cellb, className) {
-    var hash = randomString(5, 'abcdefghikhlmnopqrstuvwxyz');
-    multipleCellSelector(cella, cellb).wrapAll('<div id="' + hash + '" class="' + className + '" />');
-    return hash
-}
-
-function rowRoundUp(cella, cellb, className) {
-    var hash = randomString(5, 'abcdefghikhlmnopqrstuvwxyz');
-    multipleRowSelector(cella, cellb).wrapAll('<div id="' + hash + '" class="' + className + '" />');
-    cacheHash(className, hash);
-    return hash
-}
-
-function randomString(length, chars) {
-    var result = '';
-    for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
-    return result;
-}
-
-/* Add the back to the newly created roundUps
-WIll use .append() and change roundup so it gets a unique hash id for each .new div
-
-function prepRepurpose(cella, cellb, className) {
-    var hash;
-    if (Number(cella.split('-')[0]) != Number(cella.split('-')[0])) {
-        hash = cellRoundUp(cella, cellb, className);
-    } else {
-        hash = rowRoundUp(cella, cellb, className);
-    }
-    var reptag = $('#' + hash);
-    reptag.addClass('front');
-    var gameobj = createGameObject().addClass('back');
-    $(reptag.add(gameobj)).wrapAll('<div id="gameobj" style="height:378px;"/>')
-    $("#gameobj").flip();
-    return reptag
-}
-
-function createGameObject() {
-    return $('<canvas style="position:relative;top:0;width:' + cellSize * 7 + ';height:' + cellSize * 7 + '" />')
-}
-
-function cacheHash(className, hash) {
-    hashCache[className] = hash;
-}*/

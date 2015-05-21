@@ -79,6 +79,7 @@ function createArea(topleft, bottomright, classname) {
         'height': ((y + 1) * cellSize),
         'top': ((top - 1) * cellSize),
         'left': ((left - 1) * cellSize)
+
     });
     $('.gamecont').append(div.addClass(classname));
     return $('.' + classname);
