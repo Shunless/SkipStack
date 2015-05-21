@@ -13,8 +13,9 @@ function Enemy(_color1,blockID){
     this.block = blockID;
 
 
-  this.isDead=false;
+  this.isDead = true;
   this._c ;
+  grid.cell[grid.getCell(this.block)].setCellType('Enemy');
 }
 
 //$    INITIALIZATION    $

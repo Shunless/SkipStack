@@ -43,7 +43,7 @@ var gameStateRestarts = 0 ;
 var color ;
 var grid ;
 var actor ;
-var enemy ;
+var enemy = [];
 
 /*~~~~~$*********$~~~~~*/
 /*~~~~~$ CLASSES $~~~~~*/
@@ -70,9 +70,6 @@ function create() {
   grid = new Grid(cellsCntX, cellsCntY, cellWidth, cellHeight, '#333', '#ffffff');
   //Actor(color of the actor)
   actor = new Actor('#006400');
-  enemy = [new Enemy(enemiesColor,'0-0'),
-             new Enemy(enemiesColor,(cellsCntX-1)+'-0'),
-             new Enemy(enemiesColor,(cellsCntX-2)+'-'+(cellsCntY-2))];
 
   if(GameType === 'Normal'){
     //Do Something
@@ -92,8 +89,44 @@ function create() {
   //actor initialization ("geometry draw call")
   actor.init();
 
+  //enemies initialization ("geometry draw call")
+  for(var i=0;i<3;i++){
+    var x = '';
+    if(randomBoolean[0]()==true){
+      if(randomBoolean[0]()==true)
+        x = '0-'+getRandomInt(0,cellsCntY);
+      else
+        x = getRandomInt(0,cellsCntX)+'-0';
+    }
+    else{
+      if(randomBoolean[0]()==true)
+        x = (cellsCntX-1)+'-'+getRandomInt(0,cellsCntY);
+      else
+        x = getRandomInt(0,cellsCntX)+'-'+(cellsCntY-1);
+    }
+
+    if(grid.cell[grid.getCell(x)].type === 'Normal')
+      enemy.push(new Enemy(enemiesColor,x));
+    else
+      i--;
+  }
+
+  //Here's where we additional enemies
   for(var i=0;i<gameStateRestarts;i++){
-    var x =  getRandomInt(0,cellsCntX)+'-'+getRandomInt(0,cellsCntX);
+    var x = '';
+    if(randomBoolean[0]()==true){
+      if(randomBoolean[0]()==true)
+        x = '0-'+getRandomInt(0,cellsCntY);
+      else
+        x = getRandomInt(0,cellsCntX)+'-0';
+    }
+    else{
+      if(randomBoolean[0]()==true)
+        x = (cellsCntX-1)+'-'+getRandomInt(0,cellsCntY);
+      else
+        x = getRandomInt(0,cellsCntX)+'-'+(cellsCntY-1);
+    }
+
     if(grid.cell[grid.getCell(x)].type === 'Normal')
       enemy.push(new Enemy(enemiesColor,x));
     else
@@ -104,6 +137,7 @@ function create() {
   for(var i=0;i<enemy.length;i++)
     enemy[i].init();
 
+  EnemyMoveTimeout = game.time.time + beatRate
 }
 //$ game loop $
 function update() {
@@ -111,7 +145,7 @@ function update() {
     for(var i=0;i<enemy.length;i++)
       enemy[i].update();
 
-    blips_sfx.play();
+    //blips_sfx.play();
     EnemyMoveTimeout = game.time.time + beatRate;
   }
 
@@ -120,6 +154,7 @@ function update() {
 function render() {
   //draws cells and grid $ 1st Draw Call $
   grid.render();
+  //debug text draw calls
   game.debug.text('grid: '+cellsCntX+'-'+cellsCntY,3,14,'#b1ff00');
   game.debug.text('enemies: '+enemy.length,3,27,'#b1ff00');
   game.debug.text('beat rate: '+beatRate+' ms',3,40,'#b1ff00');
