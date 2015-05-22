@@ -73,7 +73,7 @@ function createArea(topleft, bottomright, classname) {
     var y = Number(bottomright.split('-')[0]) - top;
     var div = $('<div />');
     div.css({
-        'position': 'fixed',
+        'position': 'absolute',
         'width': ((x + 1) * cellSize),
         'height': ((y + 1) * cellSize),
         'top': ((top - 1) * cellSize),

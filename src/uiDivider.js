@@ -38,7 +38,7 @@ function gridToFlipCard(topleft, bottomright, classname) {
 
     var wrapper = $('<div />')
     wrapper.css({
-        'position': 'fixed',
+        'position': 'absolute',
         'top': top + 'px',
         'left': left + 'px',
         'width': width,
