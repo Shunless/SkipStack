@@ -17,8 +17,8 @@ var blips_sfx = jsfxlib.createWave(["sine",0.0000,0.4000,0.0000,0.0920,0.0000,0.
 var EnemyMoveTimeout = 0;
 
 //editor/runtime window scale
-var Editor_Width = 512;
-var Editor_Height = 512;
+var Editor_Width = cellSize * 7;
+var Editor_Height = cellSize * 7;
 //the aspect ratio of the screen
 var aspect_ratio = Editor_Width / Editor_Height;
 //world bounds

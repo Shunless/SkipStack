@@ -27,6 +27,8 @@ function gridToFlipCard(topleft, bottomright, classname) {
     newdiv.addClass(classname);
     newdiv.addClass(hash);
 
+    newdiv.attr('id', classname);
+
     gridarea.css({
         'top': top,
         'left': left,
@@ -41,7 +43,7 @@ function gridToFlipCard(topleft, bottomright, classname) {
         'left': left + 'px',
         'width': width,
         'height': height,
-		'z-index': '90'
+        'z-index': '90'
     });
     wrapper.addClass('flipcard ' + classname);
     wrapper.attr({
@@ -77,7 +79,7 @@ function removeFlipcard(flipcard) {
         'left': left
     });
 
-	flipcard.unwrap();
-	flipcard.removeClass('back');
-	return flipcard;
+    flipcard.unwrap();
+    flipcard.removeClass('back');
+    return flipcard;
 }
