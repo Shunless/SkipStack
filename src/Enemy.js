@@ -13,7 +13,7 @@ function Enemy(_color1,blockID){
     this.block = blockID;
 
 
-  this.isDead = true;
+  this.isDead = false;
   this._c ;
   grid.cell[grid.getCell(this.block)].setCellType('Enemy');
 }
@@ -50,10 +50,7 @@ Enemy.prototype.update = function(){
   }
   //Enemy has the same position with Enemy
   else if(CellsInt === 0){
-    cellsCntY = cellsCntX += 1;
-
-    gameStateRestarts ++;
-    game.state.start(game.state.current);
+    gameOver();
   }
   //Enemy is behind you
   else{

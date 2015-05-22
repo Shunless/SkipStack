@@ -111,7 +111,7 @@ function create() {
       i--;
   }
 
-  //Here's where we additional enemies
+  //Here's where we add additional enemies
   for(var i=0;i<gameStateRestarts;i++){
     var x = '';
     if(randomBoolean[0]()==true){
@@ -145,7 +145,7 @@ function update() {
     for(var i=0;i<enemy.length;i++)
       enemy[i].update();
 
-    //blips_sfx.play();
+    blips_sfx.play();
     EnemyMoveTimeout = game.time.time + beatRate;
   }
 
@@ -159,3 +159,12 @@ function render() {
   game.debug.text('enemies: '+enemy.length,3,27,'#b1ff00');
   game.debug.text('beat rate: '+beatRate+' ms',3,40,'#b1ff00');
 }
+
+function gameOver(){
+  if(enemy.length>Math.ceil(cellsCntX/2))
+    cellsCntY = cellsCntX += 1;
+
+  gameStateRestarts ++;
+  game.state.start(game.state.current);
+}
+
