@@ -1,3 +1,5 @@
+![Image of Yaktocat](https://chart.googleapis.com/chart?chs=116x116&cht=qr&chl=https://build.phonegap.com/apps/1470249/install/9zTrcKz_tDDeyf8-5Y_9&chld=L|1&choe=UTF-8)$ Phonegap Build :stuck_out_tongue_winking_eye:  $
+___
 [![Project Status: WIP - The project has not reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/0.1.0/wip.svg)](http://www.repostatus.org/#wip)
 
 # SkipStack [![Join Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mromangmg/SkipStack)
