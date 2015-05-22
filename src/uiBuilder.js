@@ -3,12 +3,6 @@ var wheight = $(window).height(); //Grabs the screen's height
 var cellSize; //Global cell size variable
 var border; //Global border width variable
 
-$(document).ready(function() {
-    compareSize();
-    gridBuilder('1-1', '13-7');
-    prepGame();
-});
-
 function gridBuilder(tl, br) {
     //Fills the game grid
     var cellection = $('');

@@ -33,3 +33,9 @@ body {
 .flipcard.flipped {
     transform: rotateY(180deg);
 }
+.center {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)!important;
+}

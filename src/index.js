@@ -77,7 +77,7 @@ function create() {
 
   //add profiler
   //- https://github.com/englercj/phaser-debug -
-  game.add.plugin(Phaser.Plugin.Debug);
+  //game.add.plugin(Phaser.Plugin.Debug);
 
   // Set up handlers for mouse events
   game.input.onDown.add(mouseDragStart, this);
