@@ -40,7 +40,8 @@ function gridToFlipCard(topleft, bottomright, classname) {
         'top': top + 'px',
         'left': left + 'px',
         'width': width,
-        'height': height
+        'height': height,
+		'z-index': '90'
     });
     wrapper.addClass('flipcard ' + classname);
     wrapper.attr({

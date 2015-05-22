@@ -62,9 +62,11 @@ function roundUp(topleft, bottomright, classname) {
 }
 
 function flip(jqtoflip) {
-    jqtoflip.toggleClass('flipped');
-
-        return jqtoflip
+    jqtoflip.transition({
+        perspective: '800px',
+        rotateY: '180deg'
+    });
+    return jqtoflip
 
 }
 
