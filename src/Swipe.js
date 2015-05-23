@@ -6,9 +6,11 @@
 var onDownPosX,onDownPosY,onEndPosX,onEndPosY;
 
 function mouseDragStart() {
+    if(game.input.activePointer.withinGame === false)
+      return null;
+
     onDownPosX=game.input.x;
     onDownPosY=game.input.y;
-    //console.log(onDownPosX);
 }
 
 function mouseDragMove() {
@@ -16,6 +18,9 @@ function mouseDragMove() {
 }
 
 function mouseDragEnd() {
+  if(game.input.activePointer.withinGame === false)
+    return null;
+
   onEndPosX=game.input.x;
   onEndPosY=game.input.y;
 

@@ -81,8 +81,6 @@ function create() {
   //game.add.plugin(Phaser.Plugin.Debug);
 
   // Set up handlers for mouse events
-  game.input.addPointer();
-
   game.input.onDown.add(mouseDragStart, this);
   game.input.onUp.add(mouseDragEnd, this);
   game.input.onDown.add(mouseDragStart, this);
