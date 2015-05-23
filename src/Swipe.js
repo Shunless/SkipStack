@@ -6,8 +6,9 @@
 var onDownPosX,onDownPosY,onEndPosX,onEndPosY;
 
 function mouseDragStart() {
-    onDownPosX=game.input.mousePointer.x;
-    onDownPosY=game.input.mousePointer.y;
+    onDownPosX=game.input.x;
+    onDownPosY=game.input.y;
+    //console.log(onDownPosX);
 }
 
 function mouseDragMove() {
@@ -15,8 +16,8 @@ function mouseDragMove() {
 }
 
 function mouseDragEnd() {
-  onEndPosX=game.input.mousePointer.x;
-  onEndPosY=game.input.mousePointer.y;
+  onEndPosX=game.input.x;
+  onEndPosY=game.input.y;
 
   var diffX = onDownPosX-onEndPosX;
   var diffY = onDownPosY-onEndPosY;
