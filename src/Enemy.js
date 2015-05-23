@@ -15,7 +15,7 @@ function Enemy(_color1,blockID){
 
   this.isDead = false;
   this._c ;
-  grid.cell[grid.getCell(this.block)].setCellType('Enemy');
+  grid.cell[grid.getCell(this.block)].type='Enemy';
 }
 
 //$    INITIALIZATION    $
@@ -73,7 +73,7 @@ Enemy.prototype.move = function(SwipeType){
   switch(SwipeType){
     case 'top':
       if(grid.cell[this._c].checkCell(SwipeType,this._c)
-         ||grid.cell[this._c - cellsCntX].type === 'Enemy'){
+         &&grid.cell[this._c - cellsCntX].type !== 'Enemy'){
 
         //Handle Top Swap
         grid.cell[this._c].setCellType('Normal');
@@ -87,7 +87,7 @@ Enemy.prototype.move = function(SwipeType){
       break;
     case 'bottom':
       if(grid.cell[this._c].checkCell(SwipeType,this._c)
-         ||grid.cell[this._c + cellsCntX].type === 'Enemy'){
+         &&grid.cell[this._c + cellsCntX].type !== 'Enemy'){
 
         //Handle Bottom Swap
         grid.cell[this._c].setCellType('Normal');
@@ -101,7 +101,7 @@ Enemy.prototype.move = function(SwipeType){
       break;
     case 'left':
       if(grid.cell[this._c].checkCell(SwipeType,this._c)
-        ||grid.cell[this._c - 1].type === 'Enemy'){
+        &&grid.cell[this._c - 1].type !== 'Enemy'){
 
         //Handle Left Swap
         grid.cell[this._c].setCellType('Normal');
@@ -115,7 +115,7 @@ Enemy.prototype.move = function(SwipeType){
       break;
     case 'right':
       if(grid.cell[this._c].checkCell(SwipeType,this._c)
-        ||grid.cell[this._c + 1].type === 'Enemy'){
+        &&grid.cell[this._c + 1].type !== 'Enemy'){
 
         //Handle Right Swap
         grid.cell[this._c].setCellType('Normal');

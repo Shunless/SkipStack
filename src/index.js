@@ -41,9 +41,9 @@ var gameStateRestarts = 0 ;
 //-----$*********$-----
 
 var color ;
-var grid ;
+var grid  ;
 var actor ;
-var enemy = [];
+var enemy ;
 
 /*~~~~~$*********$~~~~~*/
 /*~~~~~$ CLASSES $~~~~~*/
@@ -60,6 +60,7 @@ var game = new Phaser.Game(Editor_Width, Editor_Height, Phaser.AUTO, 'SkipStack'
 
 //$ preload function $
 function preload() {
+  enemy = new Array();
   cellWidth = (Editor_Width - (2*cellsCntX + 2)) / (cellsCntX);
   cellHeight = (Editor_Width - (2*cellsCntY + 2)) / (cellsCntY);
 }
@@ -90,29 +91,7 @@ function create() {
   actor.init();
 
   //enemies initialization ("geometry draw call")
-  for(var i=0;i<3;i++){
-    var x = '';
-    if(randomBoolean[0]()==true){
-      if(randomBoolean[0]()==true)
-        x = '0-'+getRandomInt(0,cellsCntY);
-      else
-        x = getRandomInt(0,cellsCntX)+'-0';
-    }
-    else{
-      if(randomBoolean[0]()==true)
-        x = (cellsCntX-1)+'-'+getRandomInt(0,cellsCntY);
-      else
-        x = getRandomInt(0,cellsCntX)+'-'+(cellsCntY-1);
-    }
-
-    if(grid.cell[grid.getCell(x)].type === 'Normal')
-      enemy.push(new Enemy(enemiesColor,x));
-    else
-      i--;
-  }
-
-  //Here's where we add additional enemies
-  for(var i=0;i<gameStateRestarts;i++){
+  for(var i=0;i<3+gameStateRestarts;i++){
     var x = '';
     if(randomBoolean[0]()==true){
       if(randomBoolean[0]()==true)
@@ -134,8 +113,8 @@ function create() {
   }
 
   //enemy initialization ("geometry draw call")
-  for(var i=0;i<enemy.length;i++)
-    enemy[i].init();
+  for(var x=0;x<enemy.length;x++)
+    enemy[x].init();
 
   EnemyMoveTimeout = game.time.time + beatRate
 }
@@ -145,7 +124,7 @@ function update() {
     for(var i=0;i<enemy.length;i++)
       enemy[i].update();
 
-    blips_sfx.play();
+    //blips_sfx.play();
     EnemyMoveTimeout = game.time.time + beatRate;
   }
 
@@ -162,7 +141,7 @@ function render() {
 
 function gameOver(){
   if(enemy.length>Math.ceil(cellsCntX/2))
-    cellsCntY = cellsCntX += 1;
+    cellsCntY = ++ cellsCntX;
 
   gameStateRestarts ++;
   game.state.start(game.state.current);
