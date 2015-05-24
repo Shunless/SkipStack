@@ -68,7 +68,7 @@ function preload() {
 function create() {
   color = new Color();
   //Grid(cellsX,cellsY,CellWidth,CellHeight,Color of the grid)
-  grid = new Grid(cellsCntX, cellsCntY, cellWidth, cellHeight, '#333', '#ffffff');
+  grid = new Grid(cellsCntX, cellsCntY, cellWidth, cellHeight, '#333', '#ffffff',2);
   //Actor(color of the actor)
   actor = new Actor('#006400');
 

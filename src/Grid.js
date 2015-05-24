@@ -3,33 +3,39 @@
  * @copyright 2015 Shunless Studio.
  */
 
-function Grid(cellCntX, cellCntY, cellW, cellH, _color1,_color2){
-    this.c = _color1;
-    this.c2 = _color2;
+function Grid(cellCntX, cellCntY, cellW, cellH, _color1,_color2,_bThickness){
+  this.c = _color1;//border color
+  this.c2 = _color2;//cell color
 
-    this.cellsCountX = cellCntX;//cells in x dimension .
-    this.cellsCountY = cellCntY;//cells in y dimension .
+  //the thickness of the border
+  if (typeof(_bThickness)==='undefined')
+    this.borderThickness = 2;
+  else
+    this.borderThickness = _bThickness;
 
-    this.cellWidth = cellW;//width of every cell in px .
-    this.cellHeight = cellH;//height of every cell in px .
+  this.cellsCountX = cellCntX;//cells in x dimension .
+  this.cellsCountY = cellCntY;//cells in y dimension .
 
-    this.grid;
+  this.cellWidth = cellW;//width of every cell in px .
+  this.cellHeight = cellH;//height of every cell in px .
 
-    //the cells of the grid
-    this.cell = new Array();
+  this.grid;
+
+  //the cells of the grid
+  this.cell = new Array();
 }
 
 Grid.prototype.init = function(){
-  var w = this.cellsCountX * this.cellWidth  + 2 * this.cellsCountX + 2;
-  var h = this.cellsCountY * this.cellHeight + 2 * this.cellsCountY + 2;
+  var w = this.cellsCountX * this.cellWidth  + this.borderThickness * this.cellsCountX + this.borderThickness;
+  var h = this.cellsCountY * this.cellHeight + this.borderThickness * this.cellsCountY + this.borderThickness;
   this.grid = new Phaser.Rectangle((Editor_Width-w)/2, (Editor_Height-h)/2, w, h);
 
   h = (Editor_Height-h)/2;
   w = (Editor_Width-w)/2;
   for(var y=0;y<this.cellsCountY;y++){
     for(var x=0;x<this.cellsCountX;x++){
-      var posX = w + (2 * (x + 1)) + (this.cellWidth * x);
-      var posY = h + (2 * (y + 1)) + (this.cellHeight * y);
+      var posX = w + (this.borderThickness * (x + 1)) + (this.cellWidth * x);
+      var posY = h + (this.borderThickness * (y + 1)) + (this.cellHeight * y);
 
       this.cell.push(new Cell(posX, posY,x.toString() + '-' + y.toString(), this.c2) );
     }
