@@ -2,6 +2,7 @@ var wwidth = $(window).width(); //Grabs the screen's width
 var wheight = $(window).height(); //Grabs the screen's height
 var cellSize; //Global cell size variable
 var border; //Global border width variable
+var uniz = 1;
 
 function gridBuilder(tl, br) {
     //Fills the game grid
@@ -62,7 +63,7 @@ function compareSize() {
 }
 
 /*******************************/
-/**** UI Primitive Creators ****/
+/******* UI Modificators *******/
 /*******************************/
 
 function createArea(topleft, bottomright, classname) {
@@ -72,6 +73,7 @@ function createArea(topleft, bottomright, classname) {
     var x = Number(bottomright.split('-')[1]) - left;
     var y = Number(bottomright.split('-')[0]) - top;
     var div = $('<div />');
+	
     div.css({
         'position': 'absolute',
         'width': ((x + 1) * cellSize),
@@ -79,6 +81,27 @@ function createArea(topleft, bottomright, classname) {
         'top': ((top - 1) * cellSize),
         'left': ((left - 1) * cellSize)
     });
+	
     $('.gamecont').append(div.addClass(classname));
     return $('.' + classname);
+}
+
+function reGrid(classname) {
+    //Returns the canonical grid the area spans
+    var area = $('.' + classname);
+    var tl = area.data('tl');
+    var br = area.data('br');
+    var hash = hashId();
+    var newgrid = gridBuilder(tl, br);
+    var wrapper = newgrid.wrapAll('<div class="' + hash + '" />')
+    wrapper.css({
+        'border': border + 'px solid #bbb',
+        'width': cellSize,
+        'height': cellSize
+    });
+
+    return {
+        'wrap': $('.' + hash),
+        'wraphash': hash
+    };
 }

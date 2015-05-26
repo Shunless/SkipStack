@@ -27,8 +27,6 @@ function gridToFlipCard(topleft, bottomright, classname) {
     newdiv.addClass(classname);
     newdiv.addClass(hash);
 
-    newdiv.attr('id', classname);
-
     gridarea.css({
         'top': top,
         'left': left,
@@ -43,8 +41,9 @@ function gridToFlipCard(topleft, bottomright, classname) {
         'left': left + 'px',
         'width': width,
         'height': height,
-        'z-index': '90'
+        'z-index': uniz
     });
+    uniz += 1;
     wrapper.addClass('flipcard ' + classname);
     wrapper.attr({
         'data-tl': topleft,
@@ -58,8 +57,6 @@ function gridToFlipCard(topleft, bottomright, classname) {
 
     return $('.flipcard.' + classname);
 }
-
-
 
 function removeFlipcard(flipcard) {
     flipcard.children('.front').remove();
@@ -76,8 +73,10 @@ function removeFlipcard(flipcard) {
 
     flipcard.css({
         'top': top,
-        'left': left
+        'left': left,
+        'z-index': uniz
     });
+	uniz += 1;
 
     flipcard.unwrap();
     flipcard.removeClass('back');
