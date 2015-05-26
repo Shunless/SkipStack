@@ -86,6 +86,15 @@ function createArea(topleft, bottomright, classname) {
     return $('.' + classname);
 }
 
+function createButton(loc, icon) {
+	//Adds any FontAwsome character in a selected cell
+    var playicon = $('<i class="fa fa-' + icon + ' center" /i>');
+    playicon.css('font-size', border + 'em');
+    $('#' + loc).css('border-color', '#000').append(playicon)
+
+    return $('#' + loc);
+}
+
 function reGrid(classname) {
     //Returns the canonical grid the area spans
     var area = $('.' + classname);
@@ -94,12 +103,13 @@ function reGrid(classname) {
     var hash = hashId();
     var newgrid = gridBuilder(tl, br);
     var wrapper = newgrid.wrapAll('<div class="' + hash + '" />')
+	
     wrapper.css({
         'border': border + 'px solid #bbb',
         'width': cellSize,
         'height': cellSize
     });
-
+	
     return {
         'wrap': $('.' + hash),
         'wraphash': hash

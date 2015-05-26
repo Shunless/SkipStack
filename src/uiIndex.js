@@ -8,11 +8,11 @@ $(document).ready(function() {
 function createGame() {
 
     var a = flip(gridToFlipCard('4-1', '10-7', 'SkipStack'));
-	a.children('.back').attr('id','SkipStack')
+    a.children('.back').attr('id', 'SkipStack')
     setTimeout(function() {
         removeFlipcard(a);
     }, 1000);
-	
+
     addScript('src/Math.js');
     addScript('src/Cell.js');
     addScript('src/Swipe.js');
@@ -24,11 +24,7 @@ function createGame() {
 }
 
 function createPlayButton() {
-    var playicon = $('<i class="fa fa-play center" /i>');
-    playicon.css('font-size', border + 'em');
-    $('#7-4').css('border-color', '#000').append(playicon).click(function() {
+    createButton('7-4', 'play').click(function() {
         createGame();
     });
-
-    return $('#7-4');
 }
