@@ -6,13 +6,6 @@ $(document).ready(function() {
 });
 
 function createGame() {
-
-    var a = flip(gridToFlipCard('4-1', '10-7', 'SkipStack'));
-    a.children('.back').attr('id', 'SkipStack')
-    setTimeout(function() {
-        removeFlipcard(a);
-    }, 1000);
-
     addScript('src/Math.js');
     addScript('src/Cell.js');
     addScript('src/Swipe.js');
@@ -21,6 +14,14 @@ function createGame() {
     addScript('src/Grid.js');
     addScript('src/Color.js');
     addScript('src/index.js');
+
+    var a = flip(gridToFlipCard('4-1', '10-7', 'SkipStack'));
+    a.children('.back').attr('id', 'SkipStack')
+    setTimeout(function() {
+        removeFlipcard(a);
+    }, 1000);
+
+
 }
 
 function createPlayButton() {
