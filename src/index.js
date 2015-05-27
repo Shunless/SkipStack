@@ -3,16 +3,16 @@
  * @copyright 2015 Shunless Studio.
  */
 /*
-* 1-$ Normal      # w/h beatlock
-* 2-$ Endless     # w/h beatlock
-* 3-$ SkipSmash   # w/h beatlock
-* 4-$ PaintStack  # w/h beatlock
-*/
+ * 1-$ Normal      # w/h beatlock
+ * 2-$ Endless     # w/h beatlock
+ * 3-$ SkipSmash   # w/h beatlock
+ * 4-$ PaintStack  # w/h beatlock
+ */
 
 var GameType = 'Normal';
 var beatRate = 1000;
 
-var blips_sfx = jsfxlib.createWave(["sine",0.0000,0.4000,0.0000,0.0920,0.0000,0.2080,20.0000,286.0000,2400.0000,-0.6740,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0480,0.0000]);
+var blips_sfx = jsfxlib.createWave(["sine", 0.0000, 0.4000, 0.0000, 0.0920, 0.0000, 0.2080, 20.0000, 286.0000, 2400.0000, -0.6740, 0.0000, 0.0000, 0.0100, 0.0003, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 1.0000, 0.0000, 0.0000, 0.0480, 0.0000]);
 
 var EnemyMoveTimeout = 0;
 
@@ -34,16 +34,16 @@ var cellHeight;
 //Enemy(color of the enemy,spawning cell)
 var enemiesColor = '#b50000';
 
-var gameStateRestarts = 0 ;
+var gameStateRestarts = 0;
 
 //-----$*********$-----
 //-----$ CLASSES $-----
 //-----$*********$-----
 
-var color ;
-var grid  ;
-var actor ;
-var enemy ;
+var color;
+var grid;
+var actor;
+var enemy;
 
 /*~~~~~$*********$~~~~~*/
 /*~~~~~$ CLASSES $~~~~~*/
@@ -61,18 +61,18 @@ var game = new Phaser.Game(Editor_Width, Editor_Height, Phaser.AUTO, 'SkipStack'
 //$ preload function $
 function preload() {
   enemy = new Array();
-  cellWidth = (Editor_Width - (2*cellsCntX + 2)) / (cellsCntX);
-  cellHeight = (Editor_Width - (2*cellsCntY + 2)) / (cellsCntY);
+  cellWidth = (Editor_Width - (2 * cellsCntX + 2)) / (cellsCntX);
+  cellHeight = (Editor_Width - (2 * cellsCntY + 2)) / (cellsCntY);
 }
 //$ create function $
 function create() {
   color = new Color();
   //Grid(cellsX,cellsY,CellWidth,CellHeight,Color of the grid)
-  grid = new Grid(cellsCntX, cellsCntY, cellWidth, cellHeight, '#333', '#ffffff',2);
+  grid = new Grid(cellsCntX, cellsCntY, cellWidth, cellHeight, '#333', '#ffffff', 2);
   //Actor(color of the actor)
   actor = new Actor('#006400');
 
-  if(GameType === 'Normal'){
+  if (GameType === 'Normal') {
     //Do Something
   }
 
@@ -84,7 +84,7 @@ function create() {
   game.input.onDown.add(mouseDragStart, this);
   game.input.onUp.add(mouseDragEnd, this);
   game.input.onDown.add(mouseDragStart, this);
-//  game.input.addMoveCallback(mouseDragMove, this);
+  //  game.input.addMoveCallback(mouseDragMove, this);
   game.input.onUp.add(mouseDragEnd, this);
 
   //grid initialization ("geometry draw call")
@@ -93,39 +93,39 @@ function create() {
   actor.init();
 
   //enemies initialization ("geometry draw call")
-  for(var i=0;i<3+gameStateRestarts;i++){
+  for (var i = 0; i < 3 + gameStateRestarts; i++) {
     var x = '';
-    if(randomBoolean[0]()==true){
-      if(randomBoolean[0]()==true)
-        x = '0-'+getRandomInt(0,cellsCntY);
+    if (randomBoolean[0]() == true) {
+      if (randomBoolean[0]() == true)
+        x = '0-' + getRandomInt(0, cellsCntY);
       else
-        x = getRandomInt(0,cellsCntX)+'-0';
-    }
-    else{
-      if(randomBoolean[0]()==true)
-        x = (cellsCntX-1)+'-'+getRandomInt(0,cellsCntY);
+        x = getRandomInt(0, cellsCntX) + '-0';
+    } else {
+      if (randomBoolean[0]() == true)
+        x = (cellsCntX - 1) + '-' + getRandomInt(0, cellsCntY);
       else
-        x = getRandomInt(0,cellsCntX)+'-'+(cellsCntY-1);
+        x = getRandomInt(0, cellsCntX) + '-' + (cellsCntY - 1);
     }
 
-    if(grid.cell[grid.getCell(x)].type === 'Normal')
-      enemy.push(new Enemy(enemiesColor,x));
+    if (grid.cell[grid.getCell(x)].type === 'Normal')
+      enemy.push(new Enemy(enemiesColor, x));
     else
       i--;
   }
 
   //enemy initialization ("geometry draw call")
-  for(var x=0;x<enemy.length;x++)
+  for (var x = 0; x < enemy.length; x++)
     enemy[x].init();
 
   EnemyMoveTimeout = game.time.time + beatRate
 }
 //$ game loop $
 function update() {
-  if (game.time.time> EnemyMoveTimeout) {
-    for(var i=0;i<enemy.length;i++)
+  if (game.time.time > EnemyMoveTimeout) {
+    for (var i = 0; i < enemy.length; i++)
       enemy[i].update();
 
+    //this function triggers the sfx player
     //blips_sfx.play();
     EnemyMoveTimeout = game.time.time + beatRate;
   }
@@ -136,16 +136,31 @@ function render() {
   //draws cells and grid $ 1st Draw Call $
   grid.render();
   //debug text draw calls
-  game.debug.text('grid: '+cellsCntX+'-'+cellsCntY,3,14,'#b1ff00');
-  game.debug.text('enemies: '+enemy.length,3,27,'#b1ff00');
-  game.debug.text('beat rate: '+beatRate+' ms',3,40,'#b1ff00');
+  game.debug.text('grid: ' + cellsCntX + '-' + cellsCntY, 3, 14, '#b1ff00');
+  game.debug.text('enemies: ' + enemy.length, 3, 27, '#b1ff00');
+  game.debug.text('beat rate: ' + beatRate + ' ms', 3, 40, '#b1ff00');
 }
+//$ game over $
+function gameOver() {
+  if (GameType === 'Normal') {
+    //increment cells by 1 if enemies > ceil(cells/2)
+    if (enemy.length > Math.ceil(cellsCntX / 2))
+      cellsCntY = ++cellsCntX;
 
-function gameOver(){
-  if(enemy.length>Math.ceil(cellsCntX/2))
-    cellsCntY = ++ cellsCntX;
+    gameStateRestarts++;
+    game.state.start(game.state.current);
+  } else if (GameType === 'Endless') {
 
-  gameStateRestarts ++;
-  game.state.start(game.state.current);
+    //Everything goes back to normal
+    cellsCntY = cellsCntX = 7;
+    gameStateRestarts = 0;
+
+    game.state.start(game.state.current);
+  } else if (GameType === 'SkipSmash') {
+
+    //@ToDo
+  } else if (GameType === 'PaintStack') {
+
+    //@ToDo
+  }
 }
-

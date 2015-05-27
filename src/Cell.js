@@ -3,8 +3,8 @@
  * @copyright 2015 Shunless Studio.
  */
 
-function Cell(_posX,_posY,_name,_color){
-  this.color =  _color;
+function Cell(_posX, _posY, _name, _color) {
+  this.color = _color;
   this.positionX = _posX;
   this.positionY = _posY;
 
@@ -16,45 +16,44 @@ function Cell(_posX,_posY,_name,_color){
   this.init();
 
   /* indicates the type of the cell/container
-  * $    1-Normal    $
-  * $    2-Enemy     $
-  * $    3-Actor     $
-  * Default value is normal
-  */
+   * $    1-Normal    $
+   * $    2-Enemy     $
+   * $    3-Actor     $
+   * Default value is normal
+   */
   this.type = 'Normal';
 }
 
-Cell.prototype.init = function(){
-    this.rect = new Phaser.Rectangle(this.positionX, this.positionY, grid.cellWidth,  grid.cellWidth);
+Cell.prototype.init = function() {
+  this.rect = new Phaser.Rectangle(this.positionX, this.positionY, grid.cellWidth, grid.cellWidth);
 };
 
 /*  SET CELL TYPE   */
-Cell.prototype.setCellType = function(_type){
-  if(_type!='Normal'&&_type!='Enemy'&&_type!='Actor')
+Cell.prototype.setCellType = function(_type) {
+  if (_type != 'Normal' && _type != 'Enemy' && _type != 'Actor')
     alert('type can only be "Enemy","Normal","Actor"');
   this.type = _type;
 };
 
 /*   CELL RENDER FUNCTION   */
-Cell.prototype.render = function(){
-  game.debug.geom(this.rect,this.color);
+Cell.prototype.render = function() {
+  game.debug.geom(this.rect, this.color);
 };
 
 /*   SET CELL COLOR   */
-Cell.prototype.setColor = function(_clr){
-  this.color =  _clr;
+Cell.prototype.setColor = function(_clr) {
+  this.color = _clr;
 };
 
 /*   CHECK CELL  */
-Cell.prototype.checkCell = function(_direction,_currentPos){
+Cell.prototype.checkCell = function(_direction, _currentPos) {
   var result = true;
 
-  switch(_direction){
+  switch (_direction) {
     case 'top':
-      if(_currentPos<cellsCntX){
+      if (_currentPos < cellsCntX) {
         result = false;
-      }
-      else{
+      } else {
         result = true;
       }
       //grid.cell[_currentPos - cellsCntX]
@@ -62,10 +61,9 @@ Cell.prototype.checkCell = function(_direction,_currentPos){
       break;
     case 'bottom':
       //if > CellsCountX*CellsCountY-CellsCountX
-      if(_currentPos>(cellsCntX*grid.cellsCountY)-cellsCntX){
+      if (_currentPos > (cellsCntX * grid.cellsCountY) - cellsCntX) {
         result = false;
-      }
-      else{
+      } else {
         result = true;
       }
       //grid.cell[_currentPos + cellsCntX]
@@ -73,12 +71,12 @@ Cell.prototype.checkCell = function(_direction,_currentPos){
       break;
     case 'left':
 
-      for(var i=0;i<cellsCntX;i++){
-        if(_currentPos === cellsCntX*i){
-            result = false;
+      for (var i = 0; i < cellsCntX; i++) {
+        if (_currentPos === cellsCntX * i) {
+          result = false;
         }
       }
-      if(result==false)
+      if (result == false)
         break;
       else
         result = true;
@@ -88,12 +86,12 @@ Cell.prototype.checkCell = function(_direction,_currentPos){
       break;
     case 'right':
 
-      for(var i=0;i<cellsCntX;i++){
-        if(_currentPos === (cellsCntX*i-1)){
-            result = false;
+      for (var i = 0; i < cellsCntX; i++) {
+        if (_currentPos === (cellsCntX * i - 1)) {
+          result = false;
         }
       }
-      if(result==false)
+      if (result == false)
         break;
       else
         result = true;

@@ -3,10 +3,10 @@
  * @copyright 2015 Shunless Studio.
  */
 
-function Color(){
+function Color() {
   //COLORS LIB
   this.Color_OceanBlue = 0x99FFFF,
-  this.Color_SteelBlue  = 0x4682B4,
+  this.Color_SteelBlue = 0x4682B4,
   this.Color_RoyalBlue = 0xFF0000,
   this.Color_DarkBlue = 0x0099FF,
   this.Color_Black = 0x000000,
@@ -20,6 +20,6 @@ function Color(){
   this.Color_White = 0xFFFFFF;
 }
 
-Color.prototype.generateHexColor = function(){
+Color.prototype.generateHexColor = function() {
   return '#' + ((0.5 + 0.5 * Math.random()) * 0xFFFFFF << 0).toString(16);
 };

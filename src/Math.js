@@ -4,17 +4,18 @@
  */
 
 var randomBoolean = [
-    function(){
-        return Math.random()<.5; // Readable, succint
-    },
 
-    function(){
-        return !(Math.random()+.5|0); // (shortcut for Math.round)
-    },
+  function() {
+    return Math.random() < .5; // Readable, succint
+  },
 
-    function(){
-        return !(+new Date()%2); // faux-randomness
-    }
+  function() {
+    return !(Math.random() + .5 | 0); // (shortcut for Math.round)
+  },
+
+  function() {
+    return !(+new Date() % 2); // faux-randomness
+  }
 ];
 
 // Returns a random number between 0 (inclusive) and 1 (exclusive)
