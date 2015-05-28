@@ -53,13 +53,7 @@ var movesHaveBeenStored;
 /*~~~~~$*********$~~~~~*/
 
 //$ phaser game instance
-var game; /*= new Phaser.Game(Editor_Width, Editor_Height, Phaser.AUTO, 'SkipStack', {
-  preload: preload,
-  create: create,
-  update: update,
-  render: render
-});*/
-
+var game;
 
 //$ preload function $
 function preload() {
@@ -122,29 +116,35 @@ function create() {
   for (var x = 0; x < enemy.length; x++)
     enemy[x].init();
 
-  EnemyMoveTimeout = game.time.time - beatRate/4;
+  EnemyMoveTimeout = game.time.time - beatRate / 4;
 }
 //$ game loop $
 function update() {
   if (game.time.time > EnemyMoveTimeout) {
-    for (var i = 0; i < enemy.length; i++)
-      enemy[i].move(enemyMove[i]);
 
-    //this function triggers the sfx player
-    //blips_sfx.play();
+    for (var i = 0; i < enemy.length; i++)
+      if (enemy[i].isDead === false)
+        enemy[i].move(enemyMove[i]);
+
+      //this function triggers the sfx player
+      //blips_sfx.play();
+
     movesHaveBeenStored = false;
-    
+
+    //refresh move timeout
     EnemyMoveTimeout = game.time.time + beatRate;
+
   } else if (movesHaveBeenStored === false) {
+
     //We reset the predicted moves array
     enemyMove = new Array();
-    
+
     for (var x = 0; x < enemy.length; x++)
-      enemyMove.push(enemy[x].Nextmove());
+      if (enemy[i].isDead === false)
+        enemyMove.push(enemy[x].Nextmove());
 
     movesHaveBeenStored = true;
   }
-
 }
 //$ render loop $
 function render() {

@@ -128,9 +128,6 @@ Enemy.prototype.move = function(SwipeType) {
 };
 
 Enemy.prototype.Nextmove = function() {
-  if (this.isDead === true)
-    return null;
-
   var CellsInt = actor._c - this._c;
   var RowsInt = Math.abs(grid.getRow(actor._c) - grid.getRow(this._c));
 

@@ -23,3 +23,11 @@ function Color() {
 Color.prototype.generateHexColor = function() {
   return '#' + ((0.5 + 0.5 * Math.random()) * 0xFFFFFF << 0).toString(16);
 };
+
+Color.prototype.genetaRGBAColor = function() {
+  return 'rgba(' + getRandomInt(0, 256) + getRandomInt(0, 256) + getRandomInt(0, 256) + Math.random() + ')';
+};
+
+Color.prototype.genetaRGBColor = function() {
+  return 'rgba(' + getRandomInt(0, 256) + getRandomInt(0, 256) + getRandomInt(0, 256) + '1)';
+};

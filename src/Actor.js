@@ -26,49 +26,77 @@ Actor.prototype.init = function() {
 
 Actor.prototype.move = function(SwipeType) {
   switch (SwipeType) {
+    //Handle Top Swap
     case 'top':
       if (grid.cell[this._c].checkCell(SwipeType, this._c)) {
-        //Handle Top Swap
+        var z = this._c - cellsCntX;
+
+        if (grid.cell[z].type === 'Enemy') {
+          for (var i = 0; i < enemy.length; i++)
+            enemy[i].isDead = Boolean(enemy[i]._c === z) ;
+        }
+
         grid.cell[this._c].setCellType('Normal');
         grid.cell[this._c].setColor(grid.c2);
 
-        this._c = this._c - cellsCntX;
+        this._c = z;
         grid.cell[this._c].setColor(this.color);
         grid.cell[this._c].setCellType('Actor');
       }
 
       break;
+      //Handle Bottom Swap
     case 'bottom':
       if (grid.cell[this._c].checkCell(SwipeType, this._c)) {
-        //Handle Bottom Swap
+        var z = this._c + cellsCntX;
+
+        if (grid.cell[z].type === 'Enemy') {
+          for (var i = 0; i < enemy.length; i++)
+            enemy[i].isDead = Boolean(enemy[i]._c === z) ;
+        }
+
         grid.cell[this._c].setCellType('Normal');
         grid.cell[this._c].setColor(grid.c2);
 
-        this._c = this._c + cellsCntX;
+        this._c = z;
         grid.cell[this._c].setColor(this.color);
         grid.cell[this._c].setCellType('Actor');
       }
 
       break;
+      //Handle Left Swap
     case 'left':
       if (grid.cell[this._c].checkCell(SwipeType, this._c)) {
-        //Handle Left Swap
+        var z = this._c - 1;
+
+        if (grid.cell[z].type === 'Enemy') {
+          for (var i = 0; i < enemy.length; i++)
+            enemy[i].isDead = Boolean(enemy[i]._c === z) ;
+        }
+
         grid.cell[this._c].setCellType('Normal');
         grid.cell[this._c].setColor(grid.c2);
 
-        this._c = this._c - 1;
+        this._c = z;
         grid.cell[this._c].setColor(this.color);
         grid.cell[this._c].setCellType('Actor');
       }
 
       break;
+      //Handle Right Swap
     case 'right':
       if (grid.cell[this._c].checkCell(SwipeType, this._c)) {
-        //Handle Right Swap
+        var z = this._c + 1;
+
+        if (grid.cell[z].type === 'Enemy') {
+          for (var i = 0; i < enemy.length; i++)
+            enemy[i].isDead = Boolean(enemy[i]._c === z) ;
+        }
+
         grid.cell[this._c].setCellType('Normal');
         grid.cell[this._c].setColor(grid.c2);
 
-        this._c = this._c + 1;
+        this._c = z;
         grid.cell[this._c].setColor(this.color);
         grid.cell[this._c].setCellType('Actor');
       }
