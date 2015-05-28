@@ -125,6 +125,8 @@ function update() {
     for (var i = 0; i < enemy.length; i++)
       if (enemy[i].isDead === false)
         enemy[i].move(enemyMove[i]);
+      else
+        enemy.splice(i,1);enemyMove.splice(i,1);
 
       //this function triggers the sfx player
       //blips_sfx.play();
@@ -140,7 +142,7 @@ function update() {
     enemyMove = new Array();
 
     for (var x = 0; x < enemy.length; x++)
-      if (enemy[i].isDead === false)
+      if (enemy[x].isDead === false)
         enemyMove.push(enemy[x].Nextmove());
 
     movesHaveBeenStored = true;

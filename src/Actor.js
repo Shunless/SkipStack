@@ -33,7 +33,7 @@ Actor.prototype.move = function(SwipeType) {
 
         if (grid.cell[z].type === 'Enemy') {
           for (var i = 0; i < enemy.length; i++)
-            enemy[i].isDead = Boolean(enemy[i]._c === z) ;
+            enemy[i].isDead = Boolean(enemy[i]._c === z);
         }
 
         grid.cell[this._c].setCellType('Normal');
@@ -52,7 +52,7 @@ Actor.prototype.move = function(SwipeType) {
 
         if (grid.cell[z].type === 'Enemy') {
           for (var i = 0; i < enemy.length; i++)
-            enemy[i].isDead = Boolean(enemy[i]._c === z) ;
+            enemy[i].isDead = Boolean(enemy[i]._c === z);
         }
 
         grid.cell[this._c].setCellType('Normal');
@@ -71,7 +71,7 @@ Actor.prototype.move = function(SwipeType) {
 
         if (grid.cell[z].type === 'Enemy') {
           for (var i = 0; i < enemy.length; i++)
-            enemy[i].isDead = Boolean(enemy[i]._c === z) ;
+            enemy[i].isDead = Boolean(enemy[i]._c === z);
         }
 
         grid.cell[this._c].setCellType('Normal');
@@ -90,7 +90,7 @@ Actor.prototype.move = function(SwipeType) {
 
         if (grid.cell[z].type === 'Enemy') {
           for (var i = 0; i < enemy.length; i++)
-            enemy[i].isDead = Boolean(enemy[i]._c === z) ;
+            enemy[i].isDead = Boolean(enemy[i]._c === z);
         }
 
         grid.cell[this._c].setCellType('Normal');
