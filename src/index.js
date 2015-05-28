@@ -50,12 +50,12 @@ var enemy;
 /*~~~~~$*********$~~~~~*/
 
 //$ phaser game instance
-var game = new Phaser.Game(Editor_Width, Editor_Height, Phaser.AUTO, 'SkipStack', {
+var game; /*= new Phaser.Game(Editor_Width, Editor_Height, Phaser.AUTO, 'SkipStack', {
   preload: preload,
   create: create,
   update: update,
   render: render
-});
+});*/
 
 
 //$ preload function $
