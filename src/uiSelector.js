@@ -62,6 +62,7 @@ function roundUp(topleft, bottomright, classname) {
 }
 
 function flip(jqtoflip) {
+	//Animates the flip of a Flipcard
     jqtoflip.transition({
         perspective: '800px',
         rotateY: '180deg'
@@ -71,6 +72,7 @@ function flip(jqtoflip) {
 }
 
 function hashId() {
+	//Creates a 5-character random hash
     var text = "";
     var possible = "abcdefghijklmnopqrstuvwxyz";
 
@@ -78,4 +80,13 @@ function hashId() {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
     return text;
+}
+
+function redGrid(grid, top, left) {
+	//Centers grid cells contained in an object by the locations set in top and left
+    grid.children('.cell').each(function() {
+        $(this).css('top', (Number($(this).css('top').split('px')[0]) - top) + 'px');
+        $(this).css('left', (Number($(this).css('left').split('px')[0]) - left) + 'px');
+    });
+	return grid;
 }

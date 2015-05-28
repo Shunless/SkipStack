@@ -10,10 +10,7 @@ function gridToFlipCard(topleft, bottomright, classname) {
     gridarea.addClass(classname);
     gridarea.addClass(hash);
 
-    gridarea.children('.cell').each(function() {
-        $(this).css('top', (Number($(this).css('top').split('px')[0]) - top) + 'px');
-        $(this).css('left', (Number($(this).css('left').split('px')[0]) - left) + 'px');
-    });
+    redGrid(gridarea, top, left);
 
     var newdiv = createArea(topleft, bottomright, hashb);
     var width = newdiv.css('width');
@@ -58,6 +55,8 @@ function gridToFlipCard(topleft, bottomright, classname) {
     return $('.flipcard.' + classname);
 }
 
+
+
 function removeFlipcard(flipcard) {
     flipcard.children('.front').remove();
     var top = flipcard.css('top');
@@ -81,4 +80,31 @@ function removeFlipcard(flipcard) {
     flipcard.unwrap();
     flipcard.removeClass('back');
     return flipcard;
+}
+
+
+function areaToGrid(classname) {
+	
+	//Get properties out of the new grid container
+	regrid = reGrid(classname);
+	var grid = regrid.wrap;
+	var gridhash = regrid.wraphash;
+	delete regrid;
+	
+	//Add hashid to area
+	var areahash = hashId();
+	var area = $('.'+classname);
+	area.addClass(areahash);
+	
+	//Conjoin new grid and area
+	///Redirect objects
+	////Gather coords
+	tl = area.data('tl');
+	var top = tl.split('-')[0];
+	var left = tl.split('-')[1];
+	delete tl;
+	
+	//Redirect grid
+	redGrid(grid, top, left);
+	
 }

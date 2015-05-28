@@ -20,9 +20,11 @@ function createGame() {
         preload: preload,
         create: create,
         update: update,
-        render: render
+        render: render,
+        maxWidth: 7 * cellSize,
+        maxHeight: 7 * cellSize,
     });
-	
+
     a = flip(a);
     a.children('.back').attr('id', 'SkipStack');
     setTimeout(function() {
