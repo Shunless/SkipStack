@@ -27,8 +27,8 @@ function mouseDragEnd() {
   var diffX = onDownPosX - onEndPosX;
   var diffY = onDownPosY - onEndPosY;
 
-  var isSwipeX = Math.abs(diffX) > Editor_Width / 3;
-  var isSwipeY = Math.abs(diffY) > Editor_Width / 3;
+  var isSwipeX = (Math.abs(diffX) > Editor_Width / 4);
+  var isSwipeY = (Math.abs(diffY) > Editor_Width / 4);
 
   if (isSwipeX == true || isSwipeY == true) {
 

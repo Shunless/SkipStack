@@ -3,6 +3,7 @@
  * @copyright 2015 Shunless Studio.
  */
 
+//@param string , string
 function Enemy(_color1, blockID) {
   //the color of the Enemy
   this.color = _color1;
@@ -27,44 +28,46 @@ Enemy.prototype.init = function() {
 };
 
 //$   POSITION UPDATE FUNCTION    $
-Enemy.prototype.update = function() {
-  if (this.isDead == true)
-    return null;
-
-  var CellsInt = actor._c - this._c;
-  var RowsInt = Math.abs(grid.getRow(actor._c) - grid.getRow(this._c));
-
-  //Enemy is ahead you
-  if (CellsInt < 0) {
-    if (RowsInt > 0) {
-      this.move('top');
-    } else {
-      if (this._c > actor._c) {
-        this.move('left');
-      } else {
-        this.move('right');
-      }
-    }
-  }
-  //Enemy has the same position with Enemy
-  else if (CellsInt === 0) {
-    gameOver();
-  }
-  //Enemy is behind you
-  else {
-    if (RowsInt > 0) {
-      this.move('bottom');
-    } else {
-      if (this._c > actor._c) {
-        this.move('left');
-      } else {
-        this.move('right');
-      }
-    }
-  }
-};
+// *--# $  deprecated funtion $ #--*
+//Enemy.prototype.update = function() {
+//  if (this.isDead == true)
+//    return null;
+//
+//  var CellsInt = actor._c - this._c;
+//  var RowsInt = Math.abs(grid.getRow(actor._c) - grid.getRow(this._c));
+//
+//  //Enemy is ahead you
+//  if (CellsInt < 0) {
+//    if (RowsInt > 0) {
+//      this.move('top');
+//    } else {
+//      if (this._c > actor._c) {
+//        this.move('left');
+//      } else {
+//        this.move('right');
+//      }
+//    }
+//  }
+//  //Enemy has the same position with Enemy
+//  else if (CellsInt === 0) {
+//    gameOver();
+//  }
+//  //Enemy is behind you
+//  else {
+//    if (RowsInt > 0) {
+//      this.move('bottom');
+//    } else {
+//      if (this._c > actor._c) {
+//        this.move('left');
+//      } else {
+//        this.move('right');
+//      }
+//    }
+//  }
+//};
 
 //$   MOVE FUNCTION    $
+//@param string
 Enemy.prototype.move = function(SwipeType) {
   switch (SwipeType) {
     case 'top':
@@ -145,7 +148,7 @@ Enemy.prototype.Nextmove = function() {
   }
   //Enemy has the same position with Enemy
   else if (CellsInt === 0) {
-    alert("He's Dead, Romane!");
+    gameOver();
   }
   //Enemy is behind you
   else {

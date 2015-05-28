@@ -44,6 +44,9 @@ var color;
 var grid;
 var actor;
 var enemy;
+//indicates what s the next move gonna be(*sring)
+var enemyMove;
+var movesHaveBeenStored;
 
 /*~~~~~$*********$~~~~~*/
 /*~~~~~$ CLASSES $~~~~~*/
@@ -61,6 +64,8 @@ var game; /*= new Phaser.Game(Editor_Width, Editor_Height, Phaser.AUTO, 'SkipSta
 //$ preload function $
 function preload() {
   enemy = new Array();
+  enemyMove = new Array();
+  movesHaveBeenStored = false;
   cellWidth = (Editor_Width - (2 * cellsCntX + 2)) / (cellsCntX);
   cellHeight = (Editor_Width - (2 * cellsCntY + 2)) / (cellsCntY);
 }
@@ -117,17 +122,27 @@ function create() {
   for (var x = 0; x < enemy.length; x++)
     enemy[x].init();
 
-  EnemyMoveTimeout = game.time.time + beatRate
+  EnemyMoveTimeout = game.time.time - beatRate/4;
 }
 //$ game loop $
 function update() {
   if (game.time.time > EnemyMoveTimeout) {
     for (var i = 0; i < enemy.length; i++)
-      enemy[i].update();
+      enemy[i].move(enemyMove[i]);
 
     //this function triggers the sfx player
     //blips_sfx.play();
+    movesHaveBeenStored = false;
+    
     EnemyMoveTimeout = game.time.time + beatRate;
+  } else if (movesHaveBeenStored === false) {
+    //We reset the predicted moves array
+    enemyMove = new Array();
+    
+    for (var x = 0; x < enemy.length; x++)
+      enemyMove.push(enemy[x].Nextmove());
+
+    movesHaveBeenStored = true;
   }
 
 }
