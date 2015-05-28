@@ -34,7 +34,6 @@ var bordersize;
 
 //Enemy(color of the enemy,spawning cell)
 var enemiesColor = '#b50000';
-
 var gameStateRestarts = 0;
 
 //-----$*********$-----
@@ -81,12 +80,13 @@ function create() {
   //game.add.plugin(Phaser.Plugin.Debug);
 
   // Set up handlers for mouse events
-  game.input.onDown.add(mouseDragStart, this);
-  game.input.onUp.add(mouseDragEnd, this);
-  game.input.onDown.add(mouseDragStart, this);
-  //  game.input.addMoveCallback(mouseDragMove, this);
-  game.input.onUp.add(mouseDragEnd, this);
-
+  if(gameStateRestarts === 0 ){
+    game.input.onDown.add(mouseDragStart, this);
+    game.input.onUp.add(mouseDragEnd, this);
+    game.input.onDown.add(mouseDragStart, this);
+    //  game.input.addMoveCallback(mouseDragMove, this);
+    game.input.onUp.add(mouseDragEnd, this);
+  }
   //grid initialization ("geometry draw call")
   grid.init();
   //actor initialization ("geometry draw call")
@@ -148,6 +148,9 @@ function update() {
 
     movesHaveBeenStored = true;
   }
+  if(enemy.length === 0){
+    expand();
+  }
 }
 //$ render loop $
 function render() {
@@ -161,18 +164,14 @@ function render() {
 //$ game over $
 function gameOver() {
   if (GameType === 'Normal') {
-    //increment cells by 1 if enemies > ceil(cells/2)
-    if (enemy.length > Math.ceil(cellsCntX / 2))
-      cellsCntY = ++cellsCntX;
+    cellsCntY = cellsCntX = 7;
 
-    gameStateRestarts++;
+    gameStateRestarts = 0;
     game.state.start(game.state.current);
   } else if (GameType === 'Endless') {
-
-    //Everything goes back to normal
     cellsCntY = cellsCntX = 7;
-    gameStateRestarts = 0;
 
+    gameStateRestarts = 0;
     game.state.start(game.state.current);
   } else if (GameType === 'SkipSmash') {
 
@@ -181,4 +180,15 @@ function gameOver() {
 
     //@ToDo
   }
+}
+
+function expand(){
+  gameStateRestarts++;
+
+  //increment cells by 1 if enemies > ceil(cells/2)
+  if ((3+gameStateRestarts) > Math.ceil(cellsCntX / 2))
+    cellsCntY = ++cellsCntX;
+
+  preload();
+  create();
 }
