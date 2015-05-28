@@ -30,6 +30,7 @@ var cellsCntY = 7;
 //cell scale in pixels
 var cellWidth;
 var cellHeight;
+var bordersize;
 
 //Enemy(color of the enemy,spawning cell)
 var enemiesColor = '#b50000';
@@ -60,14 +61,14 @@ function preload() {
   enemy = new Array();
   enemyMove = new Array();
   movesHaveBeenStored = false;
-  cellWidth = (Editor_Width - (2 * cellsCntX + 2)) / (cellsCntX);
-  cellHeight = (Editor_Width - (2 * cellsCntY + 2)) / (cellsCntY);
+  cellWidth = (Editor_Width - (border*2 * cellsCntX + border*2)) / (cellsCntX);
+  cellHeight = (Editor_Width - (border*2 * cellsCntY + border*2)) / (cellsCntY);
 }
 //$ create function $
 function create() {
   color = new Color();
   //Grid(cellsX,cellsY,CellWidth,CellHeight,Color of the grid)
-  grid = new Grid(cellsCntX, cellsCntY, cellWidth, cellHeight, '#333', '#ffffff', 2);
+  grid = new Grid(cellsCntX, cellsCntY, cellWidth, cellHeight, '#333', '#ffffff', border*2);
   //Actor(color of the actor)
   actor = new Actor('#006400');
 
