@@ -1,3 +1,7 @@
+/**
+ * @author Ρωμανός Μουρίκης
+ * @copyright 2015 Shunless Studio.
+ */
 function gridToFlipCard(topleft, bottomright, classname) {
     var hasha = hashId();
     var hashb = hashId();

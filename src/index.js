@@ -1,5 +1,6 @@
 /**
  * @author Alex Mourtziapis
+ * @author Ρωμανός Μουρίκης
  * @copyright 2015 Shunless Studio.
  */
 /*
@@ -77,7 +78,7 @@ function create() {
 
   //add profiler
   //- https://github.com/englercj/phaser-debug -
-  //game.add.plugin(Phaser.Plugin.Debug);
+  game.add.plugin(Phaser.Plugin.Debug);
 
   // Set up handlers for mouse events
   if(gameStateRestarts === 0 ){
@@ -160,6 +161,7 @@ function render() {
   game.debug.text('grid: ' + cellsCntX + '-' + cellsCntY, 3, 14, '#b1ff00');
   game.debug.text('enemies: ' + enemy.length, 3, 27, '#b1ff00');
   game.debug.text('beat rate: ' + beatRate + ' ms', 3, 40, '#b1ff00');
+//  game.debug.text('time: ' + game.time.now + ' ms', 3, 53, '#b1ff00');
 }
 //$ game over $
 function gameOver() {
@@ -183,12 +185,28 @@ function gameOver() {
 }
 
 function expand(){
-  gameStateRestarts++;
+  if (GameType === 'Normal') {
+    gameStateRestarts++;
 
-  //increment cells by 1 if enemies > ceil(cells/2)
-  if ((3+gameStateRestarts) > Math.ceil(cellsCntX / 2))
-    cellsCntY = ++cellsCntX;
+    //increment cells by 1 if enemies > ceil(cells/2)
+    if ((3+gameStateRestarts) > Math.ceil(cellsCntX / 2))
+      cellsCntY = ++cellsCntX;
 
-  preload();
-  create();
+    preload();
+    create();
+  } else if (GameType === 'Endless') {
+    gameStateRestarts = 0;
+
+    //increment cells by 1 if enemies > ceil(cells/2)
+    if ((3+gameStateRestarts) > Math.ceil(cellsCntX / 2))
+      cellsCntY = ++cellsCntX;
+
+    game.state.start(game.state.current);
+  } else if (GameType === 'SkipSmash') {
+
+    //@ToDo
+  } else if (GameType === 'PaintStack') {
+
+    //@ToDo
+  }
 }

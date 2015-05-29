@@ -1,3 +1,8 @@
+/**
+ * @author Ρωμανός Μουρίκης
+ * @copyright 2015 Shunless Studio.
+ */
+
 var wwidth = $(window).width(); //Grabs the screen's width
 var wheight = $(window).height(); //Grabs the screen's height
 var cellSize; //Global cell size variable
