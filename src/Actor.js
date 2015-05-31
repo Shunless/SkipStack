@@ -32,8 +32,13 @@ Actor.prototype.move = function(SwipeType) {
         var z = this._c - cellsCntX;
 
         if (grid.cell[z].type === 'Enemy') {
-          for (var i = 0; i < enemy.length; i++)
-            enemy[i].isDead = Boolean(enemy[i]._c === z);
+          for (var i = 0; i < enemy.length; i++) {
+            if (enemy[i]._c === z) {
+              enemy[i].isDead = true;
+              enemy.splice(i, 1);
+              enemyMove.splice(i, 1);
+            }
+          }
         }
 
         grid.cell[this._c].setCellType('Normal');
@@ -51,8 +56,13 @@ Actor.prototype.move = function(SwipeType) {
         var z = this._c + cellsCntX;
 
         if (grid.cell[z].type === 'Enemy') {
-          for (var i = 0; i < enemy.length; i++)
-            enemy[i].isDead = Boolean(enemy[i]._c === z);
+          for (var i = 0; i < enemy.length; i++) {
+            if (enemy[i]._c === z) {
+              enemy[i].isDead = true;
+              enemy.splice(i, 1);
+              enemyMove.splice(i, 1);
+            }
+          }
         }
 
         grid.cell[this._c].setCellType('Normal');
@@ -70,8 +80,13 @@ Actor.prototype.move = function(SwipeType) {
         var z = this._c - 1;
 
         if (grid.cell[z].type === 'Enemy') {
-          for (var i = 0; i < enemy.length; i++)
-            enemy[i].isDead = Boolean(enemy[i]._c === z);
+          for (var i = 0; i < enemy.length; i++) {
+            if (enemy[i]._c === z) {
+              enemy[i].isDead = true;
+              enemy.splice(i, 1);
+              enemyMove.splice(i, 1);
+            }
+          }
         }
 
         grid.cell[this._c].setCellType('Normal');
@@ -89,8 +104,13 @@ Actor.prototype.move = function(SwipeType) {
         var z = this._c + 1;
 
         if (grid.cell[z].type === 'Enemy') {
-          for (var i = 0; i < enemy.length; i++)
-            enemy[i].isDead = Boolean(enemy[i]._c === z);
+          for (var i = 0; i < enemy.length; i++) {
+            if (enemy[i]._c === z) {
+              enemy[i].isDead = true;
+              enemy.splice(i, 1);
+              enemyMove.splice(i, 1);
+            }
+          }
         }
 
         grid.cell[this._c].setCellType('Normal');

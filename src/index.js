@@ -3,6 +3,7 @@
  * @author Ρωμανός Μουρίκης
  * @copyright 2015 Shunless Studio.
  */
+
 /*
  * 1-$ Normal      # w/h beatlock
  * 2-$ Endless     # w/h beatlock
@@ -11,7 +12,7 @@
  */
 
 var GameType = 'Normal';
-var beatRate = 5000;
+var beatRate = 1000;
 var beatInterval = 0;
 
 var blips_sfx = jsfxlib.createWave(["sine", 0.0000, 0.4000, 0.0000, 0.0920, 0.0000, 0.2080, 20.0000, 286.0000, 2400.0000, -0.6740, 0.0000, 0.0000, 0.0100, 0.0003, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 1.0000, 0.0000, 0.0000, 0.0480, 0.0000]);
@@ -46,13 +47,19 @@ var color;
 var grid;
 var actor;
 var enemy;
-//indicates what s the next move gonna be(*sring)
-var enemyMove;
-var movesHaveBeenStored;
 
 /*~~~~~$*********$~~~~~*/
 /*~~~~~$ CLASSES $~~~~~*/
 /*~~~~~$*********$~~~~~*/
+
+//indicates what s the next move gonna be(sring)
+var enemyMove;
+var movesHaveBeenStored;
+
+//indicates the time that the game actually started.(number)*ms
+var LoadTime;
+//indicates the elapsed time since level load.(number)*s
+var timeSinceLevelLoad;
 
 //$ phaser game instance
 var game;
@@ -120,22 +127,20 @@ function create() {
     enemy[x].init();
 
   EnemyMoveTimeout = game.time.time + beatRate;
+
+  LoadTime = game.time.now;
 }
 //$ game loop $
 function update() {
   if (game.time.time > EnemyMoveTimeout) {
 
     for (var i = 0; i < enemy.length; i++)
-      if (enemy[i].isDead === false)
-        enemy[i].move(enemyMove[i]);
-      else {
-        enemy.splice(i, 1);
-        enemyMove.splice(i, 1);
-      }
+      enemy[i].move(enemyMove[i]);
 
 
-      //this function triggers the sfx player
-      //blips_sfx.play();
+
+    //this function triggers the sfx player
+    blips_sfx.play();
 
     movesHaveBeenStored = false;
 
@@ -148,17 +153,18 @@ function update() {
     enemyMove = new Array();
 
     for (var x = 0; x < enemy.length; x++)
-      if (enemy[x].isDead === false)
-        enemyMove.push(enemy[x].Nextmove());
+      enemyMove.push(enemy[x].Nextmove());
 
     movesHaveBeenStored = true;
   }
   //if user has killed all the enemies.
-  if (enemy.length === 0) {
+  if (enemy.length === 0)
     expand();
-  }
+
   //calculate new inteval
-  beatInterval=Math.round(((EnemyMoveTimeout-game.time.time)/beatRate)*100);
+  beatInterval = Math.round(((EnemyMoveTimeout - game.time.time) / beatRate) * 100);
+
+  timeSinceLevelLoad = Math.round((game.time.now - LoadTime) / 1000);
 }
 //$ render loop $
 function render() {
@@ -168,7 +174,8 @@ function render() {
   game.debug.text('grid: ' + cellsCntX + '-' + cellsCntY, 3, 14, '#b1ff00');
   game.debug.text('enemies: ' + enemy.length, 3, 27, '#b1ff00');
   game.debug.text('beat rate: ' + beatRate + ' ms', 3, 40, '#b1ff00');
-  game.debug.text('Interval: ' + beatInterval + ' %', 3, 53, beatInterval<20?'#ff0000':'#00ff27');
+  game.debug.text('Interval: ' + beatInterval + ' %', 3, 53, beatInterval < 20 ? '#ff0000' : '#00ff27');
+  game.debug.text('time: ' + timeSinceLevelLoad + ' s', 3, 66, '#b1ff00');
 }
 //$ game over $
 function gameOver() {
@@ -189,6 +196,7 @@ function gameOver() {
 
     //@ToDo
   }
+  LoadTime = game.time.now;
 }
 //$ expand " grid " $
 function expand() {
