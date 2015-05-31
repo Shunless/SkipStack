@@ -1,3 +1,7 @@
+/**
+ * @author Ρωμανός Μουρίκης
+ * @copyright 2015 Shunless Studio.
+ */
 function gridToFlipCard(topleft, bottomright, classname) {
     var hasha = hashId();
     var hashb = hashId();
@@ -84,6 +88,7 @@ function removeFlipcard(flipcard) {
 
 function areaToGrid(classname) {
 
+
     //Get properties out of the new grid container
     regrid = reGrid(classname);
     var grid = regrid.wrap;
@@ -133,3 +138,4 @@ function areaToGrid(classname) {
 
 
 }
+>>>>>>> UI core development

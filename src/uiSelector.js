@@ -1,3 +1,8 @@
+/**
+ * @author Ρωμανός Μουρίκης
+ * @copyright 2015 Shunless Studio.
+ */
+
 /*******************************/
 /****** UI Grid selectors ******/
 /*******************************/
@@ -88,6 +93,7 @@ function redGrid(grid, top, left) {
         $(this).css('top', (Number($(this).css('top').split('px')[0]) - top) + 'px');
         $(this).css('left', (Number($(this).css('left').split('px')[0]) - left) + 'px');
     });
+	
     return grid;
 }
 
@@ -96,4 +102,6 @@ function redArea(area, top, left) {
         'top': (Number($(area).css('top').split('px')[0]) - top) + 'px',
         'left': (Number($(area).css('left').split('px')[0]) - left) + 'px'
     });
+
+	return grid;
 }
