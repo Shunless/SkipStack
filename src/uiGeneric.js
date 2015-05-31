@@ -8,3 +8,8 @@ function addScript(url) {
 		return false;
     })
 }
+
+function zIndex() {
+	uniz +=1;
+	return uniz;
+}

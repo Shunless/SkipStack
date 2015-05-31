@@ -41,9 +41,9 @@ function gridToFlipCard(topleft, bottomright, classname) {
         'left': left + 'px',
         'width': width,
         'height': height,
-        'z-index': uniz
+        'z-index': zIndex()
     });
-    uniz += 1;
+
     wrapper.addClass('flipcard ' + classname);
     wrapper.attr({
         'data-tl': topleft,
@@ -76,9 +76,8 @@ function removeFlipcard(flipcard) {
     flipcard.css({
         'top': top,
         'left': left,
-        'z-index': uniz
+        'z-index': zIndex()
     });
-    uniz += 1;
 
     flipcard.unwrap();
     flipcard.removeClass('back');
@@ -124,10 +123,8 @@ function areaToGrid(classname) {
         'left': left + 'px',
         'width': area.css('width'),
         'height': area.css('height'),
-        'z-index': uniz
+        'z-index': zIndex()
     });
-    console.log(wrapper)
-    uniz += 1;
     wrapper.addClass('flipcard ' + classname)
     wrapper.attr({
         'data-tl': area.data('tl'),

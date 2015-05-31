@@ -7,7 +7,7 @@ var wwidth = $(window).width(); //Grabs the screen's width
 var wheight = $(window).height(); //Grabs the screen's height
 var cellSize; //Global cell size variable
 var border; //Global border width variable
-var uniz = 1;
+var uniz = 0;
 
 function gridBuilder(tl, br) {
     //Fills the game grid
@@ -78,7 +78,7 @@ function createArea(topleft, bottomright, classname) {
     var x = Number(bottomright.split('-')[1]) - left;
     var y = Number(bottomright.split('-')[0]) - top;
     var div = $('<div />');
-	
+
     div.css({
         'position': 'absolute',
         'width': ((x + 1) * cellSize),
@@ -86,15 +86,14 @@ function createArea(topleft, bottomright, classname) {
         'top': ((top - 1) * cellSize),
         'left': ((left - 1) * cellSize)
     });
-	
+
     $('.gamecont').append(div.addClass(classname));
     return $('.' + classname);
 }
 
 function createButton(loc, icon) {
-	//Adds any FontAwsome character in a selected cell
-    var playicon = $('<i class="fa fa-' + icon + ' center" /i>');
-    playicon.css('font-size', border + 'em');
+    //Adds any FontAwsome character in a selected cell
+    var playicon = $('<div class="' + icon + '"></div>');
     $('#' + loc).css('border-color', '#000').append(playicon)
 
     return $('#' + loc);
@@ -107,14 +106,27 @@ function reGrid(classname) {
     var br = area.data('br');
     var hash = hashId();
     var newgrid = gridBuilder(tl, br);
-    var wrapper = newgrid.wrapAll('<div class="' + hash + '" />')
-	
+
+    var top = Number(tl.split('-')[0]);
+    var left = Number(tl.split('-')[1]);
+    var bottom = Number(br.split('-')[0]);
+    var right = Number(br.split('-')[1]);
+
+    //Create wrapper div
+    var wrap = $('<div />');
+    wrap.addClass(hash);
+    wrap.css('width', (right - left + 1) * cellSize) + 'px';
+    wrap.css('height', (bottom - top + 1) * cellSize) + 'px';
+
+    //Conjoin
+    var wrapper = newgrid.wrapAll(wrap);
+
     wrapper.css({
         'border': border + 'px solid #bbb',
         'width': cellSize,
         'height': cellSize
     });
-	
+
     return {
         'wrap': $('.' + hash),
         'wraphash': hash
