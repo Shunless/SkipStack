@@ -1,3 +1,7 @@
+/**
+ * @author Ρωμανός Μουρίκης
+ * @copyright 2015 Shunless Studio.
+ */
 $(document).ready(function() {
     compareSize();
     gridBuilder('1-1', '13-7');
@@ -16,7 +20,7 @@ $(document).ready(function() {
 function createGame() {
     var a = gridToFlipCard('4-1', '10-7', 'SkipStack');
 
-    game = new Phaser.Game(Editor_Width, Editor_Height, Phaser.AUTO, 'SkipStack', {
+    game = new Phaser.Game(Editor_Width, Editor_Height, Phaser.CANVAS, 'SkipStack', {
         preload: preload,
         create: create,
         update: update,
