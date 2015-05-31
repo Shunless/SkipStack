@@ -11,7 +11,8 @@
  */
 
 var GameType = 'Normal';
-var beatRate = 1000;
+var beatRate = 5000;
+var beatInterval = 0;
 
 var blips_sfx = jsfxlib.createWave(["sine", 0.0000, 0.4000, 0.0000, 0.0920, 0.0000, 0.2080, 20.0000, 286.0000, 2400.0000, -0.6740, 0.0000, 0.0000, 0.0100, 0.0003, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 1.0000, 0.0000, 0.0000, 0.0480, 0.0000]);
 
@@ -61,14 +62,14 @@ function preload() {
   enemy = new Array();
   enemyMove = new Array();
   movesHaveBeenStored = false;
-  cellWidth = (Editor_Width - (border*2 * cellsCntX + border*2)) / (cellsCntX);
-  cellHeight = (Editor_Width - (border*2 * cellsCntY + border*2)) / (cellsCntY);
+  cellWidth = (Editor_Width - (border * 2 * cellsCntX + border * 2)) / (cellsCntX);
+  cellHeight = (Editor_Width - (border * 2 * cellsCntY + border * 2)) / (cellsCntY);
 }
 //$ create function $
 function create() {
   color = new Color();
   //Grid(cellsX,cellsY,CellWidth,CellHeight,Color of the grid)
-  grid = new Grid(cellsCntX, cellsCntY, cellWidth, cellHeight, '#333', '#ffffff', border*2);
+  grid = new Grid(cellsCntX, cellsCntY, cellWidth, cellHeight, '#333', '#ffffff', border * 2);
   //Actor(color of the actor)
   actor = new Actor('#006400');
 
@@ -81,7 +82,7 @@ function create() {
   game.add.plugin(Phaser.Plugin.Debug);
 
   // Set up handlers for mouse events
-  if(gameStateRestarts === 0 ){
+  if (gameStateRestarts === 0) {
     game.input.onDown.add(mouseDragStart, this);
     game.input.onUp.add(mouseDragEnd, this);
     game.input.onDown.add(mouseDragStart, this);
@@ -118,7 +119,7 @@ function create() {
   for (var x = 0; x < enemy.length; x++)
     enemy[x].init();
 
-  EnemyMoveTimeout = game.time.time - beatRate / 4;
+  EnemyMoveTimeout = game.time.time + beatRate;
 }
 //$ game loop $
 function update() {
@@ -127,8 +128,11 @@ function update() {
     for (var i = 0; i < enemy.length; i++)
       if (enemy[i].isDead === false)
         enemy[i].move(enemyMove[i]);
-      else
-        enemy.splice(i,1);enemyMove.splice(i,1);
+      else {
+        enemy.splice(i, 1);
+        enemyMove.splice(i, 1);
+      }
+
 
       //this function triggers the sfx player
       //blips_sfx.play();
@@ -149,9 +153,12 @@ function update() {
 
     movesHaveBeenStored = true;
   }
-  if(enemy.length === 0){
+  //if user has killed all the enemies.
+  if (enemy.length === 0) {
     expand();
   }
+  //calculate new inteval
+  beatInterval=Math.round(((EnemyMoveTimeout-game.time.time)/beatRate)*100);
 }
 //$ render loop $
 function render() {
@@ -161,7 +168,7 @@ function render() {
   game.debug.text('grid: ' + cellsCntX + '-' + cellsCntY, 3, 14, '#b1ff00');
   game.debug.text('enemies: ' + enemy.length, 3, 27, '#b1ff00');
   game.debug.text('beat rate: ' + beatRate + ' ms', 3, 40, '#b1ff00');
-//  game.debug.text('time: ' + game.time.now + ' ms', 3, 53, '#b1ff00');
+  game.debug.text('Interval: ' + beatInterval + ' %', 3, 53, beatInterval<20?'#ff0000':'#00ff27');
 }
 //$ game over $
 function gameOver() {
@@ -183,13 +190,13 @@ function gameOver() {
     //@ToDo
   }
 }
-
-function expand(){
+//$ expand " grid " $
+function expand() {
   if (GameType === 'Normal') {
     gameStateRestarts++;
 
     //increment cells by 1 if enemies > ceil(cells/2)
-    if ((3+gameStateRestarts) > Math.ceil(cellsCntX / 2))
+    if ((3 + gameStateRestarts) > Math.ceil(cellsCntX / 2))
       cellsCntY = ++cellsCntX;
 
     preload();
@@ -198,7 +205,7 @@ function expand(){
     gameStateRestarts = 0;
 
     //increment cells by 1 if enemies > ceil(cells/2)
-    if ((3+gameStateRestarts) > Math.ceil(cellsCntX / 2))
+    if ((3 + gameStateRestarts) > Math.ceil(cellsCntX / 2))
       cellsCntY = ++cellsCntX;
 
     game.state.start(game.state.current);
