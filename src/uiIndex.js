@@ -22,7 +22,7 @@ function createGame() {
         update: update,
         render: render,
         maxWidth: 7 * cellSize,
-        maxHeight: 7 * cellSize,
+        maxHeight: 7 * cellSize
     });
 
     a = flip(a);

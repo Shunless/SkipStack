@@ -16,8 +16,7 @@ function gridToFlipCard(topleft, bottomright, classname) {
     var width = newdiv.css('width');
     var height = newdiv.css('height');
 
-    newdiv.css('top', '0');
-    newdiv.css('left', '0');
+    redArea(newdiv, top, left);
     newdiv.css('background-color', 'aqua');
 
     newdiv.addClass('back');
@@ -75,7 +74,7 @@ function removeFlipcard(flipcard) {
         'left': left,
         'z-index': uniz
     });
-	uniz += 1;
+    uniz += 1;
 
     flipcard.unwrap();
     flipcard.removeClass('back');
@@ -84,27 +83,53 @@ function removeFlipcard(flipcard) {
 
 
 function areaToGrid(classname) {
-	
-	//Get properties out of the new grid container
-	regrid = reGrid(classname);
-	var grid = regrid.wrap;
-	var gridhash = regrid.wraphash;
-	delete regrid;
-	
-	//Add hashid to area
-	var areahash = hashId();
-	var area = $('.'+classname);
-	area.addClass(areahash);
-	
-	//Conjoin new grid and area
-	///Redirect objects
-	////Gather coords
-	tl = area.data('tl');
-	var top = tl.split('-')[0];
-	var left = tl.split('-')[1];
-	delete tl;
-	
-	//Redirect grid
-	redGrid(grid, top, left);
-	
+
+    //Get properties out of the new grid container
+    regrid = reGrid(classname);
+    var grid = regrid.wrap;
+    var gridhash = regrid.wraphash;
+    delete regrid;
+    grid.addClass('back');
+
+    //Add hashid to area
+    var areahash = hashId();
+    var area = $('.' + classname);
+    area.addClass(areahash);
+    area.addClass('front');
+
+    //Gather coords
+    tl = area.data('tl');
+    var top = (tl.split('-')[0] - 1) * cellSize;
+    var left = (tl.split('-')[1] - 1) * cellSize;
+    delete tl;
+
+    //Redirect grid
+    redGrid(grid, top, left);
+
+    //Redirect area
+    redArea(area, top, left);
+
+    //Conjoin new grid and area
+
+    //Create wrapper
+    var wrapper = $('<div />');
+    wrapper.css({
+        'position': 'absolute',
+        'top': top + 'px',
+        'left': left + 'px',
+        'width': area.css('width'),
+        'height': area.css('height'),
+        'z-index': uniz
+    });
+    console.log(wrapper)
+    uniz += 1;
+    wrapper.addClass('flipcard ' + classname)
+    wrapper.attr({
+        'data-tl': area.data('tl'),
+        'data-br': area.data('br')
+    });
+
+    $('.' + areahash + ' , .' + gridhash).wrapAll(wrapper);
+
+
 }
