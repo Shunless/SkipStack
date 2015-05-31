@@ -138,4 +138,4 @@ function areaToGrid(classname) {
 
 
 }
->>>>>>> UI core development
+
