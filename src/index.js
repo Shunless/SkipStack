@@ -1,6 +1,5 @@
 /**
  * @author Alex Mourtziapis
- * @author Ρωμανός Μουρίκης
  * @copyright 2015 Shunless Studio.
  */
 
