@@ -12,6 +12,7 @@ $(document).ready(function() {
     addScript('src/Swipe.js');
     addScript('src/Actor.js');
     addScript('src/Enemy.js');
+    addScript('src/Assets/Tunes.js');
     addScript('src/Grid.js');
     addScript('src/Color.js');
     addScript('src/index.js');

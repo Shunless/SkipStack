@@ -3,18 +3,19 @@
  * @copyright 2015 Shunless Studio.
  */
 
-/*
- * 1-$ Normal      # w/h beatlock
- * 2-$ Endless     # w/h beatlock
- * 3-$ SkipSmash   # w/h beatlock
- * 4-$ PaintStack  # w/h beatlock
+/* ++++   Supported Game Types  ++++
+ * 1-$ Normal      #6 w/h beatlock
+ * 2-$ Endless     #7 w/h beatlock
+ * 3-$ SkipSmash   #8 w/h beatlock
+ * 4-$ PaintStack  #9 w/h beatlock
  */
-
+// Active game type (string)
 var GameType = 'Normal';
-var beatRate = 1000;
-var beatInterval = 0;
 
-var blips_sfx = jsfxlib.createWave(["sine", 0.0000, 0.4000, 0.0000, 0.0920, 0.0000, 0.2080, 20.0000, 286.0000, 2400.0000, -0.6740, 0.0000, 0.0000, 0.0100, 0.0003, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 1.0000, 0.0000, 0.0000, 0.0480, 0.0000]);
+//beat refresh rate (number)
+var beatRate = 1000;
+//beat interval in %[0-Min, 100 Max] (string)
+var beatInterval = 0;
 
 var EnemyMoveTimeout = 0;
 
@@ -32,10 +33,9 @@ var cellsCntY = 7;
 //cell scale in pixels
 var cellWidth;
 var cellHeight;
-var bordersize;
-
-//Enemy(color of the enemy,spawning cell)
+//the color of the enemies (string)
 var enemiesColor = '#b50000';
+//indicates how many times game has been restared. (number)
 var gameStateRestarts = 0;
 
 //-----$*********$-----
@@ -54,53 +54,64 @@ var enemy;
 //indicates what s the next move gonna be(sring)
 var enemyMove;
 var movesHaveBeenStored;
-
 //indicates the time that the game actually started.(number)*ms
 var LoadTime;
 //indicates the elapsed time since level load.(number)*s
 var timeSinceLevelLoad;
-
 //$ phaser game instance
 var game;
+//indicates if user lost in the previous session
+var justLost = true;
+//indicates if the grid has just being expanded
+var justExpandedGrid = false;
 
 //$ preload function $
 function preload() {
+  //Reset Arrays
   enemy = new Array();
   enemyMove = new Array();
+
+  // Set up handlers for mouse events
+  game.input.onDown.add(mouseDragStart, this);
+  game.input.onUp.add(mouseDragEnd, this);
+  game.input.onDown.add(mouseDragStart, this);
+  game.input.onUp.add(mouseDragEnd, this);
+
   movesHaveBeenStored = false;
   cellWidth = (Editor_Width - (border * 2 * cellsCntX + border * 2)) / (cellsCntX);
   cellHeight = (Editor_Width - (border * 2 * cellsCntY + border * 2)) / (cellsCntY);
 }
 //$ create function $
 function create() {
-  color = new Color();
-  //Grid(cellsX,cellsY,CellWidth,CellHeight,Color of the grid)
-  grid = new Grid(cellsCntX, cellsCntY, cellWidth, cellHeight, '#333', '#ffffff', border * 2);
-  //Actor(color of the actor)
-  actor = new Actor('#006400');
-
-  if (GameType === 'Normal') {
-    //Do Something
-  }
-
   //add profiler
   //- https://github.com/englercj/phaser-debug -
-  game.add.plugin(Phaser.Plugin.Debug);
+  //game.add.plugin(Phaser.Plugin.Debug);
 
-  // Set up handlers for mouse events
-  if (gameStateRestarts === 0) {
-    game.input.onDown.add(mouseDragStart, this);
-    game.input.onUp.add(mouseDragEnd, this);
-    game.input.onDown.add(mouseDragStart, this);
-    //  game.input.addMoveCallback(mouseDragMove, this);
-    game.input.onUp.add(mouseDragEnd, this);
-  }
-  //grid initialization ("geometry draw call")
+  color = new Color();
+
+  //+++++++++++++++++++++++++++++
+  //  Grid initialization
+  //+++++++++++++++++++++++++++++
+
+  grid = new Grid(cellsCntX, cellsCntY, cellWidth, cellHeight, '#333', '#ffffff', border * 2);
   grid.init();
-  //actor initialization ("geometry draw call")
+
+  //+++++++++++++++++++++++++++++
+  //  Actor initialization
+  //+++++++++++++++++++++++++++++
+
+  if (justLost === true)
+    actor = new Actor('#006400');
+  else {
+    var _O_ = actor._c;
+    actor = new Actor('#006400', grid.cell[_O_].HashId);
+  }
   actor.init();
 
-  //enemies initialization ("geometry draw call")
+  //+++++++++++++++++++++++++++++
+  //  Enemies initialization
+  //+++++++++++++++++++++++++++++
+
   for (var i = 0; i < 3 + gameStateRestarts; i++) {
     var x = '';
     if (randomBoolean[0]() == true) {
@@ -121,12 +132,12 @@ function create() {
       i--;
   }
 
-  //enemy initialization ("geometry draw call")
   for (var x = 0; x < enemy.length; x++)
     enemy[x].init();
 
-  EnemyMoveTimeout = game.time.time + beatRate;
 
+  EnemyMoveTimeout = game.time.time + beatRate;
+  justLost = justExpandedGrid = false;
   LoadTime = game.time.now;
 }
 //$ game loop $
@@ -178,7 +189,9 @@ function render() {
 }
 //$ game over $
 function gameOver() {
+  justLost = true;
   if (GameType === 'Normal') {
+
     cellsCntY = cellsCntX = 7;
 
     gameStateRestarts = 0;
@@ -199,17 +212,12 @@ function gameOver() {
 }
 //$ expand " grid " $
 function expand() {
+  justExpandedGrid = true;
   if (GameType === 'Normal') {
-    gameStateRestarts++;
-
-    //increment cells by 1 if enemies > ceil(cells/2)
-    if ((3 + gameStateRestarts) > Math.ceil(cellsCntX / 2))
-      cellsCntY = ++cellsCntX;
-
-    preload();
-    create();
+    //its the same thing with GO
+    gameOver();
   } else if (GameType === 'Endless') {
-    gameStateRestarts = 0;
+    gameStateRestarts++;
 
     //increment cells by 1 if enemies > ceil(cells/2)
     if ((3 + gameStateRestarts) > Math.ceil(cellsCntX / 2))
