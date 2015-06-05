@@ -135,7 +135,6 @@ function create() {
   for (var x = 0; x < enemy.length; x++)
     enemy[x].init();
 
-
   EnemyMoveTimeout = game.time.time + beatRate;
   justLost = justExpandedGrid = false;
   LoadTime = game.time.now;
@@ -147,10 +146,8 @@ function update() {
     for (var i = 0; i < enemy.length; i++)
       enemy[i].move(enemyMove[i]);
 
-
-
     //this function triggers the sfx player
-    blips_sfx.play();
+    //blips_sfx.play();
 
     movesHaveBeenStored = false;
 
@@ -214,8 +211,14 @@ function gameOver() {
 function expand() {
   justExpandedGrid = true;
   if (GameType === 'Normal') {
-    //its the same thing with GO
-    gameOver();
+    justLost = true;
+    gameStateRestarts++;
+
+    //increment cells by 1 if enemies > ceil(cells/2)
+    if ((3 + gameStateRestarts) > Math.ceil(cellsCntX / 2))
+      cellsCntY = ++cellsCntX;
+
+    game.state.start(game.state.current);
   } else if (GameType === 'Endless') {
     gameStateRestarts++;
 

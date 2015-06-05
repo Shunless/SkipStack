@@ -63,11 +63,19 @@ Grid.prototype.render = function() {
 
 //$   CELL GET ROW FUNCTION    $
 Grid.prototype.getRow = function(_currentPos) {
-  var _y = grid.cellsCountX;
-  for (var x = 0; x < grid.cellsCountX; x++) {
+  var _y = this.cellsCountX;
+  for (var x = 0; x < this.cellsCountX; x++) {
     if (_currentPos < _y) {
       return x;
     }
-    _y += grid.cellsCountX;
+    _y += this.cellsCountX;
   }
+};
+
+//$   CELL GET COLUMN FUNCTION    $
+Grid.prototype.getColumn = function(_currentPos) {
+  for (var x = 0; x < this.cellsCountX; x++)
+    for (var y = 0; y < this.cellsCountX; y++)
+      if (_currentPos === (y + x * this.cellsCountX))
+        return y;
 };

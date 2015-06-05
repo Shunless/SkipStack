@@ -3,6 +3,10 @@
  * @copyright 2015 Shunless Studio.
  */
 
+////////////////////////////////////////////////////////////////////////////////
+// CLASS ACTOR
+////////////////////////////////////////////////////////////////////////////////
+
 //@param string , string
 function Enemy(_color1, blockID) {
   //the color of the Enemy
@@ -120,10 +124,121 @@ Enemy.prototype.Nextmove = function() {
       }
     }
   }
-}
+};
 
-//$   POSITION UPDATE FUNCTION    $
-// *--# $  deprecated funtion $ #--*
+Enemy.prototype.Thrust = function(dir) {
+  switch (dir) {
+    case 'top':
+      var z = this._c - cellsCntX;
+
+      for (var x = 0; x < cellsCntX; x++) {
+        z = this._c - cellsCntX;
+        if (grid.cell[this._c].checkCell(dir, this._c)) {
+          if (grid.cell[z].type === 'Enemy') {
+            for (var i = 0; i < enemy.length; i++) {
+              if (enemy[i]._c === z) {
+                //enemy[i].isDead = true;
+                grid.cell[z].type = 'Normal';
+                enemy.splice(i, 1);
+                enemyMove.splice(i, 1);
+                break;
+              }
+            }
+          }
+          this.move(dir);
+        } else {
+          break;
+        }
+      }
+
+      break;
+    case 'bottom':
+      var z = this._c + cellsCntX;
+
+      for (var x = 0; x < cellsCntX; x++) {
+        z = this._c + cellsCntX;
+        if (grid.cell[this._c].checkCell(dir, this._c)) {
+          if (grid.cell[z].type === 'Enemy') {
+            for (var i = 0; i < enemy.length; i++) {
+              if (enemy[i]._c === z) {
+                //enemy[i].isDead = true;
+                grid.cell[z].type = 'Normal';
+                enemy.splice(i, 1);
+                enemyMove.splice(i, 1);
+                break;
+              }
+            }
+          }
+          this.move(dir);
+        } else {
+          break;
+        }
+      }
+
+      break;
+    case 'left':
+      var z = this._c - 1;
+
+      for (var x = 0; x < cellsCntX; x++) {
+        z = this._c - 1;
+        if (grid.cell[this._c].checkCell(dir, this._c)) {
+          if (grid.cell[z].type === 'Enemy') {
+            for (var i = 0; i < enemy.length; i++) {
+              if (enemy[i]._c === z) {
+                //enemy[i].isDead = true;
+                grid.cell[z].type = 'Normal';
+                enemy.splice(i, 1);
+                enemyMove.splice(i, 1);
+                break;
+              }
+            }
+          }
+          this.move(dir);
+        } else {
+          break;
+        }
+      }
+
+      break;
+    case 'right':
+      var z = this._c + 1;
+
+      for (var x = 0; x < cellsCntX; x++) {
+        z = this._c + 1;
+        if (grid.cell[this._c].checkCell(dir, this._c)) {
+          if (grid.cell[z].type === 'Enemy') {
+            for (var i = 0; i < enemy.length; i++) {
+              if (enemy[i]._c === z) {
+                //enemy[i].isDead = true;
+                grid.cell[z].type = 'Normal';
+                enemy.splice(i, 1);
+                enemyMove.splice(i, 1);
+                break;
+              }
+            }
+          }
+          this.move(dir);
+        } else {
+          break;
+        }
+      }
+
+      break;
+    default:
+      break;
+  }
+
+
+};
+
+////////////////////////////////////////////////////////////////////////////////
+// DEPRECATED ZONE
+////////////////////////////////////////////////////////////////////////////////
+
+
+/*      UPDATE      */
+
+
 //Enemy.prototype.update = function() {
 //  if (this.isDead == true)
 //    return null;
