@@ -3,6 +3,10 @@
  * @copyright 2015 Shunless Studio.
  */
 
+//////////////////////////////////////////////////////////////////////////////
+// CLASS ACTOR
+//////////////////////////////////////////////////////////////////////////////
+
 function Actor(_color1, blockID) {
   //the color of the actor
   this.color = _color1;
@@ -25,209 +29,119 @@ Actor.prototype.init = function() {
 };
 
 Actor.prototype.move = function(SwipeType) {
-  ////////////////////////////////////////////////////////////////////////////////
-  // NORMAL & ENDLESS GAME TYPE
-  ////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
+// NORMAL & ENDLESS GAME TYPE  //////////////////////////////////////////////////////////////////////////////
   if (GameType === 'Normal' || GameType === 'Endless') {
 
     switch (SwipeType) {
       //Handle Top Swap
       case 'top':
-        if (grid.cell[this._c].checkCell(SwipeType, this._c)) {
-          var z = this._c - cellsCntX;
-
-          if (grid.cell[z].type === 'Enemy') {
-            for (var i = 0; i < enemy.length; i++) {
-              if (enemy[i]._c === z) {
-                //enemy[i].isDead = true;
-                enemy.splice(i, 1);
-                enemyMove.splice(i, 1);
-                break;
-              }
-            }
-          }
-
-          grid.cell[this._c].setCellType('Normal');
-          grid.cell[this._c].setColor(grid.c2);
-
-          this._c = z;
-          grid.cell[this._c].setColor(this.color);
-          grid.cell[this._c].setCellType('Actor');
-        }
+        this.move2(SwipeType, this._c - cellsCntX)
 
         break;
         //Handle Bottom Swap
       case 'bottom':
-        if (grid.cell[this._c].checkCell(SwipeType, this._c)) {
-          var z = this._c + cellsCntX;
-
-          if (grid.cell[z].type === 'Enemy') {
-            for (var i = 0; i < enemy.length; i++) {
-              if (enemy[i]._c === z) {
-                //enemy[i].isDead = true;
-                enemy.splice(i, 1);
-                enemyMove.splice(i, 1);
-                break;
-              }
-            }
-          }
-
-          grid.cell[this._c].setCellType('Normal');
-          grid.cell[this._c].setColor(grid.c2);
-
-          this._c = z;
-          grid.cell[this._c].setColor(this.color);
-          grid.cell[this._c].setCellType('Actor');
-        }
+        this.move2(SwipeType, this._c + cellsCntX)
 
         break;
         //Handle Left Swap
       case 'left':
-        if (grid.cell[this._c].checkCell(SwipeType, this._c)) {
-          var z = this._c - 1;
-
-          if (grid.cell[z].type === 'Enemy') {
-            for (var i = 0; i < enemy.length; i++) {
-              if (enemy[i]._c === z) {
-                //enemy[i].isDead = true;
-                enemy.splice(i, 1);
-                enemyMove.splice(i, 1);
-                break;
-              }
-            }
-          }
-
-          grid.cell[this._c].setCellType('Normal');
-          grid.cell[this._c].setColor(grid.c2);
-
-          this._c = z;
-          grid.cell[this._c].setColor(this.color);
-          grid.cell[this._c].setCellType('Actor');
-        }
+        this.move2(SwipeType, this._c - 1)
 
         break;
         //Handle Right Swap
       case 'right':
-        if (grid.cell[this._c].checkCell(SwipeType, this._c)) {
-          var z = this._c + 1;
-
-          if (grid.cell[z].type === 'Enemy') {
-            for (var i = 0; i < enemy.length; i++) {
-              if (enemy[i]._c === z) {
-                //enemy[i].isDead = true;
-                enemy.splice(i, 1);
-                enemyMove.splice(i, 1);
-                break;
-              }
-            }
-          }
-
-          grid.cell[this._c].setCellType('Normal');
-          grid.cell[this._c].setColor(grid.c2);
-
-          this._c = z;
-          grid.cell[this._c].setColor(this.color);
-          grid.cell[this._c].setCellType('Actor');
-        }
+        this.move2(SwipeType, this._c + 1)
 
         break;
       default:
         break;
     }
   }
-  ////////////////////////////////////////////////////////////////////////////////
-  // SKIPSMASH GAME TYPE
-  ////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
+// SKIPSMASH GAME TYPE
+//////////////////////////////////////////////////////////////////////////////
   else if (GameType === 'SkipSmash') {
 
     switch (SwipeType) {
       //Handle Top Swap
       case 'top':
-        if (grid.cell[this._c].checkCell(SwipeType, this._c)) {
-          var z = this._c - cellsCntX;
-
-          if (grid.cell[z].type === 'Enemy')
-            for (var i = 0; i < enemy.length; i++)
-              if (enemy[i]._c === z) {
-                enemy[i].Thrust(SwipeType);
-                break;
-              }
-
-
-          grid.cell[this._c].setCellType('Normal');
-          grid.cell[this._c].setColor(grid.c2);
-
-          this._c = z;
-          grid.cell[this._c].setColor(this.color);
-          grid.cell[this._c].setCellType('Actor');
-        }
+        this.ThrustEnemy(SwipeType, this._c - cellsCntX);
 
         break;
         //Handle Bottom Swap
       case 'bottom':
-        if (grid.cell[this._c].checkCell(SwipeType, this._c)) {
-          var z = this._c + cellsCntX;
-
-          if (grid.cell[z].type === 'Enemy')
-            for (var i = 0; i < enemy.length; i++)
-              if (enemy[i]._c === z) {
-                enemy[i].Thrust(SwipeType);
-                break;
-              }
-
-          grid.cell[this._c].setCellType('Normal');
-          grid.cell[this._c].setColor(grid.c2);
-
-          this._c = z;
-          grid.cell[this._c].setColor(this.color);
-          grid.cell[this._c].setCellType('Actor');
-        }
+        this.ThrustEnemy(SwipeType, this._c + cellsCntX);
 
         break;
         //Handle Left Swap
       case 'left':
-        if (grid.cell[this._c].checkCell(SwipeType, this._c)) {
-          var z = this._c - 1;
-
-          if (grid.cell[z].type === 'Enemy')
-            for (var i = 0; i < enemy.length; i++)
-              if (enemy[i]._c === z) {
-                enemy[i].Thrust(SwipeType);
-                break;
-              }
-
-          grid.cell[this._c].setCellType('Normal');
-          grid.cell[this._c].setColor(grid.c2);
-
-          this._c = z;
-          grid.cell[this._c].setColor(this.color);
-          grid.cell[this._c].setCellType('Actor');
-        }
+        this.ThrustEnemy(SwipeType, this._c - 1);
 
         break;
         //Handle Right Swap
       case 'right':
-        if (grid.cell[this._c].checkCell(SwipeType, this._c)) {
-          var z = this._c + 1;
-
-          if (grid.cell[z].type === 'Enemy')
-            for (var i = 0; i < enemy.length; i++)
-              if (enemy[i]._c === z) {
-                enemy[i].Thrust(SwipeType);
-                break;
-              }
-
-          grid.cell[this._c].setCellType('Normal');
-          grid.cell[this._c].setColor(grid.c2);
-
-          this._c = z;
-          grid.cell[this._c].setColor(this.color);
-          grid.cell[this._c].setCellType('Actor');
-        }
+        this.ThrustEnemy(SwipeType, this._c + 1);
 
         break;
       default:
         break;
+    }
+  }
+};
+
+
+Actor.prototype.move2 = function(dir, z) {
+  if (grid.cell[this._c].checkCell(dir, this._c)) {
+
+    if (grid.cell[z].type === 'Enemy') {
+      for (var i = 0; i < enemy.length; i++) {
+        if (enemy[i]._c === z) {
+          //enemy[i].isDead = true;
+          enemy.splice(i, 1);
+          enemyMove.splice(i, 1);
+          break;
+        }
+      }
+    }
+
+    grid.cell[this._c].setCellType('Normal');
+    grid.cell[this._c].setColor(grid.c2);
+
+    this._c = z;
+    grid.cell[this._c].setColor(this.color);
+    grid.cell[this._c].setCellType('Actor');
+  }
+};
+
+Actor.prototype.ThrustEnemy = function(dir, z) {
+  //if actor can move at the given direction
+  if (grid.cell[this._c].checkCell(dir, this._c)) {
+    //if on his path there is an enemy
+    if (grid.cell[z].type === 'Enemy') {
+      for (var i = 0; i < enemy.length; i++) {
+        if (enemy[i]._c === z) {
+          //thrust towards the given direction
+          enemy[i].Thrust(dir);
+          break;
+        }
+      }
+      //if the enemy is not stuck on the border take his postion on the grid
+      if (grid.cell[z].checkCell(dir, z)) {
+        grid.cell[this._c].setCellType('Normal');
+        grid.cell[this._c].setColor(grid.c2);
+
+        this._c = z;
+        grid.cell[this._c].setColor(this.color);
+        grid.cell[this._c].setCellType('Actor');
+      }
+    } else {
+      grid.cell[this._c].setCellType('Normal');
+      grid.cell[this._c].setColor(grid.c2);
+
+      this._c = z;
+      grid.cell[this._c].setColor(this.color);
+      grid.cell[this._c].setCellType('Actor');
     }
   }
 };
