@@ -9,7 +9,7 @@
 
 //@param string , string
 function Enemy(_color1, blockID) {
-  //the color of the Enemy (Web Color)
+  //the color of the Enemy
   this.color = _color1;
   //
   if (typeof(blockID) === 'undefined')
@@ -17,11 +17,9 @@ function Enemy(_color1, blockID) {
   else
     this.block = blockID;
 
-  //indicates if this enemy is dead.(boolean)
-  this.isDead = false;
-  //this enemy position in the grid.(number)
-  this._c;
 
+  this.isDead = false;
+  this._c;
   grid.cell[grid.getCell(this.block)].type = 'Enemy';
 }
 
@@ -34,7 +32,7 @@ Enemy.prototype.init = function() {
 };
 
 //$   MOVE FUNCTION    $
-//@param direction to move (string)
+//@param string
 Enemy.prototype.move = function(SwipeType) {
   switch (SwipeType) {
     case 'top':
@@ -129,50 +127,107 @@ Enemy.prototype.Nextmove = function() {
 };
 
 Enemy.prototype.Thrust = function(dir) {
-  //enemy's grid id to thrust
-  var z;
-  //set the enemy id based on the direction
   switch (dir) {
     case 'top':
-      z = this._c - cellsCntX;
+      var z = this._c - cellsCntX;
+
+      for (var x = 0; x < cellsCntX; x++) {
+        z = this._c - cellsCntX;
+        if (grid.cell[this._c].checkCell(dir, this._c)) {
+          if (grid.cell[z].type === 'Enemy') {
+            for (var i = 0; i < enemy.length; i++) {
+              if (enemy[i]._c === z) {
+                //enemy[i].isDead = true;
+                grid.cell[z].type = 'Normal';
+                enemy.splice(i, 1);
+                enemyMove.splice(i, 1);
+                break;
+              }
+            }
+          }
+          this.move(dir);
+        } else {
+          break;
+        }
+      }
 
       break;
     case 'bottom':
-      z = this._c + cellsCntX;
+      var z = this._c + cellsCntX;
+
+      for (var x = 0; x < cellsCntX; x++) {
+        z = this._c + cellsCntX;
+        if (grid.cell[this._c].checkCell(dir, this._c)) {
+          if (grid.cell[z].type === 'Enemy') {
+            for (var i = 0; i < enemy.length; i++) {
+              if (enemy[i]._c === z) {
+                //enemy[i].isDead = true;
+                grid.cell[z].type = 'Normal';
+                enemy.splice(i, 1);
+                enemyMove.splice(i, 1);
+                break;
+              }
+            }
+          }
+          this.move(dir);
+        } else {
+          break;
+        }
+      }
 
       break;
     case 'left':
-      z = this._c - 1;
+      var z = this._c - 1;
+
+      for (var x = 0; x < cellsCntX; x++) {
+        z = this._c - 1;
+        if (grid.cell[this._c].checkCell(dir, this._c)) {
+          if (grid.cell[z].type === 'Enemy') {
+            for (var i = 0; i < enemy.length; i++) {
+              if (enemy[i]._c === z) {
+                //enemy[i].isDead = true;
+                grid.cell[z].type = 'Normal';
+                enemy.splice(i, 1);
+                enemyMove.splice(i, 1);
+                break;
+              }
+            }
+          }
+          this.move(dir);
+        } else {
+          break;
+        }
+      }
 
       break;
     case 'right':
-      z = this._c + 1;
+      var z = this._c + 1;
+
+      for (var x = 0; x < cellsCntX; x++) {
+        z = this._c + 1;
+        if (grid.cell[this._c].checkCell(dir, this._c)) {
+          if (grid.cell[z].type === 'Enemy') {
+            for (var i = 0; i < enemy.length; i++) {
+              if (enemy[i]._c === z) {
+                //enemy[i].isDead = true;
+                grid.cell[z].type = 'Normal';
+                enemy.splice(i, 1);
+                enemyMove.splice(i, 1);
+                break;
+              }
+            }
+          }
+          this.move(dir);
+        } else {
+          break;
+        }
+      }
 
       break;
     default:
       break;
   }
 
-  //thrust the enemy
-  for (var x = 0; x < cellsCntX; x++) {
-    z = this._c - cellsCntX;
-    if (grid.cell[this._c].checkCell(dir, this._c)) {
-      if (grid.cell[z].type === 'Enemy') {
-        for (var i = 0; i < enemy.length; i++) {
-          if (enemy[i]._c === z) {
-            //enemy[i].isDead = true;
-            grid.cell[z].type = 'Normal';
-            enemy.splice(i, 1);
-            enemyMove.splice(i, 1);
-            break;
-          }
-        }
-      }
-      this.move(dir);
-    } else {
-      break;
-    }
-  }
 
 };
 
