@@ -36,22 +36,22 @@ Actor.prototype.move = function(SwipeType) {
     switch (SwipeType) {
       //Handle Top Swap
       case 'top':
-        this.move2(SwipeType, this._c - cellsCntX)
+        this.makeMove(SwipeType, this._c - cellsCntX)
 
         break;
         //Handle Bottom Swap
       case 'bottom':
-        this.move2(SwipeType, this._c + cellsCntX)
+        this.makeMove(SwipeType, this._c + cellsCntX)
 
         break;
         //Handle Left Swap
       case 'left':
-        this.move2(SwipeType, this._c - 1)
+        this.makeMove(SwipeType, this._c - 1)
 
         break;
         //Handle Right Swap
       case 'right':
-        this.move2(SwipeType, this._c + 1)
+        this.makeMove(SwipeType, this._c + 1)
 
         break;
       default:
@@ -66,22 +66,22 @@ Actor.prototype.move = function(SwipeType) {
     switch (SwipeType) {
       //Handle Top Swap
       case 'top':
-        this.ThrustEnemy(SwipeType, this._c - cellsCntX);
+        this.thrustEnemy(SwipeType, this._c - cellsCntX);
 
         break;
         //Handle Bottom Swap
       case 'bottom':
-        this.ThrustEnemy(SwipeType, this._c + cellsCntX);
+        this.thrustEnemy(SwipeType, this._c + cellsCntX);
 
         break;
         //Handle Left Swap
       case 'left':
-        this.ThrustEnemy(SwipeType, this._c - 1);
+        this.thrustEnemy(SwipeType, this._c - 1);
 
         break;
         //Handle Right Swap
       case 'right':
-        this.ThrustEnemy(SwipeType, this._c + 1);
+        this.thrustEnemy(SwipeType, this._c + 1);
 
         break;
       default:
@@ -91,7 +91,7 @@ Actor.prototype.move = function(SwipeType) {
 };
 
 
-Actor.prototype.move2 = function(dir, z) {
+Actor.prototype.makeMove = function(dir, z) {
   if (grid.cell[this._c].checkCell(dir, this._c)) {
 
     if (grid.cell[z].type === 'Enemy') {
@@ -114,7 +114,7 @@ Actor.prototype.move2 = function(dir, z) {
   }
 };
 
-Actor.prototype.ThrustEnemy = function(dir, z) {
+Actor.prototype.thrustEnemy = function(dir, z) {
   //if actor can move at the given direction
   if (grid.cell[this._c].checkCell(dir, this._c)) {
     //if on his path there is an enemy
@@ -144,4 +144,9 @@ Actor.prototype.ThrustEnemy = function(dir, z) {
       grid.cell[this._c].setCellType('Actor');
     }
   }
+};
+
+//
+Actor.prototype.mark = function(){
+//@ToDo
 };

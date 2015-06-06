@@ -10,7 +10,7 @@
  * 4-$ PaintStack  #9 w/h beatlock
  */
 // Active game type (string)
-var GameType = 'Normal';
+var GameType = 'SkipSmash';
 
 //beat refresh rate (number)
 var beatRate = 1000;
@@ -139,7 +139,8 @@ function create() {
   justLost = justExpandedGrid = false;
   LoadTime = game.time.now;
 }
-//$ game loop $
+
+// GAME LOOP
 function update() {
   if (game.time.time > EnemyMoveTimeout) {
 
@@ -164,15 +165,24 @@ function update() {
 
     movesHaveBeenStored = true;
   }
-  //if user has killed all the enemies.
-  if (enemy.length === 0)
-    expand();
+
+  if (GameType === 'Normal' || GameType === 'Endless') {
+    //if user has killed all the enemies.
+    if (enemy.length === 0)
+      expand();
+  } else if (GameType === 'SkipSmash') {
+    if (enemy.length === 1)
+      expand();
+  } else if (GameType === 'PaintStack') {
+    //@ToDo *Implement PaintStack game type
+  }
 
   //calculate new inteval
   beatInterval = Math.round(((EnemyMoveTimeout - game.time.time) / beatRate) * 100);
 
   timeSinceLevelLoad = Math.round((game.time.now - LoadTime) / 1000);
 }
+
 //$ render loop $
 function render() {
   //draws cells and grid $ 1st Draw Call $
@@ -185,32 +195,23 @@ function render() {
   game.debug.text('time: ' + timeSinceLevelLoad + ' s', 3, 66, '#b1ff00');
 }
 //$ game over $
+//every game type has the same game over.
 function gameOver() {
   justLost = true;
-  if (GameType === 'Normal') {
 
-    cellsCntY = cellsCntX = 7;
+  //reset grid back to 7x7
+  cellsCntY = cellsCntX = 7;
+  gameStateRestarts = 0;
+  game.state.start(game.state.current);
 
-    gameStateRestarts = 0;
-    game.state.start(game.state.current);
-  } else if (GameType === 'Endless') {
-    cellsCntY = cellsCntX = 7;
-
-    gameStateRestarts = 0;
-    game.state.start(game.state.current);
-  } else if (GameType === 'SkipSmash') {
-
-    //@ToDo
-  } else if (GameType === 'PaintStack') {
-
-    //@ToDo
-  }
   LoadTime = game.time.now;
 }
 //$ expand " grid " $
 function expand() {
   justExpandedGrid = true;
-  if (GameType === 'Normal') {
+
+  //NORMAL AND SKIPSMASH GAME TYPES
+  if (GameType === 'Normal' || GameType === 'SkipSmash') {
     justLost = true;
     gameStateRestarts++;
 
@@ -219,7 +220,9 @@ function expand() {
       cellsCntY = ++cellsCntX;
 
     game.state.start(game.state.current);
-  } else if (GameType === 'Endless') {
+  }
+  //ENDLESS GAME TYPE
+  else if (GameType === 'Endless') {
     gameStateRestarts++;
 
     //increment cells by 1 if enemies > ceil(cells/2)
@@ -227,11 +230,9 @@ function expand() {
       cellsCntY = ++cellsCntX;
 
     game.state.start(game.state.current);
-  } else if (GameType === 'SkipSmash') {
-
-    //@ToDo
-  } else if (GameType === 'PaintStack') {
-
+  }
+  //PAINTSTACK GAME TYPE
+  else if (GameType === 'PaintStack') {
     //@ToDo
   }
 }
