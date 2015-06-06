@@ -10,7 +10,7 @@
  * 4-$ PaintStack  #9 w/h beatlock
  */
 // Active game type (string)
-var GameType = 'SkipSmash';
+var GameType = 'Normal';
 
 //beat refresh rate (number)
 var beatRate = 1000;
@@ -19,18 +19,18 @@ var beatInterval = 0;
 
 var EnemyMoveTimeout = 0;
 
-//editor/runtime window scale
+//editor/runtime window scale in pixels (number)
 var Editor_Width = cellSize * 7;
 var Editor_Height = cellSize * 7;
-//the aspect ratio of the screen
+//the aspect ratio of the screen (decimal)
 var aspect_ratio = Editor_Width / Editor_Height;
-//world bounds
+//world bounds (number)
 var World_bounds_x = Editor_Width;
 var World_bounds_y = Editor_Height;
-//amount of cells in grid
+//amount of cells in grid (number)
 var cellsCntX = 7;
 var cellsCntY = 7;
-//cell scale in pixels
+//cell scale in pixels (number)
 var cellWidth;
 var cellHeight;
 //the color of the enemies (string)
@@ -51,18 +51,18 @@ var enemy;
 /*~~~~~$ CLASSES $~~~~~*/
 /*~~~~~$*********$~~~~~*/
 
-//indicates what s the next move gonna be(sring)
+//indicates what s the next move gonna be. (sring)
 var enemyMove;
 var movesHaveBeenStored;
 //indicates the time that the game actually started.(number)*ms
 var LoadTime;
 //indicates the elapsed time since level load.(number)*s
 var timeSinceLevelLoad;
-//$ phaser game instance
+//$ phaser game instance (object)
 var game;
-//indicates if user lost in the previous session
+//indicates if user lost in the previous session(boolean)
 var justLost = true;
-//indicates if the grid has just being expanded
+//indicates if the grid has just being expanded(boolean)
 var justExpandedGrid = false;
 
 //$ preload function $
