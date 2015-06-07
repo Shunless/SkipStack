@@ -7,6 +7,10 @@
 // CLASS CELL
 //////////////////////////////////////////////////////////////////////////////
 
+//@param world_position.x (number)
+//@param world_position.y (number)
+//@param cell's HashId (string)
+//@param cell's color (web color)
 function Cell(_posX, _posY, _name, _color) {
   this.color = _color;
   this.positionX = _posX;

@@ -7,17 +7,22 @@
 // CLASS ACTOR
 //////////////////////////////////////////////////////////////////////////////
 
+
+//@param actor's color (Web color)
+//@param actor's cell HashId (string)
 function Actor(_color1, blockID) {
-  //the color of the actor
+  //actor's color
   this.color = _color1;
-  //
+  //actor's HashId
   if (typeof(blockID) === 'undefined')
     this.block = Math.floor(cellsCntX / 2) + '-' + Math.floor(cellsCntX / 2);
   else
     this.block = blockID;
 
+  //actor's position in grid.cell
   this._c;
 
+  //enemies killed
   this.enemiesKilled = 0;
 }
 

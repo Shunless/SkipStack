@@ -7,7 +7,8 @@
 // CLASS ENEMY
 //////////////////////////////////////////////////////////////////////////////
 
-//@param string , string
+//@param enemy's color (Web Color)
+//@param enemy's cell HashId  (string)
 function Enemy(_color1, blockID) {
   //the color of the Enemy
   this.color = _color1;
@@ -17,9 +18,11 @@ function Enemy(_color1, blockID) {
   else
     this.block = blockID;
 
-
+  //indicates if this enemy is dead
   this.isDead = false;
+  //this enemys postion in  grid.cell array
   this._c;
+
   grid.cell[grid.getCell(this.block)].type = 'Enemy';
 }
 
@@ -31,8 +34,8 @@ Enemy.prototype.init = function() {
   grid.cell[this._c].setCellType('Enemy');
 };
 
-//$   MOVE FUNCTION    $
-//@param string
+//move enemy
+//@param direction (string)
 Enemy.prototype.move = function(SwipeType) {
   switch (SwipeType) {
     case 'top':
@@ -92,6 +95,7 @@ Enemy.prototype.move = function(SwipeType) {
   }
 };
 
+//returns the move of this enemy(sting)
 Enemy.prototype.Nextmove = function() {
   var CellsInt = actor._c - this._c;
   var RowsInt = Math.abs(grid.getRow(actor._c) - grid.getRow(this._c));
