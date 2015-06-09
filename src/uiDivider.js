@@ -60,7 +60,7 @@ function gridToFlipCard(topleft, bottomright, classname) {
 
 
 
-function removeFlipcard(flipcard) {
+function FlipcardtoArea(flipcard) {
     flipcard.children('.front').remove();
     var top = flipcard.css('top');
     var left = flipcard.css('left');
@@ -131,8 +131,22 @@ function areaToGrid(classname) {
         'data-br': area.data('br')
     });
 
-    $('.' + areahash + ' , .' + gridhash).wrapAll(wrapper);
+    var flipcard = $('.' + areahash + ' , .' + gridhash).wrapAll(wrapper);
 
-
+    return flipcard;
 }
 
+function FlipcardtoGrid(flipcard) {
+    flipcard.children('.front').remove();
+    var top = Number(flipcard.css('top').split('px')[0]);
+    var left = Number(flipcard.css('left').split('px')[0]);
+    var tl = flipcard.data('tl');
+    var br = flipcard.data('br');
+    flipcard = flipcard.children('.back');
+
+    deGrid(flipcard, top, left);
+
+    flipcard.unwrap();
+    var grid = flipcard.children();
+grid.unwrap()
+}

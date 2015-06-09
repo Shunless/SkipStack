@@ -33,7 +33,7 @@ function createGame() {
     a = flip(a);
     a.children('.back').attr('id', 'SkipStack');
     setTimeout(function() {
-        removeFlipcard(a);
+        FlipcardtoArea(a);
     }, 1000);
 }
 
