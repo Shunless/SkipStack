@@ -148,5 +148,6 @@ function FlipcardtoGrid(flipcard) {
 
     flipcard.unwrap();
     var grid = flipcard.children();
-grid.unwrap()
+    grid.unwrap()
 }
+
