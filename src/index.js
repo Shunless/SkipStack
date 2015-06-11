@@ -203,8 +203,26 @@ function update() {
   //calculate new inteval
   beatInterval = Math.round(((EnemyMoveTimeout - game.time.time) / beatRate) * 100);
 
+	//Function recalculates newline size on every beat
+	recalcBar(beatInterval);
+
   timeSinceLevelLoad = Math.round((game.time.now - LoadTime) / 1000);
 }
+
+/*** newline size calculation moved here in order to fix compatibility issues ***/
+function recalcBar(beat) {
+	var bar = $('.bar');
+	if (beat % 20 === 0) {
+		bar.css('background-color', 'rgb(' + ((100 - beat) * 255) / 100 + ', ' + (beat * 255) / 100 + ', 0)')
+	}
+	bar.css('width', beat + '%')
+		/*if (beat < 20 && bar.css('background-color') == 'rgb(0, 128, 0)') {
+			bar.css('background-color', 'rgb(204, 0, 0)')
+		} else if (beat > 20 && bar.css('background-color') == 'rgb(204, 0, 0)') {
+			bar.css('background-color', 'rgb(0, 128, 0)')
+		}*/
+}
+/*** newline size calculation ended ***/
 
 //RENDER LOOP
 function render() {
