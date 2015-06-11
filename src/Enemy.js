@@ -46,8 +46,18 @@ Enemy.prototype.move = function(SwipeType) {
         grid.cell[this._c].setColor(grid.c2);
 
         this._c = this._c - cellsCntX;
+        //any game type except PaintStack
+        if (GameType === 'PaintStack'){
+          if(grid.cell[this._c].isMarked){
+            actor.markedArea -= (1/(cellsCntX*cellsCntY))*100;
+            grid.cell[this._c].isMarked = false;//mark the cell as not painted
+          }
+        }
         grid.cell[this._c].setColor(this.color);
         grid.cell[this._c].setCellType('Enemy');
+
+
+
       }
 
       break;
@@ -59,6 +69,13 @@ Enemy.prototype.move = function(SwipeType) {
         grid.cell[this._c].setColor(grid.c2);
 
         this._c = this._c + cellsCntX;
+        //any game type except PaintStack
+        if (GameType === 'PaintStack'){
+          if(grid.cell[this._c].isMarked){
+            actor.markedArea -= (1/(cellsCntX*cellsCntY))*100;
+            grid.cell[this._c].isMarked = false;//mark the cell as not painted
+          }
+        }
         grid.cell[this._c].setColor(this.color);
         grid.cell[this._c].setCellType('Enemy');
       }
@@ -72,6 +89,13 @@ Enemy.prototype.move = function(SwipeType) {
         grid.cell[this._c].setColor(grid.c2);
 
         this._c = this._c - 1;
+        //any game type except PaintStack
+        if (GameType === 'PaintStack'){
+          if(grid.cell[this._c].isMarked){
+            actor.markedArea -= (1/(cellsCntX*cellsCntY))*100;
+            grid.cell[this._c].isMarked = false;//mark the cell as not painted
+          }
+        }
         grid.cell[this._c].setColor(this.color);
         grid.cell[this._c].setCellType('Enemy');
       }
@@ -85,6 +109,13 @@ Enemy.prototype.move = function(SwipeType) {
         grid.cell[this._c].setColor(grid.c2);
 
         this._c = this._c + 1;
+        //any game type except PaintStack
+        if (GameType === 'PaintStack'){
+          if(grid.cell[this._c].isMarked){
+            actor.markedArea -= (1/(cellsCntX*cellsCntY))*100;
+            grid.cell[this._c].isMarked = false;//mark the cell as not painted
+          }
+        }
         grid.cell[this._c].setColor(this.color);
         grid.cell[this._c].setCellType('Enemy');
       }

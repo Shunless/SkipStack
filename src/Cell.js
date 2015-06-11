@@ -30,6 +30,11 @@ function Cell(_posX, _posY, _name, _color) {
    * Default value is normal
    */
   this.type = 'Normal';
+  this.isMarked = false;
+
+  //if gametype is PaintStack cells ll keep a special
+  //value indicating their generated color\
+  this.genColor = '#000';
 }
 
 Cell.prototype.init = function() {

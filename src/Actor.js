@@ -7,7 +7,6 @@
 // CLASS ACTOR
 //////////////////////////////////////////////////////////////////////////////
 
-
 //@param actor's color (Web color)
 //@param actor's cell HashId (string)
 function Actor(_color1, blockID) {
@@ -24,6 +23,9 @@ function Actor(_color1, blockID) {
 
   //enemies killed
   this.enemiesKilled = 0;
+
+  //indicates how much of the grid has been marked %
+  this.markedArea = 0;
 }
 
 Actor.prototype.init = function() {
@@ -35,8 +37,8 @@ Actor.prototype.init = function() {
 
 Actor.prototype.move = function(SwipeType) {
   //////////////////////////////////////////////////////////////////////////////
-// NORMAL & ENDLESS GAME TYPE  //////////////////////////////////////////////////////////////////////////////
-  if (GameType === 'Normal' || GameType === 'Endless') {
+// NORMAL & ENDLESS & PAINTSTACK GAME TYPE  //////////////////////////////////////////////////////////////////////////////
+  if (GameType !== 'SkipSmash') {
 
     switch (SwipeType) {
       //Handle Top Swap
@@ -66,7 +68,7 @@ Actor.prototype.move = function(SwipeType) {
   //////////////////////////////////////////////////////////////////////////////
 // SKIPSMASH GAME TYPE
 //////////////////////////////////////////////////////////////////////////////
-  else if (GameType === 'SkipSmash') {
+  else {
 
     switch (SwipeType) {
       //Handle Top Swap
@@ -95,7 +97,6 @@ Actor.prototype.move = function(SwipeType) {
   }
 };
 
-
 Actor.prototype.makeMove = function(dir, z) {
   if (grid.cell[this._c].checkCell(dir, this._c)) {
 
@@ -109,13 +110,43 @@ Actor.prototype.makeMove = function(dir, z) {
         }
       }
     }
-
+    //set currecnt cell type as normal
     grid.cell[this._c].setCellType('Normal');
-    grid.cell[this._c].setColor(grid.c2);
+    //any game type except Paintstack
+    if (GameType !== 'PaintStack'){
+      grid.cell[this._c].setColor(grid.c2);
 
-    this._c = z;
-    grid.cell[this._c].setColor(this.color);
-    grid.cell[this._c].setCellType('Actor');
+      this._c = z;
+      grid.cell[this._c].setColor(this.color);
+      grid.cell[this._c].setCellType('Actor');
+
+    }
+    //PaintStack game type exclusive
+    //@ToDo
+    else{
+
+      //current cell hasnt been painted
+      if(!grid.cell[this._c].isMarked){
+        grid.cell[this._c].setColor(grid.c2);
+      }
+      //its painted
+      else{
+        //set as active color the genCol
+        grid.cell[this._c].setColor(grid.cell[this._c].genColor);
+      }
+
+      this._c = z;
+      //next cell hasnt been painted
+      if(!grid.cell[this._c].isMarked){
+        this.markedArea += (1/(cellsCntX*cellsCntY))*100;
+        //parse color to genColor for backup purpose
+        grid.cell[this._c].genColor = color.generateHexColor();
+        grid.cell[this._c].isMarked = true;//mark the cell as painted
+      }
+      grid.cell[this._c].setColor(this.color);
+      grid.cell[this._c].setCellType('Actor');
+
+    }
   }
 };
 
@@ -149,9 +180,4 @@ Actor.prototype.thrustEnemy = function(dir, z) {
       grid.cell[this._c].setCellType('Actor');
     }
   }
-};
-
-//
-Actor.prototype.mark = function(){
-//@ToDo
 };

@@ -80,16 +80,8 @@ function preload() {
 }
 //$ create function $
 function create() {
-
-  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-    // Set up handlers for mouse events
-    game.input.onDown.add(mouseDragStart, this);
-    game.input.onUp.add(mouseDragEnd, this);
-  } else {
-    // Set up handlers for mouse events
-    game.input.onDown.add(mouseDragStart, this);
-    game.input.onUp.add(mouseDragEnd, this);
-
+  //For *not* mobile devices
+  if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     //  And some controls to play the game with keyboard
     cursors = game.input.keyboard.createCursorKeys();
     cursors.left.onDown.add(function() {
@@ -107,8 +99,10 @@ function create() {
     cursors.up.onDown.add(function() {
       actor.move('top');
     }, this);
-
   }
+  // Set up handlers for mouse events
+  game.input.onDown.add(mouseDragStart, this);
+  game.input.onUp.add(mouseDragEnd, this);
 
   //add profiler
   //- https://github.com/englercj/phaser-debug -
@@ -210,7 +204,7 @@ function update() {
   timeSinceLevelLoad = Math.round((game.time.now - LoadTime) / 1000);
 }
 
-//$ render loop $
+//RENDER LOOP
 function render() {
   //draws cells and grid $ 1st Draw Call $
   grid.render();
@@ -220,9 +214,11 @@ function render() {
   game.debug.text('beat rate: ' + beatRate + ' ms', 3, 40, '#b1ff00');
   game.debug.text('Interval: ' + beatInterval + ' %', 3, 53, beatInterval < 20 ? '#ff0000' : '#00ff27');
   game.debug.text('time: ' + timeSinceLevelLoad + ' s', 3, 66, '#b1ff00');
+  if(GameType === 'PaintStack')
+      game.debug.text('marked area: ' + Math.floor(actor.markedArea) + '%' , 3, 79, '#b1ff00');
 }
 //$ game over $
-//every game type has the same game over.
+//every game type has the same game over :)
 function gameOver() {
   justLost = true;
 
