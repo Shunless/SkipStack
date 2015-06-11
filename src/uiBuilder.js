@@ -67,6 +67,20 @@ function compareSize() {
     border = Math.floor(wheight * 0.00781634663 / 2);
 }
 
+function genBar(classname) {
+    var bar = $('<div />');
+    bar.addClass('bar');
+    bar.css({
+        'background-color': 'rgb(0, 128, 0)',
+        'width': '100%',
+        'position': 'absolute',
+        'height': border * 3,
+        'bottom': 0 - (border * 3),
+        'left': '0'
+    });
+    bar.appendTo($(classname));
+}
+
 /*******************************/
 /******* UI Modificators *******/
 /*******************************/

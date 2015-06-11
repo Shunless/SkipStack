@@ -32,6 +32,7 @@ function createGame() {
 
 
     a.children('.back').attr('id', 'SkipStack');
+    genBar('#SkipStack');
     a = flip(a);
     setTimeout(function () {
         FlipcardtoArea(a);

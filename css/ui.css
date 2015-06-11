@@ -2,11 +2,13 @@
     font-family: SquareF;
     src: url("../font/Square.ttf");
 }
+
 .cell {
     box-sizing: border-box;
     background-color: #fff;
     position: absolute;
 }
+
 .gamecont {
     position: fixed;
     top: 50%;
@@ -14,10 +16,12 @@
     transform: translate(-50%, -50%);
     perspective: 800px;
 }
+
 html {
     width: 100%;
     height: 100%;
 }
+
 body {
     font-family: SquareF;
     width: 100%;
@@ -36,19 +40,26 @@ body {
     -moz-animation: AnimationName 11s ease infinite;
     animation: AnimationName 11s ease infinite;
 }
+
 .flipcard {
     transform-style: preserve-3d;
     transition: transform 1s;
 }
+
 .flipcard * {
     backface-visibility: hidden;
 }
-.flipcard .front {} .flipcard .back {
+
+.flipcard .front {}
+
+.flipcard .back {
     transform: rotateY(180deg);
 }
+
 .flipcard.flipped {
     transform: rotateY(180deg);
 }
+
 .center {
     position: fixed;
     top: 50%;
@@ -66,6 +77,15 @@ body {
     background-size: 60%;
     background-position: center;
 }
+
+.bar {
+    z-index: 7548;
+    position: absolute;
+    height: 7px;
+    bottom: -7px;
+    left: 0;
+}
+
 @-webkit-keyframes AnimationName {
     0% {
         background-position: 0% 50%
@@ -77,6 +97,7 @@ body {
         background-position: 0% 50%
     }
 }
+
 @-moz-keyframes AnimationName {
     0% {
         background-position: 0% 50%
@@ -88,6 +109,7 @@ body {
         background-position: 0% 50%
     }
 }
+
 @keyframes AnimationName {
     0% {
         background-position: 0% 50%
