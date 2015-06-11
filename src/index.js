@@ -66,17 +66,13 @@ var justLost = true;
 //indicates if the grid has just being expanded(boolean)
 var justExpandedGrid = false;
 
+var cursors;
+
 //$ preload function $
 function preload() {
   //Reset Arrays
   enemy = new Array();
   enemyMove = new Array();
-
-  // Set up handlers for mouse events
-  game.input.onDown.add(mouseDragStart, this);
-  game.input.onUp.add(mouseDragEnd, this);
-  game.input.onDown.add(mouseDragStart, this);
-  game.input.onUp.add(mouseDragEnd, this);
 
   movesHaveBeenStored = false;
   cellWidth = (Editor_Width - (border * 2 * cellsCntX + border * 2)) / (cellsCntX);
@@ -84,6 +80,36 @@ function preload() {
 }
 //$ create function $
 function create() {
+
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    // Set up handlers for mouse events
+    game.input.onDown.add(mouseDragStart, this);
+    game.input.onUp.add(mouseDragEnd, this);
+  } else {
+    // Set up handlers for mouse events
+    game.input.onDown.add(mouseDragStart, this);
+    game.input.onUp.add(mouseDragEnd, this);
+
+    //  And some controls to play the game with keyboard
+    cursors = game.input.keyboard.createCursorKeys();
+    cursors.left.onDown.add(function() {
+      actor.move('left');
+    }, this);
+
+    cursors.right.onDown.add(function() {
+      actor.move('right');
+    }, this);
+
+    cursors.down.onDown.add(function() {
+      actor.move('bottom');
+    }, this);
+
+    cursors.up.onDown.add(function() {
+      actor.move('top');
+    }, this);
+
+  }
+
   //add profiler
   //- https://github.com/englercj/phaser-debug -
   //game.add.plugin(Phaser.Plugin.Debug);
