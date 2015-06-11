@@ -195,7 +195,9 @@ function update() {
     if (enemy.length === 1)
       expand();
   } else if (GameType === 'PaintStack') {
-    //@ToDo *Implement PaintStack game type
+    //expand grid when over 70% of it is marked
+    if(Math.floor(actor.markedArea)>70)
+      expand();
   }
 
   //calculate new inteval
@@ -215,7 +217,7 @@ function render() {
   game.debug.text('Interval: ' + beatInterval + ' %', 3, 53, beatInterval < 20 ? '#ff0000' : '#00ff27');
   game.debug.text('time: ' + timeSinceLevelLoad + ' s', 3, 66, '#b1ff00');
   if(GameType === 'PaintStack')
-      game.debug.text('marked area: ' + Math.floor(actor.markedArea) + '%' , 3, 79, '#b1ff00');
+    game.debug.text('marked area: ' + Math.floor(actor.markedArea) + '%' , 3, 79, '#b1ff00');
 }
 //$ game over $
 //every game type has the same game over :)
@@ -256,6 +258,13 @@ function expand() {
   }
   //PAINTSTACK GAME TYPE
   else if (GameType === 'PaintStack') {
-    //@ToDo
+    justLost = true;
+    gameStateRestarts++;
+
+    //increment cells by 1 if enemies > ceil(cells/2)
+    if ((3 + gameStateRestarts) > Math.ceil(cellsCntX / 2))
+      cellsCntY = ++cellsCntX;
+
+    game.state.start(game.state.current);
   }
 }
