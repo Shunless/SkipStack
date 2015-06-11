@@ -2,7 +2,7 @@
  * @author Ρωμανός Μουρίκης
  * @copyright 2015 Shunless Studio.
  */
-$(document).ready(function() {
+$(document).ready(function () {
     compareSize();
     gridBuilder('1-1', '13-7');
     prepGame();
@@ -30,15 +30,45 @@ function createGame() {
         maxHeight: 7 * cellSize
     });
 
-    a = flip(a);
+
     a.children('.back').attr('id', 'SkipStack');
-    setTimeout(function() {
-        removeFlipcard(a);
+    a = flip(a);
+    setTimeout(function () {
+        FlipcardtoArea(a);
     }, 1000);
 }
 
 function createPlayButton() {
-    createButton('7-4', 'play').click(function() {
+    createButton('7-4', 'play').click(function () {
         createGame();
     });
+}
+
+function createTextCont(span, text) {
+    var div = $('<div />');
+    div.css({
+        'width': (span * cellSize) + 'px',
+        'height': '100%',
+        'text-align': 'center',
+        'font-size': '3em',
+        'position': 'fixed'
+    });
+    div.text(text);
+    return div;
+}
+
+function injectText(text, container) {
+    var tl;
+    var br;
+    if (container.hasClass('back')) {
+        tl = container.parent().data('tl');
+        br = container.parent().data('br');
+    } else {
+        tl = container.data('tl');
+        br = container.data('br');
+    }
+    var span = Number(br.split('-')[1]) - Number(tl.split('-')[1]) + 1;
+    var div = createTextCont(span, text);
+    div.appendTo(container);
+    return container;
 }

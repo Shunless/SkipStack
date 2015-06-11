@@ -97,6 +97,16 @@ function redGrid(grid, top, left) {
     return grid;
 }
 
+function deGrid(grid, top, left) {
+    //Centers grid cells contained in gamecont by the locations set in top and left
+    grid.children('.cell').each(function() {
+        $(this).css('top', (Number($(this).css('top').split('px')[0]) + top) + 'px');
+        $(this).css('left', (Number($(this).css('left').split('px')[0]) + left) + 'px');
+    });
+
+    return grid;
+}
+
 function redArea(area, top, left) {
     area.css({
         'top': (Number($(area).css('top').split('px')[0]) - top) + 'px',

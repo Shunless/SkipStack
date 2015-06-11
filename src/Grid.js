@@ -3,6 +3,17 @@
  * @copyright 2015 Shunless Studio.
  */
 
+//////////////////////////////////////////////////////////////////////////////
+// CLASS GRID
+//////////////////////////////////////////////////////////////////////////////
+
+//@param cell/s in X dimension (number)
+//@param cell/s in Y dimension (number)
+//@param each cell width in pixels (number)
+//@param each cell height in pixels (number)
+//@param the color of the border (Web Color)
+//@param the color each cell (Web Color)
+//@param the thickness of the border (number)
 function Grid(cellCntX, cellCntY, cellW, cellH, _color1, _color2, _bThickness) {
   this.c = _color1; //border color
   this.c2 = _color2; //cell color
@@ -15,16 +26,16 @@ function Grid(cellCntX, cellCntY, cellW, cellH, _color1, _color2, _bThickness) {
 
   this.cellsCountX = cellCntX; //cells in x dimension .
   this.cellsCountY = cellCntY; //cells in y dimension .
-
   this.cellWidth = cellW; //width of every cell in px .
   this.cellHeight = cellH; //height of every cell in px .
 
+  //the grid rectangle
   this.grid;
-
-  //the cells of the grid
+  //grid cells
   this.cell = new Array();
 }
 
+//initialization
 Grid.prototype.init = function() {
   var w = this.cellsCountX * this.cellWidth + this.borderThickness * this.cellsCountX + this.borderThickness;
   var h = this.cellsCountY * this.cellHeight + this.borderThickness * this.cellsCountY + this.borderThickness;
@@ -42,8 +53,8 @@ Grid.prototype.init = function() {
   }
 };
 
-//$   GET CELL FUNCTION    $
-///   return a pointer to the cell
+//returns the  the grid,cell position of the given cell.
+//@param the .hashID of the cell to search (string).
 Grid.prototype.getCell = function(_id) {
   for (var i = 0; i < this.cell.length; i++) {
     if (this.cell[i].HashId == _id) {
@@ -52,7 +63,7 @@ Grid.prototype.getCell = function(_id) {
   }
 };
 
-//$   GRID RENDER FUNCTION    $
+//render the grid on the screen
 Grid.prototype.render = function() {
   game.debug.geom(this.grid, this.c);
 
@@ -61,13 +72,23 @@ Grid.prototype.render = function() {
   }
 };
 
-//$   CELL GET ROW FUNCTION    $
+//returns the row of the given cell (number)
+//@param grid.cell postition of the cell (number)
 Grid.prototype.getRow = function(_currentPos) {
-  var _y = grid.cellsCountX;
-  for (var x = 0; x < grid.cellsCountX; x++) {
+  var _y = this.cellsCountX;
+  for (var x = 0; x < this.cellsCountX; x++) {
     if (_currentPos < _y) {
       return x;
     }
-    _y += grid.cellsCountX;
+    _y += this.cellsCountX;
   }
+};
+
+//returns the column of the given cell (number)
+//@param grid.cell postition of the cell (number)
+Grid.prototype.getColumn = function(_currentPos) {
+  for (var x = 0; x < this.cellsCountX; x++)
+    for (var y = 0; y < this.cellsCountX; y++)
+      if (_currentPos === (y + x * this.cellsCountX))
+        return y;
 };
