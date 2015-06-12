@@ -34,7 +34,8 @@ function createGame() {
 	a.children('.back').attr('id', 'SkipStack');
 	genBar('#SkipStack');
 	a = flip(a);
-	setTimeout(function () {5
+	setTimeout(function () {
+		5
 		FlipcardtoArea(a);
 	}, 1000);
 }
@@ -94,7 +95,9 @@ function createModeSelector() {
 
 	//createButton('10-1', 'prev');
 	//createButton('10-7', 'next');
-	var selector = gridToFlipCard('10-2', '10-6', 'modeselector');
+	var selector = gridToFlipCard('10-2', '10-6', 'modeselector').click(function () {
+		createGame();
+	});
 	var preview = gridToFlipCard('4-2', '7-6', 'preview');
 
 	selector.children('.back').css({
@@ -131,5 +134,15 @@ function createModeSelector() {
 		FlipcardtoArea(next);
 		FlipcardtoArea(prev);
 	}, 1000);
+
+}
+
+
+function modeIndicator(container) {
+	disposable = container;
+	gamemode.forEach(createDiv);
+}
+
+function createDiv(Element) {
 
 }

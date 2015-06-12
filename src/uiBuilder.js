@@ -8,6 +8,8 @@ var wheight = $(window).height(); //Grabs the screen's height
 var cellSize; //Global cell size variable
 var border; //Global border width variable
 var uniz = 0;
+var gamemode = ['Normal', 'Endless', 'Skipsmash', 'Paintstack'];
+var disposable;
 
 function gridBuilder(tl, br) {
 	//Fills the game grid
@@ -71,15 +73,15 @@ function genBar(classname) {
 	var bar = $('<div />');
 	var barbg = $('<div />')
 	var barfg = $('<div />');
-		barfg.css({
+	barfg.css({
 		'width': '100%',
 		'position': 'absolute',
 		'height': cellSize / 4,
 		'bottom': 0 - (cellSize / 4),
 		'left': '0',
 		'z-index': 129,
-		'border-left': 2*border + 'px solid rgb(51, 51, 51)',
-		'border-right': 2*border + 'px solid rgb(51, 51, 51)',
+		'border-left': 2 * border + 'px solid rgb(51, 51, 51)',
+		'border-right': 2 * border + 'px solid rgb(51, 51, 51)',
 		'border-bottom': 2 * border + 'px solid rgb(51, 51, 51)',
 		'box-sizing': 'border-box'
 	});
@@ -177,3 +179,4 @@ function reGrid(classname) {
 		'wraphash': hash
 	};
 }
+
