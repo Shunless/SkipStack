@@ -13,3 +13,11 @@ function zIndex() {
 	uniz +=1;
 	return uniz;
 }
+
+function arrayRotate(arr, reverse){
+  if(reverse)
+    arr.push(arr.shift());
+  else
+    arr.unshift(arr.pop());
+  return arr;
+}
