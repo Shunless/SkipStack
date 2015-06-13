@@ -11,7 +11,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
 // Active game type (string)
-var GameType = 'Normal';
+var GameType = gamemode[0];
 
 //beat refresh rate (number)
 var beatRate = 1000;
