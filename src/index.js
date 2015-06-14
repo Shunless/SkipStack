@@ -10,12 +10,14 @@
 //  4-$ PaintStack  #9 w/h beatlock
 //////////////////////////////////////////////////////////////////////////////
 
+var isMultiplayerEnabled = false;
+
 // Active game type (string)
 var GameType = gamemode[0];
 
 //beat refresh rate (number)
 var beatRate = 1000;
-//beat interval in %[0-Min, 100 Max] (string)
+//beat interval in %[0-Min, 100 Max] (number)
 var beatInterval = 0;
 
 var EnemyMoveTimeout = 0;
@@ -43,10 +45,11 @@ var gameStateRestarts = 0;
 //-----$ CLASSES $-----
 //-----$*********$-----
 
-var color;
-var grid;
-var actor;
-var enemy;
+var color;//color class instance
+var grid; //grid class instance
+var actor;//main actor instance
+var actor1;//second actor instance
+var enemy;//enemy class instance
 
 /*~~~~~$*********$~~~~~*/
 /*~~~~~$ CLASSES $~~~~~*/
@@ -65,8 +68,10 @@ var game;
 var justLost = true;
 //indicates if the grid has just being expanded(boolean)
 var justExpandedGrid = false;
-
+//curor control
 var cursors;
+
+var _W,_A,_S,_D;
 
 //$ preload function $
 function preload() {
@@ -99,6 +104,31 @@ function create() {
     cursors.up.onDown.add(function() {
       actor.move('top');
     }, this);
+
+    //If multiplayer is enabled enable 2nd player controls
+    if(isMultiplayerEnabled){
+      // W button
+      _W = game.input.keyboard.addKey(87);
+      _W.onDown.add(function() {
+        actor1.move('top');
+      }, this);
+      // S button
+      _S = game.input.keyboard.addKey(83);
+      _S.onDown.add(function() {
+        actor1.move('bottom');
+      }, this);
+      // A button
+      _A = game.input.keyboard.addKey(65);
+      _A.onDown.add(function() {
+        actor1.move('left');
+      }, this);
+      // D button
+      _D = game.input.keyboard.addKey(68);
+      _D.onDown.add(function() {
+        actor1.move('right');
+      }, this);
+
+    }
   }
   // Set up handlers for mouse events
   game.input.onDown.add(mouseDragStart, this);
@@ -121,40 +151,55 @@ function create() {
   //  Actor initialization
   //+++++++++++++++++++++++++++++
 
-  if (justLost === true)
-    actor = new Actor('#006400');
-  else {
-    var _O_ = actor._c;
-    actor = new Actor('#006400', grid.cell[_O_].HashId);
+  //multiplayer is enabed
+  if(isMultiplayerEnabled){
+    actor = new Actor('#006400','0-' + Math.floor(cellsCntY/2));
+
+    actor1 = new Actor('#006400', (cellsCntX-1) + '-' + Math.ceil(cellsCntY/2));
+
+    actor.init();
+    actor1.init();
+  } else {
+    if (justLost === true)
+      actor = new Actor('#006400');
+    else {
+      var _O_ = actor._c;
+      actor = new Actor('#006400', grid.cell[_O_].HashId);
+    }
+    actor.init();
   }
-  actor.init();
+
+
 
   //+++++++++++++++++++++++++++++
   //  Enemies initialization
   //+++++++++++++++++++++++++++++
 
-  for (var i = 0; i < 3 + gameStateRestarts; i++) {
-    var x = '';
-    if (randomBoolean[0]() == true) {
-      if (randomBoolean[0]() == true)
-        x = '0-' + getRandomInt(0, cellsCntY);
+  if(!isMultiplayerEnabled){
+    for (var i = 0; i < 3 + gameStateRestarts; i++) {
+      var x = '';
+      if (randomBoolean[0]() == true) {
+        if (randomBoolean[0]() == true)
+          x = '0-' + getRandomInt(0, cellsCntY);
+        else
+          x = getRandomInt(0, cellsCntX) + '-0';
+      } else {
+        if (randomBoolean[0]() == true)
+          x = (cellsCntX - 1) + '-' + getRandomInt(0, cellsCntY);
+        else
+          x = getRandomInt(0, cellsCntX) + '-' + (cellsCntY - 1);
+      }
+
+      if (grid.cell[grid.getCell(x)].type === 'Normal')
+        enemy.push(new Enemy(enemiesColor, x));
       else
-        x = getRandomInt(0, cellsCntX) + '-0';
-    } else {
-      if (randomBoolean[0]() == true)
-        x = (cellsCntX - 1) + '-' + getRandomInt(0, cellsCntY);
-      else
-        x = getRandomInt(0, cellsCntX) + '-' + (cellsCntY - 1);
+        i--;
     }
 
-    if (grid.cell[grid.getCell(x)].type === 'Normal')
-      enemy.push(new Enemy(enemiesColor, x));
-    else
-      i--;
-  }
+    for (var x = 0; x < enemy.length; x++)
+      enemy[x].init();
 
-  for (var x = 0; x < enemy.length; x++)
-    enemy[x].init();
+  }
 
   EnemyMoveTimeout = game.time.time + beatRate;
   justLost = justExpandedGrid = false;
@@ -187,17 +232,21 @@ function update() {
     movesHaveBeenStored = true;
   }
 
-  if (GameType === 'Normal' || GameType === 'Endless') {
-    //if user has killed all the enemies.
-    if (enemy.length === 0)
-      expand();
-  } else if (GameType === 'SkipSmash') {
-    if (enemy.length === 1)
-      expand();
-  } else if (GameType === 'PaintStack') {
-    //expand grid when over 70% of it is marked
-    if(Math.floor(actor.markedArea)>70)
-      expand();
+  if(!isMultiplayerEnabled){
+    if (GameType === 'Normal' || GameType === 'Endless') {
+      //if user has killed all the enemies.
+      if (enemy.length === 0)
+        expand();
+    } else if (GameType === 'SkipSmash') {
+      if (enemy.length === 1)
+        expand();
+    } else if (GameType === 'PaintStack') {
+      //expand grid when over 70% of it is marked
+      if(Math.floor(actor.markedArea)>70)
+        expand();
+    }
+  } else {
+
   }
 
   //calculate new inteval
