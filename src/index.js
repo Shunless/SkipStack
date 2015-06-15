@@ -70,8 +70,7 @@ var justLost = true;
 var justExpandedGrid = false;
 //curor control
 var cursors;
-
-var _W,_A,_S,_D;
+var WASDcursor;
 
 //$ preload function $
 function preload() {
@@ -107,27 +106,27 @@ function create() {
 
     //If multiplayer is enabled enable 2nd player controls
     if(isMultiplayerEnabled){
-      // W button
-      _W = game.input.keyboard.addKey(87);
-      _W.onDown.add(function() {
+      var a = new Array(87, 65, 68, 83);
+
+      var b = new Array('up', "left", "right", "down");
+
+      WASDcursor = game.input.keyboard.addKeys(a ,b);
+
+      WASDcursor.up.onDown.add(function() {
         actor1.move('top');
       }, this);
-      // S button
-      _S = game.input.keyboard.addKey(83);
-      _S.onDown.add(function() {
-        actor1.move('bottom');
-      }, this);
-      // A button
-      _A = game.input.keyboard.addKey(65);
-      _A.onDown.add(function() {
+
+      WASDcursor.left.onDown.add(function() {
         actor1.move('left');
       }, this);
-      // D button
-      _D = game.input.keyboard.addKey(68);
-      _D.onDown.add(function() {
+
+      WASDcursor.right.onDown.add(function() {
         actor1.move('right');
       }, this);
 
+      WASDcursor.down.onDown.add(function() {
+        actor1.move('bottom');
+      }, this);
     }
   }
   // Set up handlers for mouse events
