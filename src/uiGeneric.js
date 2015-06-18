@@ -21,3 +21,7 @@ function arrayRotate(arr, reverse){
     arr.unshift(arr.pop());
   return arr;
 }
+
+function getCoords(tlbr) {
+	return tlbr.split('-');	
+}

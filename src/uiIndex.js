@@ -19,8 +19,9 @@ $(document).ready(function() {
 });
 
 function createGame() {
-    var a = gridToFlipCard('4-1', '10-7', 'SkipStack');
 
+    var a = selectComplex('4-1', '10-7', 'SkipStack', ['.preview', '.prev', '.next', '.flipcard.modeselector']);
+    //var a = gridToFlipCard('4-1', '10-7', 'SkipStack');
     game = new Phaser.Game(Editor_Width, Editor_Height, Phaser.CANVAS, 'SkipStack', {
         preload: preload,
         create: create,
@@ -32,8 +33,9 @@ function createGame() {
 
 
     a.children('.back').attr('id', 'SkipStack');
+
     genBar('#SkipStack');
-    a = flip(a);
+    flip(a.not('.SkipStack>*'));
     setTimeout(function() {
         5
         FlipcardtoArea(a);
@@ -134,6 +136,7 @@ function createModeSelector() {
 
 
     setTimeout(function() {
+		//doubleSelector(selector)
         //FlipcardtoArea(selector);
         FlipcardtoArea(preview);
         FlipcardtoArea(next);
@@ -142,6 +145,17 @@ function createModeSelector() {
 
 }
 
+function doubleSelector(a) {
+	a.children('.front').remove();
+	a = a.children('.back');
+	var b = a.clone();
+	b.removeClass('back');
+	b.addClass('front');
+	b.css('backface-visibility','hidden')
+	a.after(b);
+	console.log(b)
+
+}
 
 function modeIndicator(container) {
     disposable = container;
