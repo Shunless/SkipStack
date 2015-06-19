@@ -76,7 +76,6 @@ function flip(jqtoflip, back) {
 
     var rotations = jqtoflip.data('rotation');
     var rotDegrees;
-    console.log(rotations)
 
     if (back) {
         rotDegrees = (180 * Number(rotations) - 180);
@@ -143,7 +142,6 @@ function selectComplex(topleft, bottomright, newclassname, areas) {
     var tl = getCoords(topleft);
 
     areas.forEach(function(value) {
-        //console.log(value, tl);
         redArea($(value), Number(tl[0]-1)*cellSize, Number(tl[1]-1)*cellSize);
         b = b.append($(value));
     });

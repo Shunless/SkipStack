@@ -59,7 +59,6 @@ function gridToFlipCard(topleft, bottomright, classname) {
 }
 
 
-
 function FlipcardtoArea(flipcard) {
     flipcard.children('.front').remove();
     var top = flipcard.css('top');
@@ -86,8 +85,6 @@ function FlipcardtoArea(flipcard) {
 
 
 function areaToGrid(classname) {
-
-
     //Get properties out of the new grid container
     regrid = reGrid(classname);
     var grid = regrid.wrap;
@@ -150,4 +147,3 @@ function FlipcardtoGrid(flipcard) {
     var grid = flipcard.children();
     grid.unwrap()
 }
-

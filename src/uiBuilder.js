@@ -8,7 +8,7 @@ var wheight = $(window).height(); //Grabs the screen's height
 var cellSize; //Global cell size variable
 var border; //Global border width variable
 var uniz = 0;
-var gamemode = ['Normal', 'Endless', 'Skipsmash', 'Paintstack'];
+var gamemode = ['Normal', 'Endless', 'SkipSmash', 'PaintStack'];
 var disposable;
 
 function gridBuilder(tl, br) {
@@ -183,6 +183,7 @@ function reGrid(classname) {
 function createBlock() {
     var a = $('<div />');
     var width = Math.floor(cellSize * 2.5);
+
     a.css({
         'background-color': '#ffffff',
         'border': border * 2 + 'px solid #000000',
@@ -193,11 +194,45 @@ function createBlock() {
         '-moz-box-shadow': '0px 0px 25px 3px rgba(0,0,0,0.51)',
         'box-shadow': '0px 0px 25px 3px rgba(0,0,0,0.51)'
     });
+
     var hash = hashId();
     a.addClass(hash + ' center');
-    a.appendTo('body')
+    a.appendTo('body');
+
     return {
         'block': a,
         'hash': hash
     };
+}
+
+
+/*******************************/
+/********** Ingame UI **********/
+/*******************************/
+
+function uiCell(size, l, cont, fluff) {
+    this.size = size;
+    this.left = l;
+    this.content = cont;
+    this.text = fluff;
+
+    this.generate = function() {
+        this.tl = getCoords(this.left);
+        this.br = [this.tl[0], (this.tl[1] + this.size)];
+        this.class = 'cls_' + this.text;
+        this.flipcard = gridToFlipCard(this.tl[0] + '-' + this.tl[1], this.br[0] + '-' + this.br[1], this.class);
+
+        this.area = this.flipcard.children('.back');
+        this.area.css({
+            'background-color': '#ffffff',
+            'border': border + 'px solid #000000',
+            'box-sizing': 'border-box'
+        });
+        injectText(this.text, this.area);
+
+        this.flip = function() {
+            flip(this.flipcard);
+        };
+    };
+
 }

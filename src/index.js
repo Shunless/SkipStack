@@ -13,7 +13,7 @@
 var isMultiplayerEnabled = false;
 
 // Active game type (string)
-var GameType = gamemode[0];
+var GameType;// = gamemode[0];
 
 //beat refresh rate (number)
 var beatRate = 1000;
@@ -251,10 +251,9 @@ function update() {
   //calculate new inteval
   beatInterval = Math.round(((EnemyMoveTimeout - game.time.time) / beatRate) * 100);
 
-	//Function recalculates newline size on every beat
-	recalcBar();
-
   timeSinceLevelLoad = Math.round((game.time.now - LoadTime) / 1000);
+	
+  updateUi()
 }
 
 /*** newline size calculation moved here in order to fix compatibility issues ***/

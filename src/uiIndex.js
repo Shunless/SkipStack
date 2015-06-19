@@ -19,9 +19,14 @@ $(document).ready(function() {
 });
 
 function createGame() {
-
+	
+	//Inject gamemode first value to GameType variable
+    GameType = gamemode[0];
+	
+	//Make a flipcard div spanning 4-1 and 10-7 including areas
     var a = selectComplex('4-1', '10-7', 'SkipStack', ['.preview', '.prev', '.next', '.flipcard.modeselector']);
-    //var a = gridToFlipCard('4-1', '10-7', 'SkipStack');
+	
+	//Create game object
     game = new Phaser.Game(Editor_Width, Editor_Height, Phaser.CANVAS, 'SkipStack', {
         preload: preload,
         create: create,
@@ -30,7 +35,6 @@ function createGame() {
         maxWidth: 7 * cellSize,
         maxHeight: 7 * cellSize
     });
-
 
     a.children('.back').attr('id', 'SkipStack');
 
@@ -136,7 +140,7 @@ function createModeSelector() {
 
 
     setTimeout(function() {
-		//doubleSelector(selector)
+        //doubleSelector(selector)
         //FlipcardtoArea(selector);
         FlipcardtoArea(preview);
         FlipcardtoArea(next);
@@ -146,14 +150,14 @@ function createModeSelector() {
 }
 
 function doubleSelector(a) {
-	a.children('.front').remove();
-	a = a.children('.back');
-	var b = a.clone();
-	b.removeClass('back');
-	b.addClass('front');
-	b.css('backface-visibility','hidden')
-	a.after(b);
-	console.log(b)
+    a.children('.front').remove();
+    a = a.children('.back');
+    var b = a.clone();
+    b.removeClass('back');
+    b.addClass('front');
+    b.css('backface-visibility', 'hidden')
+    a.after(b);
+    console.log(b)
 
 }
 
@@ -169,14 +173,12 @@ function createDiv(Element) {
 
 function nextMode() {
     arrayRotate(gamemode, true);
-    console.log(gamemode);
     $('.back.modeselector > div').text(gamemode[0]);
     $('.preview > div').text('[' + gamemode[0] + ' preview]');
 }
 
 function prevMode() {
     arrayRotate(gamemode);
-    console.log(gamemode);
     $('.back.modeselector > div').text(gamemode[0]);
     $('.preview > div').text('[' + gamemode[0] + ' preview]');
 }

@@ -4,24 +4,29 @@
  */
 function addScript(url) {
     $.getScript(url, function() {
-		console.log('loaded ' + url);
-		return false;
+        console.log('loaded ' + url);
+        return false;
     })
 }
 
 function zIndex() {
-	uniz +=1;
-	return uniz;
+    uniz += 1;
+    return uniz;
 }
 
-function arrayRotate(arr, reverse){
-  if(reverse)
-    arr.push(arr.shift());
-  else
-    arr.unshift(arr.pop());
-  return arr;
+function arrayRotate(arr, reverse) {
+    if (reverse)
+        arr.push(arr.shift());
+    else
+        arr.unshift(arr.pop());
+    return arr;
 }
 
 function getCoords(tlbr) {
-	return tlbr.split('-');	
+    return [Number(tlbr.split('-')[0]), Number(tlbr.split('-')[1])];
+}
+
+function updateUi() {
+    //Function recalculates newline size on every beat
+    recalcBar();
 }
