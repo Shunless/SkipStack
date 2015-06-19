@@ -36,7 +36,7 @@ Actor.prototype.init = function() {
 };
 
 Actor.prototype.move = function(SwipeType) {
-  //////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 // NORMAL & ENDLESS & PAINTSTACK GAME TYPE  //////////////////////////////////////////////////////////////////////////////
   if (GameType !== 'SkipSmash') {
 
@@ -65,7 +65,7 @@ Actor.prototype.move = function(SwipeType) {
         break;
     }
   }
-  //////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 // SKIPSMASH GAME TYPE
 //////////////////////////////////////////////////////////////////////////////
   else {
@@ -140,7 +140,7 @@ Actor.prototype.makeMove = function(dir, z) {
       if(!grid.cell[this._c].isMarked){
         this.markedArea += (1/(cellsCntX*cellsCntY))*100;
         //parse color to genColor for backup purpose
-        grid.cell[this._c].genColor = color.generateHexColor();
+        grid.cell[this._c].genColor = color.genetaHSLColor();
         grid.cell[this._c].isMarked = true;//mark the cell as painted
       }
       grid.cell[this._c].setColor(this.color);
