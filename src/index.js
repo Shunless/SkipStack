@@ -251,12 +251,6 @@ function update() {
   //calculate new inteval
   beatInterval = Math.round(((EnemyMoveTimeout - game.time.time) / beatRate) * 100);
 
-<<<<<<< HEAD
-=======
-  //Function recalculates newline size on every beat
-  recalcBar();
-
->>>>>>> origin/master
   timeSinceLevelLoad = Math.round((game.time.now - LoadTime) / 1000);
 	
   updateUi()
