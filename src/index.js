@@ -251,6 +251,12 @@ function update() {
   //calculate new inteval
   beatInterval = Math.round(((EnemyMoveTimeout - game.time.time) / beatRate) * 100);
 
+<<<<<<< HEAD
+=======
+  //Function recalculates newline size on every beat
+  recalcBar();
+
+>>>>>>> origin/master
   timeSinceLevelLoad = Math.round((game.time.now - LoadTime) / 1000);
 	
   updateUi()
@@ -316,8 +322,10 @@ function expand() {
     gameStateRestarts++;
 
     //increment cells by 1 if enemies > ceil(cells/2)
-    if ((3 + gameStateRestarts) > Math.ceil(cellsCntX / 2))
-      cellsCntY = ++cellsCntX;
+    if ((3 + gameStateRestarts) > Math.ceil(cellsCntX / 1.5)){
+      cellsCntY = cellsCntX +=2;
+      justLost = true;
+    }
 
     game.state.start(game.state.current);
   }
@@ -326,8 +334,8 @@ function expand() {
     justLost = true;
     gameStateRestarts++;
 
-    //increment cells by 1 if enemies > ceil(cells/2)
-    if ((3 + gameStateRestarts) > Math.ceil(cellsCntX / 2))
+    //increment cells by 2 if enemies > cells
+    if ((3 + gameStateRestarts) > cellsCntX )
       cellsCntY = ++cellsCntX;
 
     game.state.start(game.state.current);
