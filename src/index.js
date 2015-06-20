@@ -243,6 +243,32 @@ function update() {
       //expand grid when over 70% of it is marked
       if(Math.floor(actor.markedArea)>70)
         expand();
+      else if(enemy.length === 0){
+
+        for (var i = 0; i <Math.ceil((gameStateRestarts+1)/2); i++) {
+          var x = '';
+          if (randomBoolean[0]() == true) {
+            if (randomBoolean[0]() == true)
+              x = '0-' + getRandomInt(0, cellsCntY);
+            else
+              x = getRandomInt(0, cellsCntX) + '-0';
+          } else {
+            if (randomBoolean[0]() == true)
+              x = (cellsCntX - 1) + '-' + getRandomInt(0, cellsCntY);
+            else
+              x = getRandomInt(0, cellsCntX) + '-' + (cellsCntY - 1);
+          }
+
+          if (grid.cell[grid.getCell(x)].type === 'Normal')
+            enemy.push(new Enemy(enemiesColor, x));
+          else
+            i--;
+        }
+
+        for (var x = 0; x < enemy.length; x++)
+          enemy[x].init();
+        }
+
     }
   } else {
 
