@@ -11,14 +11,14 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%)!important;;
     perspective: 800px;
 }
 .centered {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%)!important;;
     perspective: 800px;
 }
 html {
