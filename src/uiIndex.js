@@ -19,6 +19,16 @@ $(document).ready(function() {
     createModeSelector()
 });
 
+function prepGame() {
+	//Visually prepares the game area
+	prepCell()
+	$('.gamecont').css({
+		'border': border + 'px solid #bbb',
+		'width': cellSize * 7,
+		'height': cellSize * 13
+	});
+}
+
 function createGame() {
 	
 	//Inject gamemode first value to GameType variable
