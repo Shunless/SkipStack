@@ -12,6 +12,7 @@ $(document).ready(function() {
     addScript('src/Actor.js');
     addScript('src/Enemy.js');
     addScript('src/Assets/Tunes.js');
+    addScript('src/Assets/Shaders.js');
     addScript('src/Grid.js');
     addScript('src/Color.js');
     addScript('src/index.js');
@@ -27,11 +28,10 @@ function createGame() {
     var a = selectComplex('4-1', '10-7', 'SkipStack', ['.preview', '.prev', '.next', '.flipcard.modeselector']);
 	
 	//Create game object
-    game = new Phaser.Game(Editor_Width, Editor_Height, Phaser.CANVAS, 'SkipStack', {
+    game = new Phaser.Game(Editor_Width, Editor_Height, Phaser.AUTO, 'SkipStack', {
         preload: preload,
         create: create,
         update: update,
-        render: render,
         maxWidth: 7 * cellSize,
         maxHeight: 7 * cellSize
     });

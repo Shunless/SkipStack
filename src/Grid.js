@@ -65,7 +65,7 @@ Grid.prototype.getCell = function(_id) {
 
 //render the grid on the screen
 Grid.prototype.render = function() {
-  game.debug.geom(this.grid, this.c);
+  //game.debug.geom(this.grid, this.c);
 
   for (var i = 0; i < this.cell.length; i++) {
     this.cell[i].render();

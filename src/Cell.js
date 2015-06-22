@@ -32,6 +32,8 @@ function Cell(_posX, _posY, _name, _color) {
   this.type = 'Normal';
   this.isMarked = false;
 
+  this.isFilterEnabled = false;
+
   //if gametype is PaintStack cells ll keep a special
   //value indicating their generated color\
   this.genColor = '#000';
@@ -50,12 +52,24 @@ Cell.prototype.setCellType = function(_type) {
 
 /*   CELL RENDER FUNCTION   */
 Cell.prototype.render = function() {
-  game.debug.geom(this.rect, this.color);
+  if(!this.isFilterEnabled)
+    game.debug.geom(this.rect, this.color);
 };
 
 /*   SET CELL COLOR   */
 Cell.prototype.setColor = function(_clr) {
   this.color = _clr;
+};
+
+/*   ENABLE FILTER   */
+Cell.prototype.EnableFilter = function(_clr) {
+  this.isFilterEnabled = true;
+
+  this.rect = game.add.sprite(this.positionX, this.positionY);
+  this.rect.width = cellWidth;
+  this.rect.height = cellHeight;
+
+  this.rect.filters = [ filter ];
 };
 
 /*   CHECK CELL  */

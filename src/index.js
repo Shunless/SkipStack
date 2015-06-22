@@ -12,6 +12,8 @@
 
 var isMultiplayerEnabled = false;
 
+var filter;
+
 // Active game type (string)
 var GameType;// = gamemode[0];
 
@@ -84,6 +86,10 @@ function preload() {
 }
 //$ create function $
 function create() {
+
+
+    filter = new Phaser.Filter(game, null, fragmentSrc);
+    filter.setResolution(Editor_Width, Editor_Height);
   //For *not* mobile devices
   if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     //  And some controls to play the game with keyboard
@@ -207,6 +213,9 @@ function create() {
 
 // GAME LOOP
 function update() {
+  filter.update();
+  //draws cells and grid $ 1st Draw Call $
+  grid.render();
   if (game.time.time > EnemyMoveTimeout) {
 
     for (var i = 0; i < enemy.length; i++)
@@ -279,7 +288,8 @@ function update() {
 
   timeSinceLevelLoad = Math.round((game.time.now - LoadTime) / 1000);
 	
-  updateUi()
+  updateUi();
+  render();
 }
 
 /*** newline size calculation moved here in order to fix compatibility issues ***/
@@ -299,8 +309,7 @@ function recalcBar() {
 
 //RENDER LOOP
 function render() {
-  //draws cells and grid $ 1st Draw Call $
-  grid.render();
+
   //debug text draw calls
   game.debug.text('grid: ' + cellsCntX + '-' + cellsCntY, 3, 14, '#b1ff00');
   game.debug.text('enemies: ' + enemy.length, 3, 27, '#b1ff00');
