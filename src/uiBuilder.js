@@ -87,23 +87,24 @@ function compareSize() {
 }
 
 function genBar(classname) {
-	var bar = $('<div />');
-	var barbg = $('<div />')
-	var barfg = $('<div />');
-	barfg.css({
+	this.bar = $('<div />');
+	this.barbg = $('<div />');
+	this.barfg = $('<div />');
+
+	this.barfg.css({
 		'width': '100%',
 		'position': 'absolute',
 		'height': cellSize / 4,
 		'bottom': 0 - (cellSize / 4),
 		'left': '0',
 		'z-index': 129,
-		'border-left': 2 * border + 'px solid rgb(51, 51, 51)',
-		'border-right': 2 * border + 'px solid rgb(51, 51, 51)',
-		'border-bottom': 2 * border + 'px solid rgb(51, 51, 51)',
+		'border-left': 2 * border + 'px solid rgb(0, 0, 0)',
+		'border-right': 2 * border + 'px solid rgb(0, 0, 0)',
+		'border-bottom': 2 * border + 'px solid rgb(0, 0, 0)',
 		'box-sizing': 'border-box'
 	});
 
-	barbg.css({
+	this.barbg.css({
 		'background-color': 'rgb(255, 255, 255)',
 		'width': '100%',
 		'position': 'absolute',
@@ -114,8 +115,8 @@ function genBar(classname) {
 
 	});
 
-	bar.addClass('bar');
-	bar.css({
+	this.bar.addClass('bar');
+	this.bar.css({
 		'background-color': 'rgb(0, 128, 0)',
 		'width': '100%',
 		'position': 'absolute',
@@ -125,9 +126,10 @@ function genBar(classname) {
 		'z-index': 128,
 
 	});
-	bar.appendTo($(classname));
-	barbg.appendTo($(classname));
-	barfg.appendTo($(classname));
+
+	this.bar.appendTo($(classname));
+	this.barbg.appendTo($(classname));
+	this.barfg.appendTo($(classname));
 }
 
 
