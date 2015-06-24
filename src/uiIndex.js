@@ -2,7 +2,8 @@
  * @author Ρωμανός Μουρίκης
  * @copyright 2015 Shunless Studio.
  */
-$(document).ready(function() {
+
+$(document).ready(function () {
 	compareSize();
 	gridBuilder('1-1', '13-7');
 	prepGame();
@@ -17,6 +18,8 @@ $(document).ready(function() {
 	addScript('src/Color.js');
 	addScript('src/index.js');
 	createModeSelector();
+
+
 });
 
 function prepGame() {
@@ -29,14 +32,14 @@ function prepGame() {
 	});
 }
 
-function createGame() {
+function createGame(callback) {
 
 	//Inject gamemode first value to GameType variable
 	GameType = gamemode[0];
 
 	//Make a flipcard div spanning 4-1 and 10-7 including areas
-	var a = selectComplex('4-1', '10-7', 'SkipStack', ['.preview', '.prev', '.next', '.flipcard.modeselector']);
-
+	var a = selectComplex('4-1', '10-7', 'SkipStack', ['.preview', '.prev', '.next', '.modeselector']);
+	a.children('.back').attr('id', 'SkipStack');
 	//Create game object
 	game = new Phaser.Game(Editor_Width, Editor_Height, Phaser.AUTO, 'SkipStack', {
 		preload: preload,
@@ -46,14 +49,14 @@ function createGame() {
 		maxHeight: 7 * cellSize
 	});
 
-	a.children('.back').attr('id', 'SkipStack');
-
 	var bar = genBar('#SkipStack');
 
 	flip(a.not('.SkipStack>*'));
 	setTimeout(function () {
 		FlipcardtoArea(a);
-	}, 1000);
+	}, 500);
+
+	return a;
 }
 
 function createPlayButton() {
@@ -114,11 +117,8 @@ function createModeSelector() {
 		nextMode();
 	});
 
-	//createButton('10-1', 'prev');
-	//createButton('10-7', 'next');
-	var selector = gridToFlipCard('10-2', '10-6', 'modeselector').click(function () {
-		createGame();
-	});
+	var selector = gridToFlipCard('10-2', '10-6', 'modeselector');
+
 	var preview = gridToFlipCard('4-2', '7-6', 'preview');
 
 	selector.children('.back').css({
@@ -148,47 +148,54 @@ function createModeSelector() {
 	}, 100);
 	selector = flip(selector);
 
-
 	setTimeout(function () {
 		//doubleSelector(selector)
-		//FlipcardtoArea(selector);
-		FlipcardtoArea(preview);
-		FlipcardtoArea(next);
-		FlipcardtoArea(prev);
+		selector = FlipcardtoArea(selector, handleGameCreate);
+		preview = FlipcardtoArea(preview, handlePreview);
+		next = FlipcardtoArea(next);
+		prev = FlipcardtoArea(prev);
 	}, 1000);
 
 }
 
-function doubleSelector(a) {
-	a.children('.front').remove();
-	a = a.children('.back');
-	var b = a.clone();
-	b.removeClass('back');
-	b.addClass('front');
-	b.css('backface-visibility', 'hidden')
-	a.after(b);
-	console.log(b)
-
+function handlePreview() {
+	disp = doubleAreaFlipcard(disp, 'preview')
+	injectText('disp', disp.children('.back'));
 }
 
-function modeIndicator(container) {
-	disposable = container;
-	gamemode.forEach(createDiv);
+function handleGameCreate() {
+	disp = doubleAreaFlipcard(disp, 'modeselector')
+	injectText('disp', disp.children('.back'));
+	disp.click(function () {
+		createGame();
+	});
 }
 
-function createDiv(Element) {
-
+function flipSelector(obj, newtext, rot) {
+	if (obj.data('face') == 'front') {
+		obj.data('face', 'back');
+		obj.children('.back > div').text(newtext);
+	} else {
+		obj.data('face', 'front');
+		obj.children('.front > div').text(newtext);
+	}
+	flip(obj.not('.flipcard > *'), rot);
 }
-
 
 function nextMode() {
 	arrayRotate(gamemode, true);
-	$('.back.modeselector > div').text(gamemode[0]);
-	$('.preview > div').text('[' + gamemode[0] + ' preview]');
+	setTimeout(function () {
+		flipSelector($('.preview'), ('[' + gamemode[0] + ' preview]'));
+
+	}, 50);
+	flipSelector($('.modeselector'), gamemode[0]);
 }
 
 function prevMode() {
 	arrayRotate(gamemode);
-	$('.back.modeselector > div').text(gamemode[0]);
-	$('.preview > div').text('[' + gamemode[0] + ' preview]');
+	setTimeout(function () {
+		flipSelector($('.preview'), ('[' + gamemode[0] + ' preview]'), true);
+	}, 50);
+	flipSelector($('.modeselector'), gamemode[0], true);
+
 }

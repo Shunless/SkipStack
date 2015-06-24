@@ -14,18 +14,23 @@ var disp; //Temporary variable ment for setter-getter relationships
 //  Create the game grid  \\
 //========================\\
 
+
 function gridBuilder(tl, br) {
 	//Creates basic game grid - arguements are top left (tl), bottom right (br) cell coordinates
 
 	var cellection = $(''); //Will contain the game grid by return
 
-	var x = getCoords(tl)[0] - 1, //Defines the first vertical cell - reduced by one to account for index change (from 1 to 0)
-		y = getCoords(tl)[1] - 1, //Defines the first horizontal cell
-		a = getCoords(br)[0], //Defines the last vertical cell
-		b = getCoords(br)[1]; //Defines the last horizontal cell
+	var coords = new extractCoords(tl, br);
+	coords.top--; // reduced by one to account for index change (from 1 to 0)
+	coords.left--; // reduced by one to account for index change (from 1 to 0)
+	/* (coords) object contains values for all four diametrical cells
+	this.top defines the first vertical cell
+	this.left defines the first horizontal cell
+	this.bottom defines the last vertical cell
+	this.right defines the last horizontal cell*/
 
-	for (; x < a; x++) { //Runs row creation function for every column
-		cellection = rowCreator(x, y, b, cellection); //Returns (cellection) with a new unique row until the full grid is formed
+	for (; coords.top < coords.bottom; coords.top++) { //Runs row creation function for every column
+		cellection = rowCreator(coords.top, coords.left, coords.right, cellection); //Returns (cellection) with a new unique row until the full grid is formed
 	}
 
 	return cellection; //Returns full grid
