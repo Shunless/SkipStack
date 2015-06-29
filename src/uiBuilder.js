@@ -62,13 +62,18 @@ function rowCreator(x, y, b, cellection) {
 	return cellection; //Returns (cellection) with a new unique row
 }
 
-function prepCell() { //Adds global css attributes to each cell
-
-	$('.cell').css({
-		'border': border + 'px solid #bbb',
-		'width': cellSize,
-		'height': cellSize
-	});
+function prepCell(tl, br) {
+	//Adds global css attributes to each cell
+	var a = new extractCoords(tl, br);
+	for (x = a.top; x <= a.bottom; x++) {
+		for (y = a.left; y <= a.right; y++) {
+			$('.cell#' + x + '-' + y).css({
+				'border': border + 'px solid #bbb',
+				'width': cellSize,
+				'height': cellSize
+			});
+		};
+	};
 }
 
 function compareSize() {
@@ -240,10 +245,12 @@ function uiCell(size, l, cont, fluff) {
 	this.left = l;
 	this.content = cont;
 	this.text = fluff;
+	this.rendered = false;
 
 	this.generate = function () {
+		this.rendered = true;
 		this.tl = getCoords(this.left);
-		this.br = [this.tl[0], (this.tl[1] + this.size)];
+		this.br = [this.tl[0], (this.tl[1] + (this.size - 1))];
 		this.class = 'cls_' + this.text;
 		this.flipcard = gridToFlipCard(this.tl[0] + '-' + this.tl[1], this.br[0] + '-' + this.br[1], this.class);
 
@@ -254,6 +261,13 @@ function uiCell(size, l, cont, fluff) {
 			'box-sizing': 'border-box'
 		});
 		injectText(this.text, this.area);
+
+		this.text = function (arg) {
+			if (arg !== undefined) {
+				this.area.children('div').text(arg);
+			}
+			return this.area.children('div').text();
+		};
 
 		this.flip = function () {
 			flip(this.flipcard);

@@ -29,6 +29,10 @@ function getCoords(tlbr) {
 function updateUi() {
 	//Function recalculates newline size on every beat
 	recalcBar();
+
+	if (enemiesBar.rendered) {
+		enemiesBar.text(enemy.length);
+	}
 }
 
 function extractCoords(tl, br) {

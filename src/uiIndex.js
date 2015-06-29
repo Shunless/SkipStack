@@ -18,13 +18,11 @@ $(document).ready(function () {
 	addScript('src/Color.js');
 	addScript('src/index.js');
 	createModeSelector();
-
-
 });
 
 function prepGame() {
 	//Visually prepares the game area
-	prepCell();
+	prepCell('1-1', '13-7');
 	$('.gamecont').css({
 		'border': border + 'px solid #bbb',
 		'width': cellSize * 7,
@@ -51,10 +49,17 @@ function createGame(callback) {
 
 	var bar = genBar('#SkipStack');
 
+	enemiesBar.generate();
+
 	flip(a.not('.SkipStack>*'));
 	setTimeout(function () {
 		FlipcardtoArea(a);
 	}, 500);
+	setTimeout(function () {enemiesBar.flip()}, 300);
+
+	if (callback !== undefined) {
+		callback();
+	};
 
 	return a;
 }
@@ -199,3 +204,9 @@ function prevMode() {
 	flipSelector($('.modeselector'), gamemode[0], true);
 
 }
+
+//========================\\
+//       In-game ui       \\
+//========================\\
+
+var enemiesBar = new uiCell(2, '2-1', 'enemies', 'en');
