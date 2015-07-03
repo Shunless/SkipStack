@@ -86,7 +86,7 @@ function preload() {
 }
 //$ create function $
 function create() {
-  filter = new Phaser.Filter(game, null, get_loadingShader());
+  filter = new Phaser.Filter(game, null, get_loadingCellShader2());
   filter.setResolution(Editor_Width, Editor_Height);
   //For *not* mobile devices
   if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
