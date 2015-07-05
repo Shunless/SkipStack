@@ -55,11 +55,11 @@ function createGame(callback) {
 	setTimeout(function () {
 		FlipcardtoArea(a);
 	}, 500);
-	setTimeout(function () {enemiesBar.flip()}, 300);
+	setTimeout(function () {enemiesBar.flip();}, 300);
 
 	if (callback !== undefined) {
 		callback();
-	};
+	}
 
 	return a;
 }
@@ -78,7 +78,7 @@ function createTextCont(span, text) {
 		'text-align': 'center',
 		'font-size': 0.8 * cellSize + 'px',
 		'position': 'fixed',
-		'position': 'relative',
+
 		'top': '50%',
 		'transform': 'translateY(-50%)'
 	});
@@ -103,15 +103,15 @@ function injectText(text, container) {
 }
 
 function createModeSelector() {
-	var prev = gridToFlipCard('10-1', '10-1', 'prev')
-	var next = gridToFlipCard('10-7', '10-7', 'next')
+	var prev = gridToFlipCard('10-1', '10-1', 'prev');
+	var next = gridToFlipCard('10-7', '10-7', 'next');
 
 	prev.children('.back').css({
 		'box-sizing': 'border-box',
 		'background-color': '#ffffff',
 		'border': border + 'px solid rgb(0, 0, 0)'
 	}).click(function () {
-		prevMode()
+		prevMode();
 	});
 
 	next.children('.back').css({
@@ -164,12 +164,12 @@ function createModeSelector() {
 }
 
 function handlePreview() {
-	disp = doubleAreaFlipcard(disp, 'preview')
+	disp = doubleAreaFlipcard(disp, 'preview');
 	injectText('disp', disp.children('.back'));
 }
 
 function handleGameCreate() {
-	disp = doubleAreaFlipcard(disp, 'modeselector')
+	disp = doubleAreaFlipcard(disp, 'modeselector');
 	injectText('disp', disp.children('.back'));
 	disp.click(function () {
 		createGame();

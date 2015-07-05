@@ -14,7 +14,7 @@ function selectCell(cellCoords) {
 	//Inputs the coordinates of a single cell
 	var x = cellCoords.split('-')[0];
 	var y = cellCoords.split('-')[1];
-	return $('#' + x + '-' + y)
+	return $('#' + x + '-' + y);
 }
 
 function selectRow(x) {
@@ -72,7 +72,7 @@ function flip(jqtoflip, back, callback) {
 
 	if (jqtoflip.data('rotation') === undefined) {
 		jqtoflip.data('rotation', 0);
-	};
+	}
 
 	var rotations = jqtoflip.data('rotation');
 	var rotDegrees;
@@ -90,13 +90,13 @@ function flip(jqtoflip, back, callback) {
 		rotateY: rotDegrees + 'deg'
 	});
 
-	jqtoflip.data('rotation', rotations)
+	jqtoflip.data('rotation', rotations);
 
-	if (callback != undefined) {
+	if (callback !== undefined) {
 		callback(jqtoflip, callback);
-	};
+	}
 
-	return jqtoflip
+	return jqtoflip;
 
 }
 

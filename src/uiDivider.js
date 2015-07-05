@@ -34,7 +34,7 @@ function gridToFlipCard(topleft, bottomright, classname) {
 		'height': height
 	});
 
-	var wrapper = $('<div />')
+	var wrapper = $('<div />');
 	wrapper.css({
 		'position': 'absolute',
 		'top': top + 'px',
@@ -82,10 +82,10 @@ function FlipcardtoArea(flipcard, callback) {
 
 	flipcard.unwrap();
 
-	if (callback != undefined) {
+	if (callback !== undefined) {
 		disp = flipcard;
 		callback();
-	};
+	}
 
 
 	return flipcard;
@@ -94,10 +94,9 @@ function FlipcardtoArea(flipcard, callback) {
 
 function areaToGrid(classname) {
 	//Get properties out of the new grid container
-	regrid = reGrid(classname);
+	var regrid = reGrid(classname);
 	var grid = regrid.wrap;
 	var gridhash = regrid.wraphash;
-	delete regrid;
 	grid.addClass('back');
 
 	//Add hashid to area
@@ -107,10 +106,9 @@ function areaToGrid(classname) {
 	area.addClass('front');
 
 	//Gather coords
-	tl = area.data('tl');
+	var tl = area.data('tl');
 	var top = (tl.split('-')[0] - 1) * cellSize;
 	var left = (tl.split('-')[1] - 1) * cellSize;
-	delete tl;
 
 	//Redirect grid
 	redGrid(grid, top, left);
@@ -130,7 +128,7 @@ function areaToGrid(classname) {
 		'height': area.css('height'),
 		'z-index': zIndex()
 	});
-	wrapper.addClass('flipcard ' + classname)
+	wrapper.addClass('flipcard ' + classname);
 	wrapper.attr({
 		'data-tl': area.data('tl'),
 		'data-br': area.data('br')
@@ -153,7 +151,7 @@ function FlipcardtoGrid(flipcard) {
 
 	flipcard.unwrap();
 	var grid = flipcard.children();
-	grid.unwrap()
+	grid.unwrap();
 }
 
 function doubleAreaFlipcard(area, classname) {

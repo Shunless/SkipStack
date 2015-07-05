@@ -56,7 +56,7 @@ function rowCreator(x, y, b, cellection) {
 
 		domCont.append(newcell); //Appends each cell to the DOM
 
-		cellection = cellection.add('#' + Number(x + 1) + '-' + Number(y + 1)) //Creates a jQuery object pointing to the new cell in the dom and adds it to (cellection)
+		cellection = cellection.add('#' + Number(x + 1) + '-' + Number(y + 1)); //Creates a jQuery object pointing to the new cell in the dom and adds it to (cellection)
 	}
 
 	return cellection; //Returns (cellection) with a new unique row
@@ -72,8 +72,8 @@ function prepCell(tl, br) {
 				'width': cellSize,
 				'height': cellSize
 			});
-		};
-	};
+		}
+	}
 }
 
 function compareSize() {
@@ -171,7 +171,7 @@ function createArea(topleft, bottomright, classname) {
 function createButton(loc, icon) {
 	//Adds any FontAwsome character in a selected cell
 	var playicon = $('<div class="' + icon + '"></div>');
-	$('#' + loc).css('border-color', '#000').append(playicon)
+	$('#' + loc).css('border-color', '#000').append(playicon);
 
 	return $('#' + loc);
 }
@@ -192,8 +192,8 @@ function reGrid(classname) {
 	//Create wrapper div
 	var wrap = $('<div />');
 	wrap.addClass(hash);
-	wrap.css('width', (right - left + 1) * cellSize) + 'px';
-	wrap.css('height', (bottom - top + 1) * cellSize) + 'px';
+	wrap.css('width', (right - left + 1) * cellSize + 'px');
+	wrap.css('height', (bottom - top + 1) * cellSize + 'px') ;
 
 	//Conjoin
 	var wrapper = newgrid.wrapAll(wrap);
@@ -291,6 +291,6 @@ function vibCreate(cls, opt, tmt) {
 		this.shVib = function () {
 			console.log(this);
 			setTimeout(this.vibStop, tmt);
-		}
-	};
+		};
+	}
 }
