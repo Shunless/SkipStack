@@ -30,9 +30,7 @@ function updateUi() {
 	//Function recalculates newline size on every beat
 	recalcBar();
 
-	if (enemiesBar.rendered) {
-		enemiesBar.text(enemy.length);
-	}
+	indicator.refresh();
 }
 
 function extractCoords(tl, br) {

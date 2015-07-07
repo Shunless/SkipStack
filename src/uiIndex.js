@@ -35,6 +35,17 @@ function createGame(callback) {
 	//Inject gamemode first value to GameType variable
 	GameType = gamemode[0];
 
+	if (gamemode[0] === 'PaintStack') {
+		indicator = new uiCell(2, '2-1', 'enemies', 'en', function () {
+			return Math.floor(actor.markedArea) + '%'
+		});
+	} else {
+		indicator = new uiCell(2, '2-1', 'enemies', 'en', function () {
+			return enemy.length
+		});
+	}
+
+
 	//Make a flipcard div spanning 4-1 and 10-7 including areas
 	var a = selectComplex('4-1', '10-7', 'SkipStack', ['.preview', '.prev', '.next', '.modeselector']);
 	a.children('.back').attr('id', 'SkipStack');
@@ -49,13 +60,23 @@ function createGame(callback) {
 
 	var bar = genBar('#SkipStack');
 
-	enemiesBar.generate();
+	if (gamemode[0] === 'PaintStack') {
+		indicator.refresh = function () {
+			if (indicator.rendered) {
+				this.text(Math.floor(actor.markedArea) + '%');
+			};
+		};
+	}
+
+	indicator.generate();
 
 	flip(a.not('.SkipStack>*'));
 	setTimeout(function () {
 		FlipcardtoArea(a);
 	}, 500);
-	setTimeout(function () {enemiesBar.flip();}, 300);
+	setTimeout(function () {
+		indicator.flip();
+	}, 300);
 
 	if (callback !== undefined) {
 		callback();
@@ -209,4 +230,4 @@ function prevMode() {
 //       In-game ui       \\
 //========================\\
 
-var enemiesBar = new uiCell(2, '2-1', 'enemies', 'en');
+var indicator;

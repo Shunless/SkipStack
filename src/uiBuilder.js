@@ -193,7 +193,7 @@ function reGrid(classname) {
 	var wrap = $('<div />');
 	wrap.addClass(hash);
 	wrap.css('width', (right - left + 1) * cellSize + 'px');
-	wrap.css('height', (bottom - top + 1) * cellSize + 'px') ;
+	wrap.css('height', (bottom - top + 1) * cellSize + 'px');
 
 	//Conjoin
 	var wrapper = newgrid.wrapAll(wrap);
@@ -240,7 +240,7 @@ function createBlock() {
 //    Create in-game ui   \\
 //========================\\
 
-function uiCell(size, l, cont, fluff) {
+function uiCell(size, l, cont, fluff, refresher) {
 	this.size = size;
 	this.left = l;
 	this.content = cont;
@@ -269,6 +269,12 @@ function uiCell(size, l, cont, fluff) {
 			return this.area.children('div').text();
 		};
 
+		this.refresh = function () {
+			if (this.rendered) {
+				this.text(refresher());
+			};
+		};
+
 		this.flip = function () {
 			flip(this.flipcard);
 		};
@@ -289,6 +295,7 @@ function vibCreate(cls, opt, tmt) {
 
 	if (tmt) {
 		this.shVib = function () {
+			this.vibStart();
 			console.log(this);
 			setTimeout(this.vibStop, tmt);
 		};
