@@ -26,31 +26,18 @@ function mouseDragEnd() {
     var diffX = onDownPosX - onEndPosX;
     var diffY = onDownPosY - onEndPosY;
 
-    var isSwipeX = (Boolean)(Math.abs(diffX) > cellWidth);
-    var isSwipeY = (Boolean)(Math.abs(diffY) > cellHeight);
 
-    if (isSwipeX || isSwipeY) {
-
-        if (isSwipeY === true) {
-            if (Math.abs(diffY) > Math.abs(diffX)) {
-                if (diffY > 0) {
-                    actor.move('top');
-                } else {
-                    actor.move('bottom');
-                }
-            } else {
-                if (diffX > 0) {
-                    actor.move('left');
-                } else {
-                    actor.move('right');
-                }
-            }
+    if (Math.abs(diffY) > Math.abs(diffX)) {
+        if (diffY > 0) {
+            actor.move('top');
         } else {
-            if (diffX > 0) {
-                actor.move('left');
-            } else {
-                actor.move('right');
-            }
+            actor.move('bottom');
+        }
+    } else {
+        if (diffX > 0) {
+            actor.move('left');
+        } else {
+            actor.move('right');
         }
     }
     clearvalues();
