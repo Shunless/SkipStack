@@ -75,7 +75,7 @@ Cell.prototype.checkCell = function(_direction, _currentPos) {
     var result = true;
     var i;
     switch (_direction) {
-        case 'top':
+        case 'up':
             if (_currentPos < cellsCntX) {
                 result = false;
             } else {
@@ -84,7 +84,7 @@ Cell.prototype.checkCell = function(_direction, _currentPos) {
             //grid.cell[_currentPos - cellsCntX]
 
             break;
-        case 'bottom':
+        case 'down':
             //if > CellsCountX*CellsCountY-CellsCountX
             if (_currentPos > (cellsCntX * grid.cellsCountY) - cellsCntX) {
                 result = false;

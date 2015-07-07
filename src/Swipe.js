@@ -29,9 +29,9 @@ function mouseDragEnd() {
 
     if (Math.abs(diffY) > Math.abs(diffX)) {
         if (diffY > 0) {
-            actor.move('top');
+            actor.move('up');
         } else {
-            actor.move('bottom');
+            actor.move('down');
         }
     } else {
         if (diffX > 0) {

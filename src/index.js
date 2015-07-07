@@ -129,8 +129,8 @@ function create() {
         }
     }
     // Set up handlers for mouse events
-    game.input.onDown.add(mouseDragStart, this);
-    game.input.onUp.add(mouseDragEnd, this);
+    //game.input.onDown.add(mouseDragStart, this);
+    //game.input.onUp.add(mouseDragEnd, this);
 
     //add profiler
     //- https://github.com/englercj/phaser-debug -
@@ -202,6 +202,15 @@ function create() {
     EnemyMoveTimeout = game.time.time + beatRate;
     justLost = justExpandedGrid = false;
     LoadTime = game.time.now;
+
+    $("#gamecont").swipe( {
+      //Generic swipe handler for all directions
+      swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+        actor.move(direction);
+      },
+      //Default is 75px, set to 0 for demo so any distance triggers swipe
+       threshold:0
+    });
 }
 
 // GAME LOOP

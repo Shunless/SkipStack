@@ -40,12 +40,12 @@ Actor.prototype.move = function(SwipeType) {
 
         switch (SwipeType) {
             //Handle Top Swap
-            case 'top':
+            case 'up':
                 this.makeMove(SwipeType, this._c - cellsCntX);
 
                 break;
                 //Handle Bottom Swap
-            case 'bottom':
+            case 'down':
                 this.makeMove(SwipeType, this._c + cellsCntX);
 
                 break;
@@ -70,12 +70,12 @@ Actor.prototype.move = function(SwipeType) {
 
         switch (SwipeType) {
             //Handle Top Swap
-            case 'top':
+            case 'up':
                 this.thrustEnemy(SwipeType, this._c - cellsCntX);
 
                 break;
                 //Handle Bottom Swap
-            case 'bottom':
+            case 'down':
                 this.thrustEnemy(SwipeType, this._c + cellsCntX);
 
                 break;
