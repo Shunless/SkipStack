@@ -1,19 +1,31 @@
 {
-  "name": "skipstack",
-  "version": "1.0.0",
-  "description": "![Image of PhoneGap Build](https://chart.googleapis.com/chart?chs=116x116&cht=qr&chl=https://build.phonegap.com/apps/1470249/install/9zTrcKz_tDDeyf8-5Y_9&chld=L|1&choe=UTF-8)$ Phonegap Build :stuck_out_tongue_winking_eye:  $\r ___\r [![Project Status: WIP - The project has not reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/0.1.0/wip.svg)](http://www.repostatus.org/#wip)",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mromangmg/SkipStack.git"
-  },
-  "author": "Alex Mourtziapis <alex.mourtziapis@gmail.com>",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/mromangmg/SkipStack/issues"
-  },
-  "homepage": "https://github.com/mromangmg/SkipStack#readme"
+    "name": "skipstack",
+    "version": "1.0.0",
+    "nodejs": true,
+    "scripts": {
+        "build": "node build/index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mromangmg/SkipStack.git"
+    },
+    "authors": [
+        "Alex Mourtziapis <alex.mourtziapis@gmail.com>",
+        "Ρωμανός Μουρίκης <mromangmg@gmail.com>"
+    ],
+    "license": "ISC",
+    "bugs": "https://github.com/mromangmg/SkipStack/issues",
+    "homepage": "https://github.com/mromangmg/SkipStack#readme",
+    "keywords": [
+        "HTML5",
+        "canvas",
+        "2d",
+        "WebGL",
+        "javascript",
+        "phaser",
+        "game"
+    ],
+    "dependencies": {
+        "uglify-js": "^2.4.24 (https://www.npmjs.com/package/uglify-js)"
+    }
 }
