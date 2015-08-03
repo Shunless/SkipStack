@@ -18,8 +18,8 @@ function npm_package_is_installed {
   echo "$return_"
 }
 
-if [ $(program_is_installed node) == 1 ]; then
-    sudo apt-get install node
+if [ $(program_is_installed nodejs) == 1 ]; then
+    sudo apt-get install nodejs
 fi
 
 # NPM
@@ -38,5 +38,4 @@ uglifyjs ../src/Assets/**/*.js \
          ../src/**/*.js \
          -o skipstack.min.js \
          --source-map skipstack.min.js.map \
-         --source-map-root http://skipstack.com/src \
          -p 5 -c -m
