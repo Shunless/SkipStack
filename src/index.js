@@ -87,19 +87,19 @@ function create() {
     if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         //  And some controls to play the game with keyboard
         cursors = game.input.keyboard.createCursorKeys();
-        cursors.left.onDown.add(function() {
+        cursors.left.onDown.add(function () {
             actor.move('left');
         }, this);
 
-        cursors.right.onDown.add(function() {
+        cursors.right.onDown.add(function () {
             actor.move('right');
         }, this);
 
-        cursors.down.onDown.add(function() {
+        cursors.down.onDown.add(function () {
             actor.move('bottom');
         }, this);
 
-        cursors.up.onDown.add(function() {
+        cursors.up.onDown.add(function () {
             actor.move('top');
         }, this);
 
@@ -111,19 +111,19 @@ function create() {
 
             WASDcursor = game.input.keyboard.addKeys(a, b);
 
-            WASDcursor.up.onDown.add(function() {
+            WASDcursor.up.onDown.add(function () {
                 actor1.move('top');
             }, this);
 
-            WASDcursor.left.onDown.add(function() {
+            WASDcursor.left.onDown.add(function () {
                 actor1.move('left');
             }, this);
 
-            WASDcursor.right.onDown.add(function() {
+            WASDcursor.right.onDown.add(function () {
                 actor1.move('right');
             }, this);
 
-            WASDcursor.down.onDown.add(function() {
+            WASDcursor.down.onDown.add(function () {
                 actor1.move('bottom');
             }, this);
         }
@@ -177,21 +177,24 @@ function create() {
         var x = '';
         for (var i = 0; i < 3 + gameStateRestarts; i++) {
             if (randomBoolean[0]() === true) {
-                if (randomBoolean[0]() === true)
+                if (randomBoolean[0]() === true) {
                     x = '0-' + getRandomInt(0, cellsCntY);
-                else
+                } else {
                     x = getRandomInt(0, cellsCntX) + '-0';
+                }
             } else {
-                if (randomBoolean[0]() === true)
+                if (randomBoolean[0]() === true) {
                     x = (cellsCntX - 1) + '-' + getRandomInt(0, cellsCntY);
-                else
+                } else {
                     x = getRandomInt(0, cellsCntX) + '-' + (cellsCntY - 1);
+                }
             }
 
-            if (grid.cell[grid.getCell(x)].type === 'Normal')
+            if (grid.cell[grid.getCell(x)].type === 'Normal') {
                 enemy.push(new Enemy(enemiesColor, x));
-            else
+            } else {
                 i--;
+            }
         }
 
         for (x = 0; x < enemy.length; x++) {
@@ -203,13 +206,13 @@ function create() {
     justLost = justExpandedGrid = false;
     LoadTime = game.time.now;
 
-    $("#gamecont").swipe( {
-      //Generic swipe handler for all directions
-      swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
-        actor.move(direction);
-      },
-      //Default is 75px, set to 0 for demo so any distance triggers swipe
-       threshold:0
+    $("#gamecont").swipe({
+        //Generic swipe handler for all directions
+        swipe: function (event, direction, distance, duration, fingerCount, fingerData) {
+            actor.move(direction);
+        },
+        //Default is 75px, set to 0 for demo so any distance triggers swipe
+        threshold: 0
     });
 }
 
@@ -237,8 +240,9 @@ function update() {
         //We reset the predicted moves array
         enemyMove = [];
 
-        for (x = 0; x < enemy.length; x++)
+        for (x = 0; x < enemy.length; x++) {
             enemyMove.push(enemy[x].Nextmove());
+        }
 
         movesHaveBeenStored = true;
     }
@@ -264,25 +268,29 @@ function update() {
                 for (i = 0; i < Math.ceil((gameStateRestarts + 1) / 2); i++) {
                     x = '';
                     if (randomBoolean[0]() === true) {
-                        if (randomBoolean[0]() === true)
+                        if (randomBoolean[0]() === true) {
                             x = '0-' + getRandomInt(0, cellsCntY);
-                        else
+                        } else {
                             x = getRandomInt(0, cellsCntX) + '-0';
+                        }
                     } else {
-                        if (randomBoolean[0]() === true)
+                        if (randomBoolean[0]() === true) {
                             x = (cellsCntX - 1) + '-' + getRandomInt(0, cellsCntY);
-                        else
+                        } else {
                             x = getRandomInt(0, cellsCntX) + '-' + (cellsCntY - 1);
+                        }
                     }
 
-                    if (grid.cell[grid.getCell(x)].type === 'Normal')
+                    if (grid.cell[grid.getCell(x)].type === 'Normal') {
                         enemy.push(new Enemy(enemiesColor, x));
-                    else
+                    } else {
                         i--;
+                    }
                 }
 
-                for (x = 0; x < enemy.length; x++)
+                for (x = 0; x < enemy.length; x++) {
                     enemy[x].init();
+                }
             }
 
         }
@@ -318,8 +326,9 @@ function render() {
     game.debug.text('beat rate: ' + beatRate + ' ms', 3, 40, '#b1ff00');
     game.debug.text('Interval: ' + beatInterval + ' %', 3, 53, beatInterval < 20 ? '#ff0000' : '#00ff27');
     game.debug.text('time: ' + timeSinceLevelLoad + ' s', 3, 66, '#b1ff00');
-    if (GameType === 'PaintStack')
+    if (GameType === 'PaintStack') {
         game.debug.text('marked area: ' + Math.floor(actor.markedArea) + '%', 3, 79, '#b1ff00');
+    }
 }
 //$ game over $
 //every game type has the same game over :)
@@ -343,8 +352,9 @@ function expand() {
         gameStateRestarts++;
 
         //increment cells by 1 if enemies > ceil(cells/2)
-        if ((3 + gameStateRestarts) > Math.ceil(cellsCntX / 2))
+        if ((3 + gameStateRestarts) > Math.ceil(cellsCntX / 2)) {
             cellsCntY = ++cellsCntX;
+        }
 
         game.state.start(game.state.current);
     }
@@ -366,8 +376,9 @@ function expand() {
         gameStateRestarts++;
 
         //increment cells by 2 if enemies > cells
-        if ((3 + gameStateRestarts) > cellsCntX)
+        if ((3 + gameStateRestarts) > cellsCntX) {
             cellsCntY = ++cellsCntX;
+        }
 
         game.state.start(game.state.current);
     }

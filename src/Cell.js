@@ -2,13 +2,15 @@
  * @author Alex Mourtziapis
  * @copyright 2015 Shunless Studio.
  */
-//////////////////////////////////////////////////////////////////////////////
-// CLASS CELL
-//////////////////////////////////////////////////////////////////////////////
-//@param world_position.x (number)
-//@param world_position.y (number)
-//@param cell's HashId (string)
-//@param cell's color (web color)
+
+/**
+ *
+ * @class Cell
+ * @param world_position.x (number)
+ * @param world_position.y (number)
+ * @param cell's HashId (string)
+ * @param cell's color (web color)
+ */
 function Cell(_posX, _posY, _name, _color) {
     this.color = _color;
     this.positionX = _posX;
@@ -37,30 +39,32 @@ function Cell(_posX, _posY, _name, _color) {
     this.genColor = '#000';
 }
 
-Cell.prototype.init = function() {
+Cell.prototype.init = function () {
     this.rect = new Phaser.Rectangle(this.positionX, this.positionY, grid.cellWidth, grid.cellWidth);
 };
 
 /*  SET CELL TYPE   */
-Cell.prototype.setCellType = function(_type) {
-    if (_type != 'Normal' && _type != 'Enemy' && _type != 'Actor')
+Cell.prototype.setCellType = function (_type) {
+    if (_type != 'Normal' && _type != 'Enemy' && _type != 'Actor') {
         alert('type can only be "Enemy","Normal","Actor"');
+    }
     this.type = _type;
 };
 
 /*   CELL RENDER FUNCTION   */
-Cell.prototype.render = function() {
-    if (!this.isFilterEnabled)
+Cell.prototype.render = function () {
+    if (!this.isFilterEnabled) {
         game.debug.geom(this.rect, this.color);
+    }
 };
 
 /*   SET CELL COLOR   */
-Cell.prototype.setColor = function(_clr) {
+Cell.prototype.setColor = function (_clr) {
     this.color = _clr;
 };
 
 /*   ENABLE FILTER   */
-Cell.prototype.EnableFilter = function(_clr) {
+Cell.prototype.EnableFilter = function (_clr) {
     this.isFilterEnabled = true;
 
     this.rect = game.add.sprite(this.positionX, this.positionY);
@@ -71,7 +75,7 @@ Cell.prototype.EnableFilter = function(_clr) {
 };
 
 /*   CHECK CELL  */
-Cell.prototype.checkCell = function(_direction, _currentPos) {
+Cell.prototype.checkCell = function (_direction, _currentPos) {
     var result = true;
     var i;
     switch (_direction) {
@@ -101,10 +105,11 @@ Cell.prototype.checkCell = function(_direction, _currentPos) {
                     result = false;
                 }
             }
-            if (result === false)
+            if (result === false) {
                 break;
-            else
+            } else {
                 result = true;
+            }
 
             //grid.cell[_currentPos-1]
 
@@ -116,10 +121,11 @@ Cell.prototype.checkCell = function(_direction, _currentPos) {
                     result = false;
                 }
             }
-            if (result === false)
+            if (result === false) {
                 break;
-            else
+            } else {
                 result = true;
+            }
 
             //grid.cell[_currentPos+1]
 

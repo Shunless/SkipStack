@@ -3,26 +3,28 @@
  * @copyright 2015 Shunless Studio.
  */
 
-//////////////////////////////////////////////////////////////////////////////
-// CLASS GRID
-//////////////////////////////////////////////////////////////////////////////
-
-//@param cell/s in X dimension (number)
-//@param cell/s in Y dimension (number)
-//@param each cell width in pixels (number)
-//@param each cell height in pixels (number)
-//@param the color of the border (Web Color)
-//@param the color each cell (Web Color)
-//@param the thickness of the border (number)
+/**
+ *
+ *
+ * @calss Grid
+ * @param cell/s in X dimension (number)
+ * @param cell/s in Y dimension (number)
+ * @param each cell width in pixels (number)
+ * @param each cell height in pixels (number)
+ * @param the color of the border (Web Color)
+ * @param the color each cell (Web Color)
+ * @param the thickness of the border (number)
+ */
 function Grid(cellCntX, cellCntY, cellW, cellH, _color1, _color2, _bThickness) {
     this.c = _color1; //border color
     this.c2 = _color2; //cell color
 
     //the thickness of the border
-    if (typeof(_bThickness) === 'undefined')
+    if (typeof (_bThickness) === 'undefined') {
         this.borderThickness = 2;
-    else
+    } else {
         this.borderThickness = _bThickness;
+    }
 
     this.cellsCountX = cellCntX; //cells in x dimension .
     this.cellsCountY = cellCntY; //cells in y dimension .
@@ -36,7 +38,7 @@ function Grid(cellCntX, cellCntY, cellW, cellH, _color1, _color2, _bThickness) {
 }
 
 //initialization
-Grid.prototype.init = function() {
+Grid.prototype.init = function () {
     var w = this.cellsCountX * this.cellWidth + this.borderThickness * this.cellsCountX + this.borderThickness;
     var h = this.cellsCountY * this.cellHeight + this.borderThickness * this.cellsCountY + this.borderThickness;
     this.grid = new Phaser.Rectangle((Editor_Width - w) / 2, (Editor_Height - h) / 2, w, h);
@@ -55,7 +57,7 @@ Grid.prototype.init = function() {
 
 //returns the  the grid,cell position of the given cell.
 //@param the .hashID of the cell to search (string).
-Grid.prototype.getCell = function(_id) {
+Grid.prototype.getCell = function (_id) {
     for (var i = 0; i < this.cell.length; i++) {
         if (this.cell[i].HashId == _id) {
             return i;
@@ -64,7 +66,7 @@ Grid.prototype.getCell = function(_id) {
 };
 
 //render the grid on the screen
-Grid.prototype.render = function() {
+Grid.prototype.render = function () {
     //game.debug.geom(this.grid, this.c);
 
     for (var i = 0; i < this.cell.length; i++) {
@@ -74,7 +76,7 @@ Grid.prototype.render = function() {
 
 //returns the row of the given cell (number)
 //@param grid.cell postition of the cell (number)
-Grid.prototype.getRow = function(_currentPos) {
+Grid.prototype.getRow = function (_currentPos) {
     var _y = this.cellsCountX;
     for (var x = 0; x < this.cellsCountX; x++) {
         if (_currentPos < _y) {
@@ -86,9 +88,12 @@ Grid.prototype.getRow = function(_currentPos) {
 
 //returns the column of the given cell (number)
 //@param grid.cell postition of the cell (number)
-Grid.prototype.getColumn = function(_currentPos) {
-    for (var x = 0; x < this.cellsCountX; x++)
-        for (var y = 0; y < this.cellsCountX; y++)
-            if (_currentPos === (y + x * this.cellsCountX))
+Grid.prototype.getColumn = function (_currentPos) {
+    for (var x = 0; x < this.cellsCountX; x++) {
+        for (var y = 0; y < this.cellsCountX; y++) {
+            if (_currentPos === (y + x * this.cellsCountX)) {
                 return y;
+            }
+        }
+    }
 };

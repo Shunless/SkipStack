@@ -3,20 +3,23 @@
  * @copyright 2015 Shunless Studio.
  */
 
-//////////////////////////////////////////////////////////////////////////////
-// CLASS ENEMY
-//////////////////////////////////////////////////////////////////////////////
-
-//@param enemy's color (Web Color)
-//@param enemy's cell HashId  (string)
+/**
+ *
+ *
+ * @class Enemy
+ * @param enemy's color (Web Color)
+ * @param enemy's cell HashId  (string)
+ */
 function Enemy(_color1, blockID) {
     //the color of the Enemy
     this.color = _color1;
     //
-    if (typeof(blockID) === 'undefined')
+    if (typeof (blockID) === 'undefined') {
         alert('Error : "blockID" is undefined');
-    else
+
+    } else {
         this.block = blockID;
+    }
 
     //indicates if this enemy is dead
     this.isDead = false;
@@ -27,7 +30,7 @@ function Enemy(_color1, blockID) {
 }
 
 //$    INITIALIZATION    $
-Enemy.prototype.init = function() {
+Enemy.prototype.init = function () {
     this._c = grid.getCell(this.block);
 
     grid.cell[this._c].setColor(this.color);
@@ -36,7 +39,7 @@ Enemy.prototype.init = function() {
 
 //move enemy
 //@param direction (string)
-Enemy.prototype.move = function(SwipeType) {
+Enemy.prototype.move = function (SwipeType) {
     switch (SwipeType) {
         case 'top':
             if (grid.cell[this._c].checkCell(SwipeType, this._c) && grid.cell[this._c - cellsCntX].type !== 'Enemy') {
@@ -55,8 +58,6 @@ Enemy.prototype.move = function(SwipeType) {
                 }
                 grid.cell[this._c].setColor(this.color);
                 grid.cell[this._c].setCellType('Enemy');
-
-
 
             }
 
@@ -127,7 +128,7 @@ Enemy.prototype.move = function(SwipeType) {
 };
 
 //returns the move of this enemy(sting)
-Enemy.prototype.Nextmove = function() {
+Enemy.prototype.Nextmove = function () {
     var CellsInt = actor._c - this._c;
     var RowsInt = Math.abs(grid.getRow(actor._c) - grid.getRow(this._c));
 
@@ -161,7 +162,7 @@ Enemy.prototype.Nextmove = function() {
     }
 };
 
-Enemy.prototype.Thrust = function(dir) {
+Enemy.prototype.Thrust = function (dir) {
     var z, x, i;
     switch (dir) {
         case 'top':
