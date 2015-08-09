@@ -11,6 +11,7 @@
 var isMultiplayerEnabled = false;
 
 var filter;
+var isfilterEnabled = false;
 
 // Active game type (string)
 var GameType; // = gamemode[0];
@@ -104,7 +105,7 @@ function create() {
         }, this);
 
         //If multiplayer is enabled enable 2nd player controls
-        if (isMultiplayerEnabled) {
+        if (isMultiplayerEnabled === true) {
             var a = new Array(87, 65, 68, 83);
 
             var b = new Array('up', "left", "right", "down");
@@ -150,7 +151,7 @@ function create() {
     //+++++++++++++++++++++++++++++
 
     //multiplayer is enabed
-    if (isMultiplayerEnabled) {
+    if (isMultiplayerEnabled === true) {
         actor = new Actor('#006400', '0-' + Math.floor(cellsCntY / 2));
 
         actor1 = new Actor('#006400', (cellsCntX - 1) + '-' + Math.ceil(cellsCntY / 2));
@@ -173,7 +174,7 @@ function create() {
     //  Enemies initialization
     //+++++++++++++++++++++++++++++
 
-    if (!isMultiplayerEnabled) {
+    if ( isMultiplayerEnabled === false) {
         var x = '';
         for (var i = 0; i < 3 + gameStateRestarts; i++) {
             if (randomBoolean[0]() === true) {
@@ -218,8 +219,12 @@ function create() {
 
 // GAME LOOP
 function update() {
+
     var i, x;
-    filter.update();
+    // reduced total cost by 3%
+    if( isfilterEnabled === true ){
+        filter.update();
+    }
     //draws cells and grid $ 1st Draw Call $
     grid.render();
     if (game.time.time > EnemyMoveTimeout) {
@@ -304,10 +309,11 @@ function update() {
     timeSinceLevelLoad = Math.round((game.time.now - LoadTime) / 1000);
 
     updateUi();
-    render();
+    // reduced total cost by 2%
+    //render();
+
 }
 
-/*** newline size calculation moved here in order to fix compatibility issues ***/
 function recalcBar() {
     var bar = $('.bar');
     if (beatInterval % 20 === 0) {
@@ -315,7 +321,6 @@ function recalcBar() {
     }
     bar.css('width', beatInterval + '%');
 }
-/*** newline size calculation ended ***/
 
 //RENDER LOOP
 function render() {
