@@ -106,9 +106,7 @@ function create() {
 
         //If multiplayer is enabled enable 2nd player controls
         if (isMultiplayerEnabled === true) {
-            var a = new Array(87, 65, 68, 83);
-
-            var b = new Array('up', "left", "right", "down");
+            var a = [87, 65, 68, 83], b = ['up', "left", "right", "down"];
 
             WASDcursor = game.input.keyboard.addKeys(a, b);
 
@@ -159,11 +157,11 @@ function create() {
         actor.init();
         actor1.init();
     } else {
-        if (justLost === true)
+        if (justLost === true) {
             actor = new Actor('#006400');
-        else {
-            var _O_ = actor._c;
-            actor = new Actor('#006400', grid.cell[_O_].HashId);
+        } else {
+            var bl = actor._c;
+            actor = new Actor('#006400', grid.cell[bl].HashId);
         }
         actor.init();
     }
@@ -174,9 +172,9 @@ function create() {
     //  Enemies initialization
     //+++++++++++++++++++++++++++++
 
-    if ( isMultiplayerEnabled === false) {
-        var x = '';
-        for (var i = 0; i < 3 + gameStateRestarts; i++) {
+    if (isMultiplayerEnabled === false) {
+        var x = '', i;
+        for (i = 0; i < 3 + gameStateRestarts; i++) {
             if (randomBoolean[0]() === true) {
                 if (randomBoolean[0]() === true) {
                     x = '0-' + getRandomInt(0, cellsCntY);
