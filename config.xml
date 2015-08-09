@@ -15,6 +15,7 @@
         <!-- Plugins -->
 
         <!-- Core plugins -->
+<!--
         <gap:plugin name="org.apache.cordova.battery-status" />
         <gap:plugin name="org.apache.cordova.camera" />
         <gap:plugin name="org.apache.cordova.media-capture" />
@@ -33,6 +34,7 @@
         <gap:plugin name="org.apache.cordova.network-information" />
         <gap:plugin name="org.apache.cordova.splashscreen" />
         <gap:plugin name="org.apache.cordova.vibration" />
+-->
 
         <!-- Third party plugins -->
 <!--        <gap:plugin name="cordova-plugin-wkwebview" source="npm" />-->
