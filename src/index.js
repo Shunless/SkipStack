@@ -388,3 +388,10 @@ function expand() {
         game.state.start(game.state.current);
     }
 }
+
+document.addEventListener("deviceready", onDeviceReady, false);
+
+function onDeviceReady() {
+    // Fast-click to elliminate the delay of 300ms
+    FastClick.attach(document.body);
+}
