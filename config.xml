@@ -4,15 +4,18 @@
         <preference name='phonegap-version' value='cli-5.1.1' />
         <!--  Projects name  -->
         <name>SkipStack</name>
-        <preference name="Fullscreen" value="true" />
-        <preference name="Orientation" value="portrait" />
-        <preference name="DisallowOverscroll" value="true" />
-        <preference name="SetFullscreen" value="true" />
+        <!-- Customize your app and platform with the preference element. -->
+        <preference name="orientation" value="portrait" />
+        <!-- all: default means both landscape and portrait are enabled -->
+        <preference name="target-device" value="universal" />
+        <!-- all: possible values handset, tablet, or universal -->
+        <preference name="fullscreen" value="true" />
+        <!-- all: hides the status bar at the top of the screen -->
 
         <!-- Plugins -->
 
         <!-- Core plugins -->
-        <!--
+<!--
         <gap:plugin name="org.apache.cordova.battery-status" />
         <gap:plugin name="org.apache.cordova.camera" />
         <gap:plugin name="org.apache.cordova.media-capture" />
@@ -34,7 +37,7 @@
 -->
 
         <!-- Third party plugins -->
-        <gap:plugin name="cordova-plugin-wkwebview" source="npm" />
+<!--        <gap:plugin name="cordova-plugin-wkwebview" source="npm" />-->
 
         <!--  a wildcard access tag allows access to all external resource.  -->
         <access origin="*" />
