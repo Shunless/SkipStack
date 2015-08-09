@@ -7,16 +7,19 @@ $(document).ready(function () {
     compareSize();
     gridBuilder('1-1', '13-7');
     prepGame();
-    addScript('src/Math.js');
-    addScript('src/Cell.js');
-    addScript('src/Swipe.js');
-    addScript('src/Actor.js');
-    addScript('src/Enemy.js');
-    addScript('src/Assets/Tunes.js');
-    addScript('src/Assets/Shaders.js');
-    addScript('src/Grid.js');
-    addScript('src/Color.js');
-    addScript('src/index.js');
+    // if not using the a minified version of the game.
+    if($('#using_builder').length<=0){
+        addScript('src/Math.js');
+        addScript('src/Cell.js');
+        addScript('src/Swipe.js');
+        addScript('src/Actor.js');
+        addScript('src/Enemy.js');
+        addScript('src/Assets/Tunes.js');
+        addScript('src/Assets/Shaders.js');
+        addScript('src/Grid.js');
+        addScript('src/Color.js');
+        addScript('src/index.js');
+    }
     createModeSelector();
 });
 
