@@ -300,7 +300,7 @@ function update() {
 
         }
     } else {
-
+        // chill! There's nothing to do
     }
 
     //calculate new inteval

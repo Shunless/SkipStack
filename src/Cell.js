@@ -53,7 +53,7 @@ Cell.prototype.setCellType = function (_type) {
 
 /*   CELL RENDER FUNCTION   */
 Cell.prototype.render = function () {
-    if (!this.isFilterEnabled) {
+    if (this.isFilterEnabled === false) {
         game.debug.geom(this.rect, this.color);
     }
 };
