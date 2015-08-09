@@ -35,7 +35,7 @@
         <gap:plugin name="org.apache.cordova.vibration" />
 
         <!-- Third party plugins -->
-        <gap:plugin name="cordova-plugin-wkwebview" source="npm" />
+<!--        <gap:plugin name="cordova-plugin-wkwebview" source="npm" />-->
 
         <!--  a wildcard access tag allows access to all external resource.  -->
         <access origin="*" />
