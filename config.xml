@@ -40,5 +40,5 @@
 <!--        <gap:plugin name="cordova-plugin-wkwebview" source="npm" />-->
 
         <!--  a wildcard access tag allows access to all external resource.  -->
-        <access origin="*" />
+<!--        <access origin="*" />-->
     </widget>
