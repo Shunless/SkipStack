@@ -23,9 +23,6 @@ var beatInterval = 0;
 
 var EnemyMoveTimeout = 0;
 
-//editor/runtime window scale in pixels (number)
-var Editor_Width = cellSize * 7;
-var Editor_Height = cellSize * 7;
 //amount of cells in grid (number)
 var cellsCntX = 7;
 var cellsCntY = 7;
@@ -70,6 +67,7 @@ var WASDcursor;
 
 //$ preload function $
 function preload() {
+    console.log('Preload Function');
     //Reset Arrays
     enemy = [];
     enemyMove = [];
@@ -80,6 +78,7 @@ function preload() {
 }
 //$ create function $
 function create() {
+    console.log('Create Function');
     filter = new Phaser.Filter(game, null, get_loadingCellShader2());
     filter.setResolution(Editor_Width, Editor_Height);
     //For *not* mobile devices
@@ -334,6 +333,7 @@ function render() {
 //$ game over $
 //every game type has the same game over :)
 function gameOver() {
+    console.clear();
     justLost = true;
 
     //reset grid back to 7x7

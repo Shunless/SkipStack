@@ -3,6 +3,8 @@
  * @copyright 2015 Shunless Studio.
  */
 
+
+var Editor_Width,Editor_Height;//editor/runtime window scale in pixels
 var cellSize; //Global cell diametre variable
 var border; //Global border width variable
 var uniz = 0; //Global Z-Index, functions ssould call the zIndex function and not the variable itself
@@ -94,6 +96,7 @@ function compareSize() {
 	}
 
 	cellSize = size - 1;
+    Editor_Height = Editor_Width = cellSize * 7;
 }
 
 function genBar(classname) {

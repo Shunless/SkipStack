@@ -9,6 +9,7 @@ $(document).ready(function () {
     prepGame();
     // if not using the a minified version of the game.
     if($('#using_builder').length<=0){
+        console.log('Loading Scripts');
         addScript('src/Math.js');
         addScript('src/Cell.js');
         addScript('src/Swipe.js');
@@ -19,6 +20,7 @@ $(document).ready(function () {
         addScript('src/Grid.js');
         addScript('src/Color.js');
         addScript('src/index.js');
+        console.log('Loaded Scripts');
     }
     createModeSelector();
 });
