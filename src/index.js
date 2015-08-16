@@ -26,8 +26,6 @@ var EnemyMoveTimeout = 0;
 //editor/runtime window scale in pixels (number)
 var Editor_Width = cellSize * 7;
 var Editor_Height = cellSize * 7;
-//the aspect ratio of the screen (decimal)
-var aspect_ratio = Editor_Width / Editor_Height;
 //amount of cells in grid (number)
 var cellsCntX = 7;
 var cellsCntY = 7;
@@ -231,7 +229,7 @@ function update() {
         }
 
         //this function triggers the sfx player
-        //blips_sfx.play();
+        blips_sfx.play();
 
         movesHaveBeenStored = false;
 
@@ -347,6 +345,7 @@ function gameOver() {
 }
 //$ expand " grid " $
 function expand() {
+    levelup_sfx.play();
     justExpandedGrid = true;
 
     //NORMAL AND SKIPSMASH GAME TYPES

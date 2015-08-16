@@ -109,6 +109,7 @@ Actor.prototype.makeMove = function (dir, z) {
                     //enemy[i].isDead = true;
                     enemy.splice(i, 1);
                     enemyMove.splice(i, 1);
+                    hit_sfx.play();
                     break;
                 }
             }
