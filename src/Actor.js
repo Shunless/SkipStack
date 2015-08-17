@@ -106,10 +106,13 @@ Actor.prototype.makeMove = function (dir, z) {
         if (grid.cell[z].type === 'Enemy') {
             for (var i = 0; i < enemy.length; i++) {
                 if (enemy[i]._c === z) {
+                    // if is ! the last enemy
+                    if(enemy.length!=0){
+                        hit_sfx.play();
+                    }
                     //enemy[i].isDead = true;
                     enemy.splice(i, 1);
                     enemyMove.splice(i, 1);
-                    hit_sfx.play();
                     break;
                 }
             }

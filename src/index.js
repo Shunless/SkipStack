@@ -345,13 +345,14 @@ function gameOver() {
 }
 //$ expand " grid " $
 function expand() {
-    levelup_sfx.play();
+    // play random tune from levelup_sfx array
+    levelup_sfx[getRandomInt(0,levelup_sfx.length)].play();
     justExpandedGrid = true;
 
+    gameStateRestarts++;
     //NORMAL AND SKIPSMASH GAME TYPES
     if (GameType === 'Normal' || GameType === 'SkipSmash') {
         justLost = true;
-        gameStateRestarts++;
 
         //increment cells by 1 if enemies > ceil(cells/2)
         if ((3 + gameStateRestarts) > Math.ceil(cellsCntX / 2)) {
@@ -362,7 +363,6 @@ function expand() {
     }
     //ENDLESS GAME TYPE
     else if (GameType === 'Endless') {
-        gameStateRestarts++;
 
         //increment cells by 1 if enemies > ceil(cells/2)
         if ((3 + gameStateRestarts) > Math.ceil(cellsCntX / 1.5)) {
@@ -375,7 +375,6 @@ function expand() {
     //PAINTSTACK GAME TYPE
     else if (GameType === 'PaintStack') {
         justLost = true;
-        gameStateRestarts++;
 
         //increment cells by 2 if enemies > cells
         if ((3 + gameStateRestarts) > cellsCntX) {
