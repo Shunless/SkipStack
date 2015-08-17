@@ -19,13 +19,6 @@ var SkipStack = SkipStack || {
     version: '0.0.1',
 
     /**
-    * An array of SkipStack instances.
-    * @constant
-    * @type {array}
-    */
-    Instances: [],
-
-    /**
     * Indicates if sound is on or off
     * @constant
     * @type {boolean}
