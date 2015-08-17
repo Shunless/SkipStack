@@ -44,12 +44,12 @@ Actor.prototype.move = function (SwipeType) {
     if (GameType !== 'SkipSmash') {
 
         switch (SwipeType) {
-            //Handle Top Swap
+            //Handle Up Swap
             case 'up':
                 this.makeMove(SwipeType, this._c - cellsCntX);
 
                 break;
-                //Handle Bottom Swap
+                //Handle Down Swap
             case 'down':
                 this.makeMove(SwipeType, this._c + cellsCntX);
 
@@ -74,12 +74,12 @@ Actor.prototype.move = function (SwipeType) {
     else {
 
         switch (SwipeType) {
-            //Handle Top Swap
+            //Handle Up Swap
             case 'up':
                 this.thrustEnemy(SwipeType, this._c - cellsCntX);
 
                 break;
-                //Handle Bottom Swap
+                //Handle Down Swap
             case 'down':
                 this.thrustEnemy(SwipeType, this._c + cellsCntX);
 

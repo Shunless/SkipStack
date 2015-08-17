@@ -41,10 +41,10 @@ Enemy.prototype.init = function () {
 //@param direction (string)
 Enemy.prototype.move = function (SwipeType) {
     switch (SwipeType) {
-        case 'top':
+        case 'up':
             if (grid.cell[this._c].checkCell(SwipeType, this._c) && grid.cell[this._c - cellsCntX].type !== 'Enemy') {
 
-                //Handle Top Swap
+                //Handle up Swap
                 grid.cell[this._c].setCellType('Normal');
                 grid.cell[this._c].setColor(grid.c2);
 
@@ -62,10 +62,10 @@ Enemy.prototype.move = function (SwipeType) {
             }
 
             break;
-        case 'bottom':
+        case 'down':
             if (grid.cell[this._c].checkCell(SwipeType, this._c) && grid.cell[this._c + cellsCntX].type !== 'Enemy') {
 
-                //Handle Bottom Swap
+                //Handle down Swap
                 grid.cell[this._c].setCellType('Normal');
                 grid.cell[this._c].setColor(grid.c2);
 
@@ -135,7 +135,7 @@ Enemy.prototype.Nextmove = function () {
     //Enemy is ahead you
     if (CellsInt < 0) {
         if (RowsInt > 0) {
-            return ('top');
+            return ('up');
         } else {
             if (this._c > actor._c) {
                 return ('left');
@@ -151,7 +151,7 @@ Enemy.prototype.Nextmove = function () {
     //Enemy is behind you
     else {
         if (RowsInt > 0) {
-            return ('bottom');
+            return ('down');
         } else {
             if (this._c > actor._c) {
                 return ('left');
@@ -165,7 +165,7 @@ Enemy.prototype.Nextmove = function () {
 Enemy.prototype.Thrust = function (dir) {
     var z, x, i;
     switch (dir) {
-        case 'top':
+        case 'up':
             z = this._c - cellsCntX;
 
             for (x = 0; x < cellsCntX; x++) {
@@ -189,7 +189,7 @@ Enemy.prototype.Thrust = function (dir) {
             }
 
             break;
-        case 'bottom':
+        case 'down':
             z = this._c + cellsCntX;
 
             for (x = 0; x < cellsCntX; x++) {
@@ -286,7 +286,7 @@ Enemy.prototype.Thrust = function (dir) {
 //  //Enemy is ahead you
 //  if (CellsInt < 0) {
 //    if (RowsInt > 0) {
-//      this.move('top');
+//      this.move('up');
 //    } else {
 //      if (this._c > actor._c) {
 //        this.move('left');
@@ -302,7 +302,7 @@ Enemy.prototype.Thrust = function (dir) {
 //  //Enemy is behind you
 //  else {
 //    if (RowsInt > 0) {
-//      this.move('bottom');
+//      this.move('down');
 //    } else {
 //      if (this._c > actor._c) {
 //        this.move('left');

@@ -96,11 +96,11 @@ function create() {
         }, this);
 
         cursors.down.onDown.add(function () {
-            actor.move('bottom');
+            actor.move('down');
         }, this);
 
         cursors.up.onDown.add(function () {
-            actor.move('top');
+            actor.move('up');
         }, this);
 
         //If multiplayer is enabled enable 2nd player controls
@@ -110,7 +110,7 @@ function create() {
             WASDcursor = game.input.keyboard.addKeys(a, b);
 
             WASDcursor.up.onDown.add(function () {
-                actor1.move('top');
+                actor1.move('up');
             }, this);
 
             WASDcursor.left.onDown.add(function () {
@@ -122,7 +122,7 @@ function create() {
             }, this);
 
             WASDcursor.down.onDown.add(function () {
-                actor1.move('bottom');
+                actor1.move('down');
             }, this);
         }
     }
