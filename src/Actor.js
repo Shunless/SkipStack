@@ -107,7 +107,7 @@ Actor.prototype.makeMove = function (dir, z) {
             for (var i = 0; i < enemy.length; i++) {
                 if (enemy[i]._c === z) {
                     // if is ! the last enemy
-                    if(enemy.length!=0){
+                    if(enemy.length!=0 && soundsOn){
                         hit_sfx.play();
                     }
                     //enemy[i].isDead = true;

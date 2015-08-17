@@ -10,6 +10,8 @@
 //////////////////////////////////////////////////////////////////////////////
 var isMultiplayerEnabled = false;
 
+var soundsOn = false;
+
 var filter;
 var isfilterEnabled = false;
 
@@ -227,8 +229,10 @@ function update() {
             enemy[i].move(enemyMove[i]);
         }
 
-        //this function triggers the sfx player
-        blips_sfx.play();
+        if(soundsOn){
+            //this function triggers the sfx player
+            blips_sfx.play();
+        }
 
         movesHaveBeenStored = false;
 
@@ -345,8 +349,11 @@ function gameOver() {
 }
 //$ expand " grid " $
 function expand() {
-    // play random tune from levelup_sfx array
-    levelup_sfx[getRandomInt(0,levelup_sfx.length)].play();
+    if(soundsOn){
+        // play random tune from levelup_sfx array
+        levelup_sfx[getRandomInt(0,levelup_sfx.length)].play();
+    }
+
     justExpandedGrid = true;
 
     gameStateRestarts++;
