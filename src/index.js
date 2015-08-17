@@ -10,7 +10,29 @@
 //////////////////////////////////////////////////////////////////////////////
 var isMultiplayerEnabled = false;
 
-var soundsOn = false;
+var SkipStack = SkipStack || {
+    /**
+    * SkipStack version number.
+    * @constant
+    * @type {string}
+    */
+    version: '0.0.1',
+
+    /**
+    * An array of SkipStack instances.
+    * @constant
+    * @type {array}
+    */
+    Instances: [],
+
+    /**
+    * Indicates if sound is on or off
+    * @constant
+    * @type {boolean}
+    */
+    soundsOn: false
+
+};
 
 var filter;
 var isfilterEnabled = false;
@@ -229,7 +251,7 @@ function update() {
             enemy[i].move(enemyMove[i]);
         }
 
-        if(soundsOn){
+        if(SkipStack.soundsOn){
             //this function triggers the sfx player
             blips_sfx.play();
         }
@@ -349,7 +371,7 @@ function gameOver() {
 }
 //$ expand " grid " $
 function expand() {
-    if(soundsOn){
+    if(SkipStack.soundsOn){
         // play random tune from levelup_sfx array
         levelup_sfx[getRandomInt(0,levelup_sfx.length)].play();
     }
