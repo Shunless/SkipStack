@@ -6,10 +6,11 @@
 /**
  *
  * @class Actor
+ * @constructor
  * @param actor's color (Web color)
  * @param actor's cell HashId (string)
  */
-function Actor(_color1, blockID) {
+Actor = function (_color1, blockID) {
     //actor's color
     this.color = _color1;
     //actor's HashId
@@ -28,146 +29,180 @@ function Actor(_color1, blockID) {
 
     //indicates how much of the grid has been marked %
     this.markedArea = 0;
-}
-
-Actor.prototype.init = function () {
-    this._c = grid.getCell(this.block);
-
-    grid.cell[this._c].setColor(this.color);
-    grid.cell[this._c].setCellType('Actor');
 };
 
-Actor.prototype.move = function (SwipeType) {
-    //////////////////////////////////////////////////////////////////////////////
-    // NORMAL & ENDLESS & PAINTSTACK GAME TYPE
-    //////////////////////////////////////////////////////////////////////////////
-    if (GameType !== 'SkipSmash') {
+Actor.prototype = {
 
-        switch (SwipeType) {
-            //Handle Top Swap
-            case 'up':
-                this.makeMove(SwipeType, this._c - cellsCntX);
+    /**
+     * Should be over-ridden.
+     * @method Actor#init
+     */
+    init: function () {
+        this._c = grid.getCell(this.block);
 
-                break;
-                //Handle Bottom Swap
-            case 'down':
-                this.makeMove(SwipeType, this._c + cellsCntX);
+        grid.cell[this._c].setColor(this.color);
+        grid.cell[this._c].setCellType('Actor');
+    },
 
-                break;
-                //Handle Left Swap
-            case 'left':
-                this.makeMove(SwipeType, this._c - 1);
+    /**
+     * Make the actor move towards a direction of your choice.
+     * @method Actor#move
+     * @param {string} SwipeType - Direction to move.
+     */
+    move: function (SwipeType) {
+        //////////////////////////////////////////////////////////////////////////////
+        // NORMAL & ENDLESS & PAINTSTACK GAME TYPE
+        //////////////////////////////////////////////////////////////////////////////
+        if (GameType !== 'SkipSmash') {
 
-                break;
-                //Handle Right Swap
-            case 'right':
-                this.makeMove(SwipeType, this._c + 1);
+            switch (SwipeType) {
+                //Handle Up Swap
+                case 'up':
+                    this.makeMove(SwipeType, this._c - cellsCntX);
 
-                break;
-            default:
-                break;
-        }
-    }
-    //////////////////////////////////////////////////////////////////////////////
-    // SKIPSMASH GAME TYPE
-    //////////////////////////////////////////////////////////////////////////////
-    else {
-
-        switch (SwipeType) {
-            //Handle Top Swap
-            case 'up':
-                this.thrustEnemy(SwipeType, this._c - cellsCntX);
-
-                break;
-                //Handle Bottom Swap
-            case 'down':
-                this.thrustEnemy(SwipeType, this._c + cellsCntX);
-
-                break;
-                //Handle Left Swap
-            case 'left':
-                this.thrustEnemy(SwipeType, this._c - 1);
-
-                break;
-                //Handle Right Swap
-            case 'right':
-                this.thrustEnemy(SwipeType, this._c + 1);
-
-                break;
-            default:
-                break;
-        }
-    }
-};
-
-Actor.prototype.makeMove = function (dir, z) {
-    if (grid.cell[this._c].checkCell(dir, this._c)) {
-
-        if (grid.cell[z].type === 'Enemy') {
-            for (var i = 0; i < enemy.length; i++) {
-                if (enemy[i]._c === z) {
-                    //enemy[i].isDead = true;
-                    enemy.splice(i, 1);
-                    enemyMove.splice(i, 1);
-                    hit_sfx.play();
                     break;
-                }
+                    //Handle Down Swap
+                case 'down':
+                    this.makeMove(SwipeType, this._c + cellsCntX);
+
+                    break;
+                    //Handle Left Swap
+                case 'left':
+                    this.makeMove(SwipeType, this._c - 1);
+
+                    break;
+                    //Handle Right Swap
+                case 'right':
+                    this.makeMove(SwipeType, this._c + 1);
+
+                    break;
+                default:
+                    break;
             }
         }
-        //set currecnt cell type as normal
-        grid.cell[this._c].setCellType('Normal');
-        //any game type except Paintstack
-        if (GameType !== 'PaintStack') {
-            grid.cell[this._c].setColor(grid.c2);
-
-            this._c = z;
-            grid.cell[this._c].setColor(this.color);
-            grid.cell[this._c].setCellType('Actor');
-
-        }
-        //PaintStack game type exclusive
-        //@ToDo
+        //////////////////////////////////////////////////////////////////////////////
+        // SKIPSMASH GAME TYPE
+        //////////////////////////////////////////////////////////////////////////////
         else {
 
-            //current cell hasnt been painted
-            if (!grid.cell[this._c].isMarked) {
-                grid.cell[this._c].setColor(grid.c2);
-            }
-            //its painted
-            else {
-                //set as active color the genCol
-                grid.cell[this._c].setColor(grid.cell[this._c].genColor);
-            }
+            switch (SwipeType) {
+                //Handle Up Swap
+                case 'up':
+                    this.thrustEnemy(SwipeType, this._c - cellsCntX);
 
-            this._c = z;
-            //next cell hasnt been painted
-            if (!grid.cell[this._c].isMarked) {
-                this.markedArea += (1 / (cellsCntX * cellsCntY)) * 100;
-                //parse color to genColor for backup purpose
-                grid.cell[this._c].genColor = color.genetaHSLColor();
-                grid.cell[this._c].isMarked = true; //mark the cell as painted
-            }
-            grid.cell[this._c].setColor(this.color);
-            grid.cell[this._c].setCellType('Actor');
-
-        }
-    }
-};
-
-Actor.prototype.thrustEnemy = function (dir, z) {
-    //if actor can move at the given direction
-    if (grid.cell[this._c].checkCell(dir, this._c)) {
-        //if on his path there is an enemy
-        if (grid.cell[z].type === 'Enemy') {
-            for (var i = 0; i < enemy.length; i++) {
-                if (enemy[i]._c === z) {
-                    //thrust towards the given direction
-                    enemy[i].Thrust(dir);
                     break;
+                    //Handle Down Swap
+                case 'down':
+                    this.thrustEnemy(SwipeType, this._c + cellsCntX);
+
+                    break;
+                    //Handle Left Swap
+                case 'left':
+                    this.thrustEnemy(SwipeType, this._c - 1);
+
+                    break;
+                    //Handle Right Swap
+                case 'right':
+                    this.thrustEnemy(SwipeType, this._c + 1);
+
+                    break;
+                default:
+                    break;
+            }
+        }
+    },
+
+    /**
+     * Update grid's cells
+     * @method Actor#makeMove
+     * @param {string} dir - latest actor's move
+     * @param {number} z - the cell that actor is supposed to go.
+     */
+    makeMove: function (dir, z) {
+        if (grid.cell[this._c].checkCell(dir, this._c)) {
+
+            if (grid.cell[z].type === 'Enemy') {
+                for (var i = 0; i < enemy.length; i++) {
+                    if (enemy[i]._c === z) {
+                        // if is ! the last enemy
+                        if (enemy.length != 0 && SkipStack.soundsOn) {
+                            hit_sfx.play();
+                        }
+                        //enemy[i].isDead = true;
+                        enemy.splice(i, 1);
+                        enemyMove.splice(i, 1);
+                        break;
+                    }
                 }
             }
-            //if the enemy is not stuck on the border take his postion on the grid
-            if (grid.cell[z].checkCell(dir, z)) {
+            //set currecnt cell type as normal
+            grid.cell[this._c].setCellType('Normal');
+            //any game type except Paintstack
+            if (GameType !== 'PaintStack') {
+                grid.cell[this._c].setColor(grid.c2);
+
+                this._c = z;
+                grid.cell[this._c].setColor(this.color);
+                grid.cell[this._c].setCellType('Actor');
+
+            }
+            //PaintStack game type exclusive
+            //@ToDo
+            else {
+
+                //current cell hasnt been painted
+                if (!grid.cell[this._c].isMarked) {
+                    grid.cell[this._c].setColor(grid.c2);
+                }
+                //its painted
+                else {
+                    //set as active color the genCol
+                    grid.cell[this._c].setColor(grid.cell[this._c].genColor);
+                }
+
+                this._c = z;
+                //next cell hasnt been painted
+                if (!grid.cell[this._c].isMarked) {
+                    this.markedArea += (1 / (cellsCntX * cellsCntY)) * 100;
+                    //parse color to genColor for backup purpose
+                    grid.cell[this._c].genColor = color.genetaHSLColor();
+                    grid.cell[this._c].isMarked = true; //mark the cell as painted
+                }
+                grid.cell[this._c].setColor(this.color);
+                grid.cell[this._c].setCellType('Actor');
+
+            }
+        }
+    },
+
+    /**
+     * Thrust enemy towards a given direction
+     * @method Actor#thrustEnemy
+     * @param {string} dir - latest actor's move
+     * @param {number} z - the cell that actor is supposed to go.
+     */
+    thrustEnemy: function (dir, z) {
+        //if actor can move at the given direction
+        if (grid.cell[this._c].checkCell(dir, this._c)) {
+            //if on his path there is an enemy
+            if (grid.cell[z].type === 'Enemy') {
+                for (var i = 0; i < enemy.length; i++) {
+                    if (enemy[i]._c === z) {
+                        //thrust towards the given direction
+                        enemy[i].Thrust(dir);
+                        break;
+                    }
+                }
+                //if the enemy is not stuck on the border take his postion on the grid
+                if (grid.cell[z].checkCell(dir, z)) {
+                    grid.cell[this._c].setCellType('Normal');
+                    grid.cell[this._c].setColor(grid.c2);
+
+                    this._c = z;
+                    grid.cell[this._c].setColor(this.color);
+                    grid.cell[this._c].setCellType('Actor');
+                }
+            } else {
                 grid.cell[this._c].setCellType('Normal');
                 grid.cell[this._c].setColor(grid.c2);
 
@@ -175,13 +210,9 @@ Actor.prototype.thrustEnemy = function (dir, z) {
                 grid.cell[this._c].setColor(this.color);
                 grid.cell[this._c].setCellType('Actor');
             }
-        } else {
-            grid.cell[this._c].setCellType('Normal');
-            grid.cell[this._c].setColor(grid.c2);
-
-            this._c = z;
-            grid.cell[this._c].setColor(this.color);
-            grid.cell[this._c].setCellType('Actor');
         }
     }
+
 };
+
+Actor.prototype.constructor = Actor;

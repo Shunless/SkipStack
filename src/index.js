@@ -10,6 +10,23 @@
 //////////////////////////////////////////////////////////////////////////////
 var isMultiplayerEnabled = false;
 
+var SkipStack = SkipStack || {
+    /**
+    * SkipStack version number.
+    * @constant
+    * @type {string}
+    */
+    version: '0.0.1',
+
+    /**
+    * Indicates if sound is on or off
+    * @constant
+    * @type {boolean}
+    */
+    soundsOn: false
+
+};
+
 var filter;
 var isfilterEnabled = false;
 
@@ -94,11 +111,11 @@ function create() {
         }, this);
 
         cursors.down.onDown.add(function () {
-            actor.move('bottom');
+            actor.move('down');
         }, this);
 
         cursors.up.onDown.add(function () {
-            actor.move('top');
+            actor.move('up');
         }, this);
 
         //If multiplayer is enabled enable 2nd player controls
@@ -108,7 +125,7 @@ function create() {
             WASDcursor = game.input.keyboard.addKeys(a, b);
 
             WASDcursor.up.onDown.add(function () {
-                actor1.move('top');
+                actor1.move('up');
             }, this);
 
             WASDcursor.left.onDown.add(function () {
@@ -120,7 +137,7 @@ function create() {
             }, this);
 
             WASDcursor.down.onDown.add(function () {
-                actor1.move('bottom');
+                actor1.move('down');
             }, this);
         }
     }
@@ -227,8 +244,10 @@ function update() {
             enemy[i].move(enemyMove[i]);
         }
 
-        //this function triggers the sfx player
-        blips_sfx.play();
+        if(SkipStack.soundsOn){
+            //this function triggers the sfx player
+            blips_sfx.play();
+        }
 
         movesHaveBeenStored = false;
 
@@ -345,13 +364,17 @@ function gameOver() {
 }
 //$ expand " grid " $
 function expand() {
-    levelup_sfx.play();
+    if(SkipStack.soundsOn){
+        // play random tune from levelup_sfx array
+        levelup_sfx[getRandomInt(0,levelup_sfx.length)].play();
+    }
+
     justExpandedGrid = true;
 
+    gameStateRestarts++;
     //NORMAL AND SKIPSMASH GAME TYPES
     if (GameType === 'Normal' || GameType === 'SkipSmash') {
         justLost = true;
-        gameStateRestarts++;
 
         //increment cells by 1 if enemies > ceil(cells/2)
         if ((3 + gameStateRestarts) > Math.ceil(cellsCntX / 2)) {
@@ -362,7 +385,6 @@ function expand() {
     }
     //ENDLESS GAME TYPE
     else if (GameType === 'Endless') {
-        gameStateRestarts++;
 
         //increment cells by 1 if enemies > ceil(cells/2)
         if ((3 + gameStateRestarts) > Math.ceil(cellsCntX / 1.5)) {
@@ -375,7 +397,6 @@ function expand() {
     //PAINTSTACK GAME TYPE
     else if (GameType === 'PaintStack') {
         justLost = true;
-        gameStateRestarts++;
 
         //increment cells by 2 if enemies > cells
         if ((3 + gameStateRestarts) > cellsCntX) {

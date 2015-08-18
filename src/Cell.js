@@ -6,12 +6,13 @@
 /**
  *
  * @class Cell
+ * @constructor
  * @param world_position.x (number)
  * @param world_position.y (number)
  * @param cell's HashId (string)
  * @param cell's color (web color)
  */
-function Cell(_posX, _posY, _name, _color) {
+Cell = function (_posX, _posY, _name, _color) {
     this.color = _color;
     this.positionX = _posX;
     this.positionY = _posY;
@@ -37,102 +38,131 @@ function Cell(_posX, _posY, _name, _color) {
     //if gametype is PaintStack cells ll keep a special
     //value indicating their generated color\
     this.genColor = '#000';
-}
-
-Cell.prototype.init = function () {
-    this.rect = new Phaser.Rectangle(this.positionX, this.positionY, grid.cellWidth, grid.cellWidth);
 };
 
-/*  SET CELL TYPE   */
-Cell.prototype.setCellType = function (_type) {
-    if (_type != 'Normal' && _type != 'Enemy' && _type != 'Actor') {
-        alert('type can only be "Enemy","Normal","Actor"');
-    }
-    this.type = _type;
-};
+Cell.prototype = {
 
-/*   CELL RENDER FUNCTION   */
-Cell.prototype.render = function () {
-    if (this.isFilterEnabled === false) {
-        game.debug.geom(this.rect, this.color);
-    }
-};
+    /**
+     * Should be over-ridden.
+     * @method Cell#init
+     */
+    init: function () {
+        this.rect = new Phaser.Rectangle(this.positionX, this.positionY, grid.cellWidth, grid.cellWidth);
+    },
 
-/*   SET CELL COLOR   */
-Cell.prototype.setColor = function (_clr) {
-    this.color = _clr;
-};
+    /**
+     * Set the type of this particular cell.
+     * @method Cell#setCellType
+     * @param {string} _type - Type of the cell.
+     */
+    setCellType: function (_type) {
+        if (_type != 'Normal' && _type != 'Enemy' && _type != 'Actor') {
+            alert('type can only be "Enemy","Normal","Actor"');
+        }
+        this.type = _type;
+    },
 
-/*   ENABLE FILTER   */
-Cell.prototype.EnableFilter = function (_clr) {
-    this.isFilterEnabled = true;
+    /**
+     * Render the cell on the screen.
+     * @method Cell#render
+     */
+    render: function () {
+        if (this.isFilterEnabled === false) {
+            game.debug.geom(this.rect, this.color);
+        }
+    },
 
-    this.rect = game.add.sprite(this.positionX, this.positionY);
-    this.rect.width = cellWidth;
-    this.rect.height = cellHeight;
+    /**
+     * Set the color of this particular cell.
+     * @method Cell#setColor
+     * @param {string} _type - Color of the cell.
+     */
+    setColor: function (_clr) {
+        this.color = _clr;
+    },
 
-    this.rect.filters = [filter];
-};
+    /**
+     * Make visible a backround filter inside cell's region.
+     * @method Cell#EnableFilter
+     */
+    EnableFilter: function () {
+        this.isFilterEnabled = true;
 
-/*   CHECK CELL  */
-Cell.prototype.checkCell = function (_direction, _currentPos) {
-    var result = true;
-    var i;
-    switch (_direction) {
-        case 'up':
-            if (_currentPos < cellsCntX) {
-                result = false;
-            } else {
-                result = true;
-            }
-            //grid.cell[_currentPos - cellsCntX]
+        this.rect = game.add.sprite(this.positionX, this.positionY);
+        this.rect.width = cellWidth;
+        this.rect.height = cellHeight;
 
-            break;
-        case 'down':
-            //if > CellsCountX*CellsCountY-CellsCountX
-            if (_currentPos > (cellsCntX * grid.cellsCountY) - cellsCntX) {
-                result = false;
-            } else {
-                result = true;
-            }
-            //grid.cell[_currentPos + cellsCntX]
+        this.rect.filters = [filter];
+    },
 
-            break;
-        case 'left':
-
-            for (i = 0; i < cellsCntX; i++) {
-                if (_currentPos === cellsCntX * i) {
+    /**
+     * Check if can move towards the given direction.
+     * @method Cell#checkCell
+     * @param {string} _direction - Direction you want to move.
+     * @param {number} _currentPos - Current cell's posiion.
+     */
+    checkCell: function (_direction, _currentPos) {
+        var result = true;
+        var i;
+        switch (_direction) {
+            case 'up':
+                if (_currentPos < cellsCntX) {
                     result = false;
+                } else {
+                    result = true;
                 }
-            }
-            if (result === false) {
+                //grid.cell[_currentPos - cellsCntX]
+
                 break;
-            } else {
-                result = true;
-            }
-
-            //grid.cell[_currentPos-1]
-
-            break;
-        case 'right':
-
-            for (i = 0; i < cellsCntX; i++) {
-                if (_currentPos === (cellsCntX * i - 1)) {
+            case 'down':
+                //if > CellsCountX*CellsCountY-CellsCountX
+                if (_currentPos > (cellsCntX * grid.cellsCountY) - cellsCntX) {
                     result = false;
+                } else {
+                    result = true;
                 }
-            }
-            if (result === false) {
+                //grid.cell[_currentPos + cellsCntX]
+
                 break;
-            } else {
-                result = true;
-            }
+            case 'left':
 
-            //grid.cell[_currentPos+1]
+                for (i = 0; i < cellsCntX; i++) {
+                    if (_currentPos === cellsCntX * i) {
+                        result = false;
+                    }
+                }
+                if (result === false) {
+                    break;
+                } else {
+                    result = true;
+                }
 
-            break;
-        default:
-            break;
+                //grid.cell[_currentPos-1]
+
+                break;
+            case 'right':
+
+                for (i = 0; i < cellsCntX; i++) {
+                    if (_currentPos === (cellsCntX * i - 1)) {
+                        result = false;
+                    }
+                }
+                if (result === false) {
+                    break;
+                } else {
+                    result = true;
+                }
+
+                //grid.cell[_currentPos+1]
+
+                break;
+            default:
+                break;
+        }
+
+        return result;
     }
 
-    return result;
 };
+
+Cell.prototype.constructor = Cell;

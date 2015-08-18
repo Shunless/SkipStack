@@ -6,8 +6,9 @@
 /**
  *
  * @class Color
+ * @constructor
  */
-function Color() {
+Color = function () {
     //COLORS LIB
     this.Color_OceanBlue = 0x99FFFF;
     this.Color_SteelBlue = 0x4682B4;
@@ -35,24 +36,50 @@ function Color() {
     this.Color_Wheat = 0xF5DEB3;
     this.Color_AntiqueWhite = 0xFAEBD7;
     this.Color_White = 0xFFFFFF;
-}
-
-Color.prototype.generateHexColor = function () {
-    return '#' + ((0.5 + 0.5 * Math.random()) * 0xFFFFFF << 0).toString(16);
 };
 
-Color.prototype.genetaRGBAColor = function () {
-    return 'rgba(' + getRandomInt(0, 256) + ',' + getRandomInt(0, 256) + ',' + getRandomInt(0, 256) + ',' + Math.random() + ')';
+Color.prototype = {
+
+    /**
+     * Generate a totally random Hex color.
+     * @method Color#generateHexColor
+     */
+    generateHexColor: function () {
+        return '#' + ((0.5 + 0.5 * Math.random()) * 0xFFFFFF << 0).toString(16);
+    },
+
+    /**
+     * Generate a totally random RGBA color.
+     * @method Color#genetaRGBAColor
+     */
+    genetaRGBAColor: function () {
+        return 'rgba(' + getRandomInt(0, 256) + ',' + getRandomInt(0, 256) + ',' + getRandomInt(0, 256) + ',' + Math.random() + ')';
+    },
+
+    /**
+     * Generate a totally random RGB color.
+     * @method Color#genetaRGBColor
+     */
+    genetaRGBColor: function () {
+        return 'rgba(' + getRandomInt(0, 256) + ',' + getRandomInt(0, 256) + ',' + getRandomInt(0, 256) + ', 1)';
+    },
+
+    /**
+     * Generate a totally random HLSL color.
+     * @method Color#genetaHSLColor
+     */
+    genetaHSLColor: function () {
+        return 'hsl(' + getRandomInt(0, 256) + ',' + 100 + '%,' + 30 + '%)';
+    },
+
+    /**
+     * Generate a totally random HLSLA color.
+     * @method Color#genetaHSLAColor
+     */
+    genetaHSLAColor: function () {
+        return 'hsl(' + getRandomInt(0, 256) + ',' + 100 + '%,' + 30 + '%,' + Math.random() + ')';
+    }
+
 };
 
-Color.prototype.genetaRGBColor = function () {
-    return 'rgba(' + getRandomInt(0, 256) + ',' + getRandomInt(0, 256) + ',' + getRandomInt(0, 256) + ', 1)';
-};
-
-Color.prototype.genetaHSLColor = function () {
-    return 'hsl(' + getRandomInt(0, 256) + ',' + 100 + '%,' + 30 + '%)';
-};
-
-Color.prototype.genetaHSLAColor = function () {
-    return 'hsl(' + getRandomInt(0, 256) + ',' + 100 + '%,' + 30 + '%,' + Math.random() + ')';
-};
+Color.prototype.constructor = Color;
