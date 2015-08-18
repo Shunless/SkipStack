@@ -190,6 +190,7 @@ Actor.prototype = {
             }
         }
     }
+
 };
 
 Actor.prototype.constructor = Actor;

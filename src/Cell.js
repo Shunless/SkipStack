@@ -134,7 +134,6 @@ Cell.prototype = {
         return result;
     }
 
-}
+};
 
-/*   CHECK CELL  */
 Cell.prototype.constructor =  Cell;
