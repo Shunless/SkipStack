@@ -6,6 +6,7 @@
 /**
  *
  * @class Actor
+ * @constructor
  * @param actor's color (Web color)
  * @param actor's cell HashId (string)
  */
@@ -32,6 +33,10 @@ Actor = function (_color1, blockID) {
 
 Actor.prototype = {
 
+    /**
+     * Should be over-ridden.
+     * @method Actor#init
+     */
     init: function () {
         this._c = grid.getCell(this.block);
 
@@ -39,6 +44,11 @@ Actor.prototype = {
         grid.cell[this._c].setCellType('Actor');
     },
 
+    /**
+     * Make the actor move towards a direction of your choice.
+     * @method Actor#move
+     * @param {string} SwipeType - Direction to move.
+     */
     move: function (SwipeType) {
         //////////////////////////////////////////////////////////////////////////////
         // NORMAL & ENDLESS & PAINTSTACK GAME TYPE
@@ -102,6 +112,12 @@ Actor.prototype = {
         }
     },
 
+    /**
+     * Update grid's cells
+     * @method Actor#makeMove
+     * @param {string} dir - latest actor's move
+     * @param {number} z - the cell that actor is supposed to go.
+     */
     makeMove: function (dir, z) {
         if (grid.cell[this._c].checkCell(dir, this._c)) {
 
@@ -159,6 +175,12 @@ Actor.prototype = {
         }
     },
 
+    /**
+     * Thrust enemy towards a given direction
+     * @method Actor#thrustEnemy
+     * @param {string} dir - latest actor's move
+     * @param {number} z - the cell that actor is supposed to go.
+     */
     thrustEnemy: function (dir, z) {
         //if actor can move at the given direction
         if (grid.cell[this._c].checkCell(dir, this._c)) {

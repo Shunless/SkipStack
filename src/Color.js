@@ -6,6 +6,7 @@
 /**
  *
  * @class Color
+ * @constructor
  */
 Color = function () {
     //COLORS LIB
@@ -39,22 +40,42 @@ Color = function () {
 
 Color.prototype = {
 
+    /**
+     * Generate a totally random Hex color.
+     * @method Color#generateHexColor
+     */
     generateHexColor: function () {
         return '#' + ((0.5 + 0.5 * Math.random()) * 0xFFFFFF << 0).toString(16);
     },
 
+    /**
+     * Generate a totally random RGBA color.
+     * @method Color#genetaRGBAColor
+     */
     genetaRGBAColor: function () {
         return 'rgba(' + getRandomInt(0, 256) + ',' + getRandomInt(0, 256) + ',' + getRandomInt(0, 256) + ',' + Math.random() + ')';
     },
 
+    /**
+     * Generate a totally random RGB color.
+     * @method Color#genetaRGBColor
+     */
     genetaRGBColor: function () {
         return 'rgba(' + getRandomInt(0, 256) + ',' + getRandomInt(0, 256) + ',' + getRandomInt(0, 256) + ', 1)';
     },
 
+    /**
+     * Generate a totally random HLSL color.
+     * @method Color#genetaHSLColor
+     */
     genetaHSLColor: function () {
         return 'hsl(' + getRandomInt(0, 256) + ',' + 100 + '%,' + 30 + '%)';
     },
 
+    /**
+     * Generate a totally random HLSLA color.
+     * @method Color#genetaHSLAColor
+     */
     genetaHSLAColor: function () {
         return 'hsl(' + getRandomInt(0, 256) + ',' + 100 + '%,' + 30 + '%,' + Math.random() + ')';
     }

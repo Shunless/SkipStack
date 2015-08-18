@@ -5,8 +5,8 @@
 
 /**
  *
- *
  * @class Enemy
+ * @constructor
  * @param enemy's color (Web Color)
  * @param enemy's cell HashId  (string)
  */
@@ -31,6 +31,10 @@ Enemy = function (_color1, blockID) {
 
 Enemy.prototype = {
 
+    /**
+     * Should be over-ridden.
+     * @method Enemy#init
+     */
     init: function () {
         this._c = grid.getCell(this.block);
 
@@ -38,6 +42,11 @@ Enemy.prototype = {
         grid.cell[this._c].setCellType('Enemy');
     },
 
+    /**
+     * Make the enemy move towards a direction of your choice.
+     * @method Enemy#move
+     * @param {string} SwipeType - Direction to move.
+     */
     move: function (SwipeType) {
         switch (SwipeType) {
             case 'up':
@@ -126,6 +135,11 @@ Enemy.prototype = {
         }
     },
 
+    /**
+     * Gives the direction which enemy will march
+     * @method Enemy#Nextmove
+     * @return {string}
+     */
     Nextmove: function () {
         var CellsInt = actor._c - this._c;
         var RowsInt = Math.abs(grid.getRow(actor._c) - grid.getRow(this._c));
@@ -160,6 +174,11 @@ Enemy.prototype = {
         }
     },
 
+    /**
+     * Make the enemy move towards a direction of your choice.
+     * @method Enemy#move
+     * @param {string} SwipeType - Direction to move.
+     */
     Thrust: function (dir) {
         var z, x, i;
         switch (dir) {

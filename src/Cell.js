@@ -6,12 +6,13 @@
 /**
  *
  * @class Cell
+ * @constructor
  * @param world_position.x (number)
  * @param world_position.y (number)
  * @param cell's HashId (string)
  * @param cell's color (web color)
  */
-Cell = function(_posX, _posY, _name, _color) {
+Cell = function (_posX, _posY, _name, _color) {
     this.color = _color;
     this.positionX = _posX;
     this.positionY = _posY;
@@ -41,28 +42,50 @@ Cell = function(_posX, _posY, _name, _color) {
 
 Cell.prototype = {
 
+    /**
+     * Should be over-ridden.
+     * @method Cell#init
+     */
     init: function () {
         this.rect = new Phaser.Rectangle(this.positionX, this.positionY, grid.cellWidth, grid.cellWidth);
     },
 
-    setCellType: function (_type){
+    /**
+     * Set the type of this particular cell.
+     * @method Cell#setCellType
+     * @param {string} _type - Type of the cell.
+     */
+    setCellType: function (_type) {
         if (_type != 'Normal' && _type != 'Enemy' && _type != 'Actor') {
             alert('type can only be "Enemy","Normal","Actor"');
         }
         this.type = _type;
     },
 
-    render: function (){
-         if (this.isFilterEnabled === false) {
+    /**
+     * Render the cell on the screen.
+     * @method Cell#render
+     */
+    render: function () {
+        if (this.isFilterEnabled === false) {
             game.debug.geom(this.rect, this.color);
         }
     },
 
+    /**
+     * Set the color of this particular cell.
+     * @method Cell#setColor
+     * @param {string} _type - Color of the cell.
+     */
     setColor: function (_clr) {
         this.color = _clr;
     },
 
-    EnableFilter: function (_clr) {
+    /**
+     * Make visible a backround filter inside cell's region.
+     * @method Cell#EnableFilter
+     */
+    EnableFilter: function () {
         this.isFilterEnabled = true;
 
         this.rect = game.add.sprite(this.positionX, this.positionY);
@@ -72,6 +95,12 @@ Cell.prototype = {
         this.rect.filters = [filter];
     },
 
+    /**
+     * Check if can move towards the given direction.
+     * @method Cell#checkCell
+     * @param {string} _direction - Direction you want to move.
+     * @param {number} _currentPos - Current cell's posiion.
+     */
     checkCell: function (_direction, _currentPos) {
         var result = true;
         var i;
@@ -136,4 +165,4 @@ Cell.prototype = {
 
 };
 
-Cell.prototype.constructor =  Cell;
+Cell.prototype.constructor = Cell;
