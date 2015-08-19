@@ -26,7 +26,21 @@ var SkipStack = SkipStack || {
      * @constant
      * @type {boolean}
      */
-    soundsOn: true
+    soundsOn: true,
+
+    /**
+     * stored total score for each game mode.
+     * @constant
+     * @type {Array<number>}
+     */
+    TotalScore: [0, 0, 0, 0],
+
+    /**
+     * current score
+     * @constant
+     * @type {number}
+     */
+    CurrentScore: 0
 
 };
 
@@ -382,16 +396,49 @@ function render() {
 //$ game over $
 //every game type has the same game over :)
 function gameOver() {
+
+    // clear console
     console.clear();
+
+    // turn justLost flag to true
     justLost = true;
 
     //reset grid back to 7x7
     cellsCntY = cellsCntX = 7;
+
+    // Reset $gameStateRestarts, $timesExpanded back to 0
     gameStateRestarts = timesExpanded = 0;
+
+    // Refresh LoadTIme
+    LoadTime = game.time.now;
+
+    if (GameType === 'Normal') {
+
+        // Update Normal gametype total score
+        SkipStack.TotalScore[0] += SkipStack.CurrentScore;
+
+    } else if (GameType === 'SkipSmash') {
+
+        // Update SkipSmash gametype total score
+        SkipStack.TotalScore[2] += SkipStack.CurrentScore;
+
+    } else if (GameType === 'Endless') {
+
+        // Update Endless gametype total score
+        SkipStack.TotalScore[1] += SkipStack.CurrentScore;
+
+    } else if (GameType === 'PaintStack') {
+
+        // Update PaintStack gametype total score
+        SkipStack.TotalScore[3] += SkipStack.CurrentScore;
+
+    }
+
+    // "Restart" the game
     game.state.start(game.state.current);
 
-    LoadTime = game.time.now;
 }
+
 //$ expand " grid " $
 function expand() {
 
@@ -404,7 +451,8 @@ function expand() {
 
     justExpandedGrid = true;
 
-    gameStateRestarts++;
+    // increase current score and gamerestarts by 1
+    SkipStack.CurrentScore = ++gameStateRestarts;
 
     //NORMAL TYPE
     if (GameType === 'Normal') {
@@ -416,7 +464,6 @@ function expand() {
             cellsCntY = ++cellsCntX;
         }
 
-        game.state.start(game.state.current);
     }
     //SKIPSMASH GAME TYPE
     else if (GameType === 'SkipSmash') {
@@ -428,7 +475,6 @@ function expand() {
             cellsCntY = ++cellsCntX;
         }
 
-        game.state.start(game.state.current);
     }
     //ENDLESS GAME TYPE
     else if (GameType === 'Endless') {
@@ -439,7 +485,6 @@ function expand() {
             justLost = true;
         }
 
-        game.state.start(game.state.current);
     }
     //PAINTSTACK GAME TYPE
     else if (GameType === 'PaintStack') {
@@ -450,7 +495,9 @@ function expand() {
             cellsCntY = ++cellsCntX;
         }
 
-        game.state.start(game.state.current);
     }
+
+    // "Restart" the game
+    game.state.start(game.state.current);
 
 }
