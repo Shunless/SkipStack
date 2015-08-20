@@ -40,7 +40,21 @@ var SkipStack = SkipStack || {
      * @constant
      * @type {number}
      */
-    CurrentScore: 0
+    CurrentScore: 0,
+
+    /**
+     * isPaused
+     * @constant
+     * @type {boolean}
+     */
+    isPaused: true,
+
+    /**
+     * firtIteration
+     * @constant
+     * @type {boolean}
+     */
+    firtIteration: true
 
 };
 
@@ -138,8 +152,14 @@ function preload() {
 //$ create function $
 function create() {
     console.log('Create Function');
-    filter = new Phaser.Filter(game, null, get_loadingCellShader2());
+    filter = new Phaser.Filter(game, null, get_loadingShader());
     filter.setResolution(Editor_Width, Editor_Height);
+
+    var sprite = game.add.sprite();
+    sprite.width = Editor_Width;
+    sprite.height = Editor_Height;
+    sprite.filters = [ filter ];
+
     //For *not* mobile devices
     if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         //  And some controls to play the game with keyboard
@@ -183,6 +203,36 @@ function create() {
                 actor1.move('down');
             }, this);
         }
+
+        if (SkipStack.firtIteration) {
+            SkipStack.isPaused = true;
+            var text = game.add.text(game.world.centerX/1.15, game.world.centerY/1.3, "5", {
+                font: "Bold "+ Editor_Width/5 +"px Arial",
+                fill: '#ffffff',
+                align: "center"
+            });
+
+            setTimeout(function () {
+                text.text = "4";
+                setTimeout(function () {
+                    text.text = "3";
+                    setTimeout(function () {
+                        text.text = "2";
+                        setTimeout(function () {
+                            text.text = "1";
+                            setTimeout(function () {
+                                text.text = "";
+                                SkipStack.isPaused = false;
+                                sprite.destroy();
+//                                SkipStack.firtIteration = false;
+                            }, 1000);
+                        }, 1000);
+                    }, 1000);
+                }, 1000);
+            }, 1000);
+
+        }
+
     }
     // Set up handlers for mouse events
     //game.input.onDown.add(mouseDragStart, this);
@@ -275,6 +325,10 @@ function create() {
 
 // GAME LOOP
 function update() {
+
+    if (SkipStack.isPaused) {
+        return filter.update();
+    }
 
     var i, x;
     // reduced total cost by 3%
