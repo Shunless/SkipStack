@@ -8,26 +8,46 @@
 //  3-$ SkipSmash   #8 w/h beatlock
 //  4-$ PaintStack  #9 w/h beatlock
 //////////////////////////////////////////////////////////////////////////////
+
+// indicates if multiplayer is enabled
 var isMultiplayerEnabled = false;
 
+// SkipStack namespace
 var SkipStack = SkipStack || {
     /**
-    * SkipStack version number.
-    * @constant
-    * @type {string}
-    */
+     * SkipStack version number.
+     * @constant
+     * @type {string}
+     */
     version: '0.0.1',
 
     /**
-    * Indicates if sound is on or off
-    * @constant
-    * @type {boolean}
-    */
-    soundsOn: false
+     * Indicates if sound is on or off
+     * @constant
+     * @type {boolean}
+     */
+    soundsOn: false,
+
+    /**
+     * stored total score for each game mode.
+     * @constant
+     * @type {Array<number>}
+     */
+    TotalScore: [0, 0, 0, 0],
+
+    /**
+     * current score
+     * @constant
+     * @type {number}
+     */
+    CurrentScore: 0
 
 };
 
+//
 var filter;
+
+//
 var isfilterEnabled = false;
 
 // Active game type (string)
@@ -35,19 +55,23 @@ var GameType; // = gamemode[0];
 
 //beat refresh rate (number)
 var beatRate = 1000;
+
 //beat interval in %[0-Min, 100 Max] (number)
 var beatInterval = 0;
 
+//
 var EnemyMoveTimeout = 0;
 
 //amount of cells in grid (number)
-var cellsCntX = 7;
-var cellsCntY = 7;
+var cellsCntX = 7,
+    cellsCntY = 7;
+
 //cell scale in pixels (number)
-var cellWidth;
-var cellHeight;
+var cellWidth, cellHeight;
+
 //the color of the enemies (string)
 var enemiesColor = '#b50000';
+
 //indicates how many times game has been restared. (number)
 var gameStateRestarts = 0;
 
@@ -55,11 +79,20 @@ var gameStateRestarts = 0;
 //-----$ CLASSES $-----
 //-----$*********$-----
 
-var color; //color class instance
-var grid; //grid class instance
-var actor; //main actor instance
-var actor1; //second actor instance
-var enemy; //enemy class instance
+//color class instance
+var color;
+
+//grid class instance
+var grid;
+
+//main actor instance
+var actor;
+
+//second actor instance
+var actor1;
+
+//enemy class instance
+var enemy;
 
 /*~~~~~$*********$~~~~~*/
 /*~~~~~$ CLASSES $~~~~~*/
@@ -67,27 +100,36 @@ var enemy; //enemy class instance
 
 //indicates what s the next move gonna be. (sring)
 var enemyMove;
+
+//
 var movesHaveBeenStored;
+
 //indicates the time that the game actually started.(number)*ms
 var LoadTime;
+
 //indicates the elapsed time since level load.(number)*s
 var timeSinceLevelLoad;
+
 //$ phaser game instance (object)
 var game;
+
 //indicates if user lost in the previous session(boolean)
 var justLost = true;
+
 //indicates if the grid has just being expanded(boolean)
 var justExpandedGrid = false;
+
+//
+var timesExpanded = 0;
+
 //curor control
-var cursors;
-var WASDcursor;
+var cursors, WASDcursor;
 
 //$ preload function $
 function preload() {
     console.log('Preload Function');
     //Reset Arrays
-    enemy = [];
-    enemyMove = [];
+    enemy = enemyMove = [];
 
     movesHaveBeenStored = false;
     cellWidth = (Editor_Width - (border * 2 * cellsCntX + border * 2)) / (cellsCntX);
@@ -120,7 +162,8 @@ function create() {
 
         //If multiplayer is enabled enable 2nd player controls
         if (isMultiplayerEnabled === true) {
-            var a = [87, 65, 68, 83], b = ['up', "left", "right", "down"];
+            var a = [87, 65, 68, 83],
+                b = ['up', "left", "right", "down"];
 
             WASDcursor = game.input.keyboard.addKeys(a, b);
 
@@ -187,7 +230,8 @@ function create() {
     //+++++++++++++++++++++++++++++
 
     if (isMultiplayerEnabled === false) {
-        var x = '', i;
+        var x = '',
+            i;
         for (i = 0; i < 3 + gameStateRestarts; i++) {
             if (randomBoolean[0]() === true) {
                 if (randomBoolean[0]() === true) {
@@ -234,7 +278,7 @@ function update() {
 
     var i, x;
     // reduced total cost by 3%
-    if( isfilterEnabled === true ){
+    if (isfilterEnabled === true) {
         filter.update();
     }
     //draws cells and grid $ 1st Draw Call $
@@ -244,7 +288,7 @@ function update() {
             enemy[i].move(enemyMove[i]);
         }
 
-        if(SkipStack.soundsOn){
+        if (SkipStack.soundsOn) {
             //this function triggers the sfx player
             blips_sfx.play();
         }
@@ -323,8 +367,8 @@ function update() {
     timeSinceLevelLoad = Math.round((game.time.now - LoadTime) / 1000);
 
     updateUi();
-    // reduced total cost by 2%
-    //render();
+    // total cost is 2%
+    render();
 
 }
 
@@ -345,64 +389,117 @@ function render() {
     game.debug.text('beat rate: ' + beatRate + ' ms', 3, 40, '#b1ff00');
     game.debug.text('Interval: ' + beatInterval + ' %', 3, 53, beatInterval < 20 ? '#ff0000' : '#00ff27');
     game.debug.text('time: ' + timeSinceLevelLoad + ' s', 3, 66, '#b1ff00');
+    game.debug.text('Level: ' + SkipStack.CurrentScore, 3, 79, '#b1ff00');
     if (GameType === 'PaintStack') {
-        game.debug.text('marked area: ' + Math.floor(actor.markedArea) + '%', 3, 79, '#b1ff00');
+        game.debug.text('marked area: ' + Math.floor(actor.markedArea) + '%', 3, 92, '#b1ff00');
     }
+
 }
 //$ game over $
 //every game type has the same game over :)
 function gameOver() {
+
+    // clear console
     console.clear();
+
+    // turn justLost flag to true
     justLost = true;
 
     //reset grid back to 7x7
     cellsCntY = cellsCntX = 7;
-    gameStateRestarts = 0;
+
+    // Refresh LoadTIme
+    LoadTime = game.time.now;
+
+    if (GameType === 'Normal') {
+
+        // Update Normal gametype total score
+        SkipStack.TotalScore[0] += SkipStack.CurrentScore;
+
+    } else if (GameType === 'SkipSmash') {
+
+        // Update SkipSmash gametype total score
+        SkipStack.TotalScore[2] += SkipStack.CurrentScore;
+
+    } else if (GameType === 'Endless') {
+
+        // Update Endless gametype total score
+        SkipStack.TotalScore[1] += SkipStack.CurrentScore;
+
+    } else if (GameType === 'PaintStack') {
+
+        // Update PaintStack gametype total score
+        SkipStack.TotalScore[3] += SkipStack.CurrentScore;
+
+    }
+
+    // Reset $gameStateRestarts, $timesExpanded back to 0
+    SkipStack.CurrentScore = gameStateRestarts = timesExpanded = 0;
+
+    // "Restart" the game
     game.state.start(game.state.current);
 
-    LoadTime = game.time.now;
 }
+
 //$ expand " grid " $
 function expand() {
-    if(SkipStack.soundsOn){
+
+    var qq = Math.ceil(cellsCntX + timesExpanded * cellsCntX / 2);
+
+    if (SkipStack.soundsOn) {
         // play random tune from levelup_sfx array
-        levelup_sfx[getRandomInt(0,levelup_sfx.length)].play();
+        levelup_sfx[getRandomInt(0, levelup_sfx.length)].play();
     }
 
     justExpandedGrid = true;
 
-    gameStateRestarts++;
-    //NORMAL AND SKIPSMASH GAME TYPES
-    if (GameType === 'Normal' || GameType === 'SkipSmash') {
+    // increase current score and gamerestarts by 1
+    SkipStack.CurrentScore = ++gameStateRestarts;
+
+    //NORMAL TYPE
+    if (GameType === 'Normal') {
         justLost = true;
 
-        //increment cells by 1 if enemies > ceil(cells/2)
-        if ((3 + gameStateRestarts) > Math.ceil(cellsCntX / 2)) {
+        // expand grid by 1 cell if enemies > Math.ceil(cellsCntX + timesExpanded * cellsCntX / 2)
+        if ((3 + gameStateRestarts) > qq) {
+            timesExpanded++;
             cellsCntY = ++cellsCntX;
         }
 
-        game.state.start(game.state.current);
+    }
+    //SKIPSMASH GAME TYPE
+    else if (GameType === 'SkipSmash') {
+        justLost = true;
+
+        // expand grid by 1 cell if enemies > Math.ceil(cellsCntX + timesExpanded * cellsCntX / 3)
+        if ((3 + gameStateRestarts) > Math.ceil(cellsCntX + timesExpanded * cellsCntX / 3)) {
+            timesExpanded++;
+            cellsCntY = ++cellsCntX;
+        }
+
     }
     //ENDLESS GAME TYPE
     else if (GameType === 'Endless') {
 
-        //increment cells by 1 if enemies > ceil(cells/2)
-        if ((3 + gameStateRestarts) > Math.ceil(cellsCntX / 1.5)) {
+        // expand grid by 1 cell if enemies > Math.ceil(cellsCntX + timesExpanded * cellsCntX / 2)
+        if ((3 + gameStateRestarts) > qq) {
             cellsCntY = cellsCntX += 2;
             justLost = true;
         }
 
-        game.state.start(game.state.current);
     }
     //PAINTSTACK GAME TYPE
     else if (GameType === 'PaintStack') {
         justLost = true;
 
-        //increment cells by 2 if enemies > cells
-        if ((3 + gameStateRestarts) > cellsCntX) {
+        // expand grid by 1 cell if enemies > Math.ceil(cellsCntX + timesExpanded * cellsCntX / 4)
+        if ((3 + gameStateRestarts) > Math.ceil(cellsCntX + timesExpanded * cellsCntX / 4)) {
             cellsCntY = ++cellsCntX;
         }
 
-        game.state.start(game.state.current);
     }
+
+    // "Restart" the game
+    game.state.start(game.state.current);
+
 }

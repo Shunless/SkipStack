@@ -141,37 +141,27 @@ Enemy.prototype = {
      * @return {string}
      */
     Nextmove: function () {
-        var CellsInt = actor._c - this._c;
-        var RowsInt = Math.abs(grid.getRow(actor._c) - grid.getRow(this._c));
+        var CellsInt = actor._c - this._c,
+            RowsInt = Math.round(grid.getRow(actor._c) - grid.getRow(this._c)),
+            ColumnInt = Math.round(grid.getColumn(actor._c) - grid.getColumn(this._c));
 
-        //Enemy is ahead you
-        if (CellsInt < 0) {
-            if (RowsInt > 0) {
-                return ('up');
+        // Game Over
+        if (CellsInt === 0) {
+            return gameOver();
+        }
+
+        if (RowsInt > 0 && randomBoolean[0]() === true) {
+            return ('down');
+        } else if (RowsInt < 0 && randomBoolean[0]() === true) {
+            return ('up');
+        } else {
+            if (ColumnInt > 0) {
+                return ('right');
             } else {
-                if (this._c > actor._c) {
-                    return ('left');
-                } else {
-                    return ('right');
-                }
+                return ('left');
             }
         }
-        //Enemy has the same position with Enemy
-        else if (CellsInt === 0) {
-            gameOver();
-        }
-        //Enemy is behind you
-        else {
-            if (RowsInt > 0) {
-                return ('down');
-            } else {
-                if (this._c > actor._c) {
-                    return ('left');
-                } else {
-                    return ('right');
-                }
-            }
-        }
+
     },
 
     /**

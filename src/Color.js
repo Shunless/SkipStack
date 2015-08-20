@@ -57,6 +57,31 @@ Color.prototype = {
     },
 
     /**
+     * Generate random RGB color with a given max value.
+     * @method Color#genetaRGBColor_max
+     * @param {number} maxR - max R value
+     * @param {number} maxG - max G value
+     * @param {number} maxB - max B value
+     */
+    genetaRGBColor_max: function (maxR, maxG, maxB) {
+        var x = [getRandomInt(0, 256), getRandomInt(0, 256), getRandomInt(0, 256)];
+        while (x[0] > maxR) {
+            x[0] /= 2;
+        }
+
+        while (x[1] > maxR) {
+            x[1] /= 2;
+        }
+
+        while (x[2] > maxR) {
+            x[2] /= 2;
+        }
+
+        return 'rgba(' + Math.round(x[0]) + ',' + Math.round(x[1]) + ',' + Math.round(x[2]) + ', 1)';
+    },
+
+
+    /**
      * Generate a totally random RGB color.
      * @method Color#genetaRGBColor
      */
@@ -69,7 +94,25 @@ Color.prototype = {
      * @method Color#genetaHSLColor
      */
     genetaHSLColor: function () {
-        return 'hsl(' + getRandomInt(0, 256) + ',' + 100 + '%,' + 30 + '%)';
+        return 'hsl(' + getRandomInt(0, 360) + ',' + 30 + '%,' + 30 + '%)';
+    },
+
+    /**
+     * Generate a random HLSL color, excluding given arcs.
+     * @method Color#genetaHSLColor_Angle
+     * @param {Array<object>} io - arcs to exlude
+     */
+    genetaHSLColor_Angle: function (io) {
+        var i = 0;
+        var result = getRandomInt(0, 360);
+        while (i < io.length) {
+            if (result >= io[i].minAngle && result <= io[i].maxAngle) {
+                result = getRandomInt(0, 360);
+                i = -1;
+            }
+            i++;
+        }
+        return 'hsl(' + result + ',' + getRandomInt(30, 61) + '%,' + 30 + '%)'
     },
 
     /**
@@ -77,7 +120,7 @@ Color.prototype = {
      * @method Color#genetaHSLAColor
      */
     genetaHSLAColor: function () {
-        return 'hsl(' + getRandomInt(0, 256) + ',' + 100 + '%,' + 30 + '%,' + Math.random() + ')';
+        return 'hsl(' + getRandomInt(0, 360) + ',' + 30 + '%,' + 30 + '%,' + Math.random() + ')';
     }
 
 };

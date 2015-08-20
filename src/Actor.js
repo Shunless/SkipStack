@@ -165,7 +165,20 @@ Actor.prototype = {
                 if (!grid.cell[this._c].isMarked) {
                     this.markedArea += (1 / (cellsCntX * cellsCntY)) * 100;
                     //parse color to genColor for backup purpose
-                    grid.cell[this._c].genColor = color.genetaHSLColor();
+                    grid.cell[this._c].genColor = color.genetaHSLColor_Angle([
+                        {
+                            minAngle: 320,
+                            maxAngle: 359
+                        },
+                        {
+                            minAngle: 0,
+                            maxAngle: 40
+                        },
+                        {
+                            minAngle: 70,
+                            maxAngle: 160
+                        }
+                    ]);
                     grid.cell[this._c].isMarked = true; //mark the cell as painted
                 }
                 grid.cell[this._c].setColor(this.color);
