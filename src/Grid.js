@@ -104,6 +104,7 @@ Grid.prototype = {
             }
             _y += this.cellsCountX;
         }
+        console.error("Something went terribly wrong! \n Couldn't find the row of a cell.");
     },
 
     /**
@@ -116,11 +117,12 @@ Grid.prototype = {
     getColumn: function (_currentPos) {
         for (var x = 0; x < this.cellsCountX; x++) {
             for (var y = 0; y < this.cellsCountX; y++) {
-                if (_currentPos === (y + x * this.cellsCountX)) {
-                    return y;
+                if (_currentPos === (x + y * this.cellsCountX)) {
+                    return x;
                 }
             }
         }
+        console.error("Something went terribly wrong! \n Couldn't find the column of a cell.");
     }
 
 };

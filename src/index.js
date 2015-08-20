@@ -391,7 +391,7 @@ function render() {
     game.debug.text('time: ' + timeSinceLevelLoad + ' s', 3, 66, '#b1ff00');
     game.debug.text('Level: ' + SkipStack.CurrentScore, 3, 79, '#b1ff00');
     if (GameType === 'PaintStack') {
-        game.debug.text('marked area: ' + Math.floor(actor.markedArea) + '%', 3, 79, '#b1ff00');
+        game.debug.text('marked area: ' + Math.floor(actor.markedArea) + '%', 3, 92, '#b1ff00');
     }
 
 }
