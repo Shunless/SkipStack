@@ -26,7 +26,7 @@ var SkipStack = SkipStack || {
      * @constant
      * @type {boolean}
      */
-    soundsOn: true,
+    soundsOn: false,
 
     /**
      * stored total score for each game mode.
@@ -367,8 +367,8 @@ function update() {
     timeSinceLevelLoad = Math.round((game.time.now - LoadTime) / 1000);
 
     updateUi();
-    // reduced total cost by 2%
-    //render();
+    // total cost is 2%
+    render();
 
 }
 
@@ -389,9 +389,11 @@ function render() {
     game.debug.text('beat rate: ' + beatRate + ' ms', 3, 40, '#b1ff00');
     game.debug.text('Interval: ' + beatInterval + ' %', 3, 53, beatInterval < 20 ? '#ff0000' : '#00ff27');
     game.debug.text('time: ' + timeSinceLevelLoad + ' s', 3, 66, '#b1ff00');
+    game.debug.text('Level: ' + SkipStack.CurrentScore, 3, 79, '#b1ff00');
     if (GameType === 'PaintStack') {
         game.debug.text('marked area: ' + Math.floor(actor.markedArea) + '%', 3, 79, '#b1ff00');
     }
+
 }
 //$ game over $
 //every game type has the same game over :)
@@ -405,9 +407,6 @@ function gameOver() {
 
     //reset grid back to 7x7
     cellsCntY = cellsCntX = 7;
-
-    // Reset $gameStateRestarts, $timesExpanded back to 0
-    gameStateRestarts = timesExpanded = 0;
 
     // Refresh LoadTIme
     LoadTime = game.time.now;
@@ -433,6 +432,9 @@ function gameOver() {
         SkipStack.TotalScore[3] += SkipStack.CurrentScore;
 
     }
+
+    // Reset $gameStateRestarts, $timesExpanded back to 0
+    SkipStack.CurrentScore = gameStateRestarts = timesExpanded = 0;
 
     // "Restart" the game
     game.state.start(game.state.current);
