@@ -158,10 +158,11 @@ function create() {
     var sprite = game.add.sprite();
     sprite.width = Editor_Width;
     sprite.height = Editor_Height;
-    sprite.filters = [ filter ];
+    sprite.filters = [filter];
 
     //For *not* mobile devices
     if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+
         //  And some controls to play the game with keyboard
         cursors = game.input.keyboard.createCursorKeys();
         cursors.left.onDown.add(function () {
@@ -204,36 +205,37 @@ function create() {
             }, this);
         }
 
-        if (SkipStack.firtIteration) {
-            SkipStack.isPaused = true;
-            var text = game.add.text(game.world.centerX/1.15, game.world.centerY/1.3, "5", {
-                font: "Bold "+ Editor_Width/5 +"px Arial",
-                fill: '#ffffff',
-                align: "center"
-            });
+    }
 
+    if (SkipStack.firtIteration) {
+        SkipStack.isPaused = true;
+        var text = game.add.text(game.world.centerX / 1.15, game.world.centerY / 1.3, "5", {
+            font: "Bold " + Editor_Width / 5 + "px Arial",
+            fill: '#ffffff',
+            align: "center"
+        });
+
+        setTimeout(function () {
+            text.text = "4";
             setTimeout(function () {
-                text.text = "4";
+                text.text = "3";
                 setTimeout(function () {
-                    text.text = "3";
+                    text.text = "2";
                     setTimeout(function () {
-                        text.text = "2";
+                        text.text = "1";
                         setTimeout(function () {
-                            text.text = "1";
-                            setTimeout(function () {
-                                text.text = "";
-                                SkipStack.isPaused = false;
-                                sprite.destroy();
-//                                SkipStack.firtIteration = false;
-                            }, 1000);
+                            text.text = "";
+                            SkipStack.isPaused = false;
+                            sprite.destroy();
+                            //                                SkipStack.firtIteration = false;
                         }, 1000);
                     }, 1000);
                 }, 1000);
             }, 1000);
-
-        }
+        }, 1000);
 
     }
+
     // Set up handlers for mouse events
     //game.input.onDown.add(mouseDragStart, this);
     //game.input.onUp.add(mouseDragEnd, this);
