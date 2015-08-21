@@ -155,11 +155,6 @@ function create() {
     filter = new Phaser.Filter(game, null, get_loadingShader2());
     filter.setResolution(Editor_Width, Editor_Height);
 
-    var sprite = game.add.sprite();
-    sprite.width = Editor_Width;
-    sprite.height = Editor_Height;
-    sprite.filters = [filter];
-
     //For *not* mobile devices
     if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 
@@ -207,8 +202,11 @@ function create() {
 
     }
 
-    if (SkipStack.isCountdownEnabled) {
-        SkipStack.isPaused = true;
+    if (SkipStack.isCountdownEnabled === true) {
+        var sprite = game.add.sprite();
+        sprite.width = Editor_Width;
+        sprite.height = Editor_Height;
+        sprite.filters = [filter];
         var text = game.add.text(game.world.centerX / 1.15, game.world.centerY / 1.3, "5", {
             font: "Bold " + Editor_Width / 5 + "px Arial",
             fill: 'rgb(0, 179, 204)',
@@ -225,9 +223,8 @@ function create() {
                         text.text = "1";
                         setTimeout(function () {
                             text.text = "";
-                            SkipStack.isPaused = false;
                             sprite.destroy();
-                            //SkipStack.isCountdownEnabled = false;
+                            SkipStack.isCountdownEnabled = false;
                         }, 1000);
                     }, 1000);
                 }, 1000);
@@ -328,7 +325,7 @@ function create() {
 // GAME LOOP
 function update() {
 
-    if (SkipStack.isPaused) {
+    if (SkipStack.isCountdownEnabled === true) {
         return filter.update();
     }
 
