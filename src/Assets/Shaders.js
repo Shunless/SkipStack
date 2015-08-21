@@ -12,7 +12,7 @@ function get_loadingCellShader() {
     ];
 }
 //NxZ grid compattible shader for loading\
-/* http://glslsandbox.com/e#26360.0 */
+/* Source: http://glslsandbox.com/e#26360.0 */
 function get_loadingCellShader2() {
     return [
         "#define PI 3.14159265359",
@@ -23,6 +23,13 @@ function get_loadingCellShader2() {
 function get_loadingShader() {
     return [
         "precision mediump float;uniform float time;uniform vec2 mouse;uniform vec2 resolution;void main( void ){gl_FragColor=vec4( 1.0 );vec2 p=(gl_FragCoord.xy / resolution.xy) * 2.0 - 1.0;vec2 r=vec2(length(p), atan(p.x, p.y));r.y=fract(time+4.*r.x/3.14);if(r.y > .22 && r.x < .9 && r.y < 0.9){gl_FragColor.rg *=vec2(0.7, .8);}}"
+    ];
+}
+
+/* Source: http://glslsandbox.com/e#27255.0 */
+function get_loadingShader2() {
+    return [
+        "precision mediump float;uniform float time;uniform vec2 resolution;void main( void ){gl_FragColor=vec4( 1.0 );vec2 p=gl_FragCoord.xy / resolution -0.5;vec2 r=vec2(length(p), atan(p.x, p.y));r.y=fract(time+abs(1.0-sin(time)*3.0)*r.y/3.141592653);if(r.x > .22 && r.x < .4 && r.y < 0.9){gl_FragColor.rgb *=vec3(0.0, 0.7, 0.8);}}"
     ];
 }
 

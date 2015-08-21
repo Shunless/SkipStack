@@ -50,11 +50,11 @@ var SkipStack = SkipStack || {
     isPaused: true,
 
     /**
-     * firtIteration
+     * isCountdownEnabled
      * @constant
      * @type {boolean}
      */
-    firtIteration: true
+    isCountdownEnabled: true
 
 };
 
@@ -152,7 +152,7 @@ function preload() {
 //$ create function $
 function create() {
     console.log('Create Function');
-    filter = new Phaser.Filter(game, null, get_loadingShader());
+    filter = new Phaser.Filter(game, null, get_loadingShader2());
     filter.setResolution(Editor_Width, Editor_Height);
 
     var sprite = game.add.sprite();
@@ -207,11 +207,11 @@ function create() {
 
     }
 
-    if (SkipStack.firtIteration) {
+    if (SkipStack.isCountdownEnabled) {
         SkipStack.isPaused = true;
         var text = game.add.text(game.world.centerX / 1.15, game.world.centerY / 1.3, "5", {
             font: "Bold " + Editor_Width / 5 + "px Arial",
-            fill: '#ffffff',
+            fill: 'rgb(0, 179, 204)',
             align: "center"
         });
 
@@ -227,7 +227,7 @@ function create() {
                             text.text = "";
                             SkipStack.isPaused = false;
                             sprite.destroy();
-                            //                                SkipStack.firtIteration = false;
+                            //SkipStack.isCountdownEnabled = false;
                         }, 1000);
                     }, 1000);
                 }, 1000);
@@ -492,6 +492,9 @@ function gameOver() {
     // Reset $gameStateRestarts, $timesExpanded back to 0
     SkipStack.CurrentScore = gameStateRestarts = timesExpanded = 0;
 
+    // Enable countdown
+    SkipStack.isCountdownEnabled = true;
+
     // "Restart" the game
     game.state.start(game.state.current);
 
@@ -554,6 +557,9 @@ function expand() {
         }
 
     }
+
+    // Disable countdown
+    SkipStack.isCountdownEnabled = false;
 
     // "Restart" the game
     game.state.start(game.state.current);
