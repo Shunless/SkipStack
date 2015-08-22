@@ -42,11 +42,11 @@ function createGame(callback) {
 
     if (gamemode[0] === 'PaintStack') {
         indicator = new uiCell(2, '2-1', 'enemies', 'en', function () {
-            return Math.floor(actor.markedArea) + '%'
+            return Math.floor(actor.markedArea) + '%';
         });
     } else {
         indicator = new uiCell(2, '2-1', 'enemies', 'en', function () {
-            return enemy.length
+            return SkipStack.CurrentScore;
         });
     }
 

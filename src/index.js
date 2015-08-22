@@ -421,7 +421,7 @@ function update() {
 
     updateUi();
     // total cost is 2%
-    render();
+    // render();
 
 }
 

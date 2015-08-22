@@ -126,7 +126,7 @@ Actor.prototype = {
                     if (enemy[i]._c === z) {
                         // if is ! the last enemy
                         if (enemy.length != 0 && SkipStack.soundsOn) {
-                            hit_sfx.play();
+                            hit_sfx[getRandomInt(0, hit_sfx.length)].play();
                         }
                         //enemy[i].isDead = true;
                         enemy.splice(i, 1);
