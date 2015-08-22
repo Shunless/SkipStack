@@ -26,7 +26,7 @@ var SkipStack = SkipStack || {
      * @constant
      * @type {boolean}
      */
-    soundsOn: false,
+    soundsOn: true,
 
     /**
      * stored total score for each game mode.
@@ -40,7 +40,21 @@ var SkipStack = SkipStack || {
      * @constant
      * @type {number}
      */
-    CurrentScore: 0
+    CurrentScore: 0,
+
+    /**
+     * isPaused
+     * @constant
+     * @type {boolean}
+     */
+    isPaused: true,
+
+    /**
+     * isCountdownEnabled
+     * @constant
+     * @type {boolean}
+     */
+    isCountdownEnabled: true
 
 };
 
@@ -138,10 +152,12 @@ function preload() {
 //$ create function $
 function create() {
     console.log('Create Function');
-    filter = new Phaser.Filter(game, null, get_loadingCellShader2());
+    filter = new Phaser.Filter(game, null, get_loadingShader2());
     filter.setResolution(Editor_Width, Editor_Height);
+
     //For *not* mobile devices
     if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+
         //  And some controls to play the game with keyboard
         cursors = game.input.keyboard.createCursorKeys();
         cursors.left.onDown.add(function () {
@@ -183,7 +199,40 @@ function create() {
                 actor1.move('down');
             }, this);
         }
+
     }
+
+    if (SkipStack.isCountdownEnabled === true) {
+        var sprite = game.add.sprite();
+        sprite.width = Editor_Width;
+        sprite.height = Editor_Height;
+        sprite.filters = [filter];
+        var text = game.add.text(game.world.centerX / 1.15, game.world.centerY / 1.3, "5", {
+            font: "Bold " + Editor_Width / 5 + "px Arial",
+            fill: 'rgb(0, 179, 204)',
+            align: "center"
+        });
+
+        setTimeout(function () {
+            text.text = "4";
+            setTimeout(function () {
+                text.text = "3";
+                setTimeout(function () {
+                    text.text = "2";
+                    setTimeout(function () {
+                        text.text = "1";
+                        setTimeout(function () {
+                            text.text = "";
+                            sprite.destroy();
+                            SkipStack.isCountdownEnabled = false;
+                        }, 1000);
+                    }, 1000);
+                }, 1000);
+            }, 1000);
+        }, 1000);
+
+    }
+
     // Set up handlers for mouse events
     //game.input.onDown.add(mouseDragStart, this);
     //game.input.onUp.add(mouseDragEnd, this);
@@ -275,6 +324,10 @@ function create() {
 
 // GAME LOOP
 function update() {
+
+    if (SkipStack.isCountdownEnabled === true) {
+        return filter.update();
+    }
 
     var i, x;
     // reduced total cost by 3%
@@ -368,7 +421,7 @@ function update() {
 
     updateUi();
     // total cost is 2%
-    render();
+    // render();
 
 }
 
@@ -436,6 +489,9 @@ function gameOver() {
     // Reset $gameStateRestarts, $timesExpanded back to 0
     SkipStack.CurrentScore = gameStateRestarts = timesExpanded = 0;
 
+    // Enable countdown
+    SkipStack.isCountdownEnabled = true;
+
     // "Restart" the game
     game.state.start(game.state.current);
 
@@ -498,6 +554,9 @@ function expand() {
         }
 
     }
+
+    // Disable countdown
+    SkipStack.isCountdownEnabled = false;
 
     // "Restart" the game
     game.state.start(game.state.current);

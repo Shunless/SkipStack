@@ -126,7 +126,7 @@ Actor.prototype = {
                     if (enemy[i]._c === z) {
                         // if is ! the last enemy
                         if (enemy.length != 0 && SkipStack.soundsOn) {
-                            hit_sfx.play();
+                            hit_sfx[getRandomInt(0, hit_sfx.length)].play();
                         }
                         //enemy[i].isDead = true;
                         enemy.splice(i, 1);
@@ -201,6 +201,10 @@ Actor.prototype = {
             if (grid.cell[z].type === 'Enemy') {
                 for (var i = 0; i < enemy.length; i++) {
                     if (enemy[i]._c === z) {
+                        // if is ! the last enemy
+                        if (enemy.length != 0 && SkipStack.soundsOn) {
+                            thrustEnemy.play();
+                        }
                         //thrust towards the given direction
                         enemy[i].Thrust(dir);
                         break;
