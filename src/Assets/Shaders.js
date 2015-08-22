@@ -29,7 +29,7 @@ function get_loadingShader() {
 /* Source: http://glslsandbox.com/e#27255.0 */
 function get_loadingShader2() {
     return [
-        "precision mediump float;uniform float time;uniform vec2 resolution;void main( void ){gl_FragColor=vec4( 1.0 );vec2 p=gl_FragCoord.xy / resolution -0.5;vec2 r=vec2(length(p), atan(p.x, p.y));r.y=fract(time+abs(1.0-sin(time)*3.0)*r.y/3.141592653);if(r.x > .22 && r.x < .4 && r.y < 0.9){gl_FragColor.rgb *=vec3(0.0, 0.7, 0.8);}}"
+        "precision mediump float;uniform float time;uniform vec2 resolution;void main( void ){gl_FragColor=vec4( 1.0 );vec2 p=gl_FragCoord.xy / resolution -0.5;vec2 r=vec2(length(p), atan(p.x, p.y));r.y=fract(time+abs(1.0-sin(time)*3.0)*r.y/3.141592653);if(r.x > .22 && r.x < .4 && r.y < 0.9){gl_FragColor.rgb *=vec3(0.0, 0.7, 0.8) / ( smoothstep(0.0, 0.07, dot(r.x,r.x)) * smoothstep(0.3, 0.1, dot(r.x,r.x)) + smoothstep(0.9, 0.92, dot(r.y,r.y)) );}}"
     ];
 }
 

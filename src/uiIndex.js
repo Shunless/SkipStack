@@ -8,7 +8,7 @@ $(document).ready(function () {
     gridBuilder('1-1', '13-7');
     prepGame();
     // if not using the a minified version of the game.
-    if($('#using_builder').length<=0){
+    if ($('#using_builder').length <= 0) {
         console.log('Loading Scripts');
         addScript('src/Math.js');
         addScript('src/Cell.js');
@@ -192,6 +192,9 @@ function createModeSelector() {
 function handlePreview() {
     disp = doubleAreaFlipcard(disp, 'preview');
     injectText('disp', disp.children('.back'));
+    disp.click(function () {
+        createGame();
+    });
 }
 
 function handleGameCreate() {

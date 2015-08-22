@@ -201,6 +201,10 @@ Actor.prototype = {
             if (grid.cell[z].type === 'Enemy') {
                 for (var i = 0; i < enemy.length; i++) {
                     if (enemy[i]._c === z) {
+                        // if is ! the last enemy
+                        if (enemy.length != 0 && SkipStack.soundsOn) {
+                            thrustEnemy.play();
+                        }
                         //thrust towards the given direction
                         enemy[i].Thrust(dir);
                         break;
