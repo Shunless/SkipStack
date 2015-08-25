@@ -223,7 +223,8 @@ function create() {
                         text.text = "1";
                         setTimeout(function () {
                             text.text = "";
-                            sprite.destroy();
+                            sprite.destroy();// Destroy background filter
+                            console.clear();// Clear console
                             SkipStack.isCountdownEnabled = false;
                         }, 1000);
                     }, 1000);

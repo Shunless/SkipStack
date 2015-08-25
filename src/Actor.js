@@ -50,6 +50,9 @@ Actor.prototype = {
      * @param {string} SwipeType - Direction to move.
      */
     move: function (SwipeType) {
+        if(SkipStack.isCountdownEnabled === true){
+            return console.log("Can't move while game is loading!");
+        }
         //////////////////////////////////////////////////////////////////////////////
         // NORMAL & ENDLESS & PAINTSTACK GAME TYPE
         //////////////////////////////////////////////////////////////////////////////
