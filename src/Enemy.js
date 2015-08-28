@@ -48,91 +48,51 @@ Enemy.prototype = {
      * @param {string} SwipeType - Direction to move.
      */
     move: function (SwipeType) {
+
+        var z;
         switch (SwipeType) {
             case 'up':
+
                 if (grid.cell[this._c].checkCell(SwipeType, this._c) && grid.cell[this._c - cellsCntX].type !== 'Enemy') {
-
-                    //Handle up Swap
-                    grid.cell[this._c].setCellType('Normal');
-                    grid.cell[this._c].setColor(grid.c2);
-
-                    this._c = this._c - cellsCntX;
-                    //any game type except PaintStack
-                    if (GameType === 'PaintStack') {
-                        if (grid.cell[this._c].isMarked) {
-                            actor.markedArea -= (1 / (cellsCntX * cellsCntY)) * 100;
-                            grid.cell[this._c].isMarked = false; //mark the cell as not painted
-                        }
-                    }
-                    grid.cell[this._c].setColor(this.color);
-                    grid.cell[this._c].setCellType('Enemy');
-
+                    z = this._c - cellsCntX;
                 }
-
                 break;
             case 'down':
+
                 if (grid.cell[this._c].checkCell(SwipeType, this._c) && grid.cell[this._c + cellsCntX].type !== 'Enemy') {
-
-                    //Handle down Swap
-                    grid.cell[this._c].setCellType('Normal');
-                    grid.cell[this._c].setColor(grid.c2);
-
-                    this._c = this._c + cellsCntX;
-                    //any game type except PaintStack
-                    if (GameType === 'PaintStack') {
-                        if (grid.cell[this._c].isMarked) {
-                            actor.markedArea -= (1 / (cellsCntX * cellsCntY)) * 100;
-                            grid.cell[this._c].isMarked = false; //mark the cell as not painted
-                        }
-                    }
-                    grid.cell[this._c].setColor(this.color);
-                    grid.cell[this._c].setCellType('Enemy');
+                    z = this._c + cellsCntX;
                 }
-
                 break;
             case 'left':
+
                 if (grid.cell[this._c].checkCell(SwipeType, this._c) && grid.cell[this._c - 1].type !== 'Enemy') {
-
-                    //Handle Left Swap
-                    grid.cell[this._c].setCellType('Normal');
-                    grid.cell[this._c].setColor(grid.c2);
-
-                    this._c = this._c - 1;
-                    //any game type except PaintStack
-                    if (GameType === 'PaintStack') {
-                        if (grid.cell[this._c].isMarked) {
-                            actor.markedArea -= (1 / (cellsCntX * cellsCntY)) * 100;
-                            grid.cell[this._c].isMarked = false; //mark the cell as not painted
-                        }
-                    }
-                    grid.cell[this._c].setColor(this.color);
-                    grid.cell[this._c].setCellType('Enemy');
+                    z = this._c - 1;
                 }
-
                 break;
             case 'right':
+
                 if (grid.cell[this._c].checkCell(SwipeType, this._c) && grid.cell[this._c + 1].type !== 'Enemy') {
-
-                    //Handle Right Swap
-                    grid.cell[this._c].setCellType('Normal');
-                    grid.cell[this._c].setColor(grid.c2);
-
-                    this._c = this._c + 1;
-                    //any game type except PaintStack
-                    if (GameType === 'PaintStack') {
-                        if (grid.cell[this._c].isMarked) {
-                            actor.markedArea -= (1 / (cellsCntX * cellsCntY)) * 100;
-                            grid.cell[this._c].isMarked = false; //mark the cell as not painted
-                        }
-                    }
-                    grid.cell[this._c].setColor(this.color);
-                    grid.cell[this._c].setCellType('Enemy');
+                    z = this._c + 1;
                 }
-
                 break;
             default:
                 break;
         }
+
+        grid.cell[this._c].setCellType('Normal');
+        grid.cell[this._c].setColor(grid.c2);
+
+        this._c = z;
+        //any game type except PaintStack
+        if (GameType === 'PaintStack') {
+            if (grid.cell[this._c].isMarked) {
+                actor.markedArea -= (1 / (cellsCntX * cellsCntY)) * 100;
+                grid.cell[this._c].isMarked = false; //mark the cell as not painted
+            }
+        }
+        grid.cell[this._c].setColor(this.color);
+        grid.cell[this._c].setCellType('Enemy');
+
     },
 
     /**
