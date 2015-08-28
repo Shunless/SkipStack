@@ -14,12 +14,21 @@ var isMultiplayerEnabled = false;
 
 // SkipStack namespace
 var SkipStack = SkipStack || {
+
     /**
      * SkipStack version number.
      * @constant
      * @type {string}
      */
     version: '0.0.1',
+
+    /**
+     * SkipStack renderer.
+     * @constant
+     * @type {Array<string>}
+     * @ToDo Implement functional GLSL based renderer.
+     */
+    renderer: ['Phaser.WebGL', 'GLSL'],
 
     /**
      * Indicates if sound is on or off
@@ -54,7 +63,14 @@ var SkipStack = SkipStack || {
      * @constant
      * @type {boolean}
      */
-    isCountdownEnabled: true
+    isCountdownEnabled: true,
+
+    /**
+     * hasBounds
+     * @constant
+     * @type {boolean}
+     */
+    hasBounds: false
 
 };
 
@@ -223,8 +239,8 @@ function create() {
                         text.text = "1";
                         setTimeout(function () {
                             text.text = "";
-                            sprite.destroy();// Destroy background filter
-                            console.clear();// Clear console
+                            sprite.destroy(); // Destroy background filter
+                            console.clear(); // Clear console
                             SkipStack.isCountdownEnabled = false;
                         }, 1000);
                     }, 1000);

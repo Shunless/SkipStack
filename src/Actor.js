@@ -50,7 +50,7 @@ Actor.prototype = {
      * @param {string} SwipeType - Direction to move.
      */
     move: function (SwipeType) {
-        if(SkipStack.isCountdownEnabled === true){
+        if (SkipStack.isCountdownEnabled === true) {
             return console.log("Can't move while game is loading!");
         }
         //////////////////////////////////////////////////////////////////////////////
@@ -187,6 +187,47 @@ Actor.prototype = {
                 grid.cell[this._c].setColor(this.color);
                 grid.cell[this._c].setCellType('Actor');
 
+            }
+        } else if(SkipStack.hasBounds === false){
+            switch (dir) {
+                //Handle Up Swap
+                case 'up':
+                    grid.cell[this._c].setColor(grid.c2);
+
+                    this._c += cellsCntX*cellsCntY-cellsCntX;
+                    grid.cell[this._c].setColor(this.color);
+                    grid.cell[this._c].setCellType('Actor');
+
+                    break;
+                    //Handle Down Swap
+                case 'down':
+                    grid.cell[this._c].setColor(grid.c2);
+
+                    this._c -= cellsCntX*cellsCntY-cellsCntX;
+                    grid.cell[this._c].setColor(this.color);
+                    grid.cell[this._c].setCellType('Actor');
+
+                    break;
+                    //Handle Left Swap
+                case 'left':
+                    grid.cell[this._c].setColor(grid.c2);
+
+                    this._c += cellsCntX-1;
+                    grid.cell[this._c].setColor(this.color);
+                    grid.cell[this._c].setCellType('Actor');
+
+                    break;
+                    //Handle Right Swap
+                case 'right':
+                    grid.cell[this._c].setColor(grid.c2);
+
+                    this._c -= cellsCntX-1;
+                    grid.cell[this._c].setColor(this.color);
+                    grid.cell[this._c].setCellType('Actor');
+
+                    break;
+                default:
+                    break;
             }
         }
     },
