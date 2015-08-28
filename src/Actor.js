@@ -123,112 +123,94 @@ Actor.prototype = {
      */
     makeMove: function (dir, z) {
         if (grid.cell[this._c].checkCell(dir, this._c)) {
-
-            if (grid.cell[z].type === 'Enemy') {
-                for (var i = 0; i < enemy.length; i++) {
-                    if (enemy[i]._c === z) {
-                        // if is ! the last enemy
-                        if (enemy.length != 0 && SkipStack.soundsOn) {
-                            hit_sfx[getRandomInt(0, hit_sfx.length)].play();
-                        }
-                        //enemy[i].isDead = true;
-                        enemy.splice(i, 1);
-                        enemyMove.splice(i, 1);
-                        break;
-                    }
-                }
-            }
-            //set currecnt cell type as normal
-            grid.cell[this._c].setCellType('Normal');
-            //any game type except Paintstack
-            if (GameType !== 'PaintStack') {
-                grid.cell[this._c].setColor(grid.c2);
-
-                this._c = z;
-                grid.cell[this._c].setColor(this.color);
-                grid.cell[this._c].setCellType('Actor');
-
-            }
-            //PaintStack game type exclusive
-            //@ToDo
-            else {
-
-                //current cell hasnt been painted
-                if (!grid.cell[this._c].isMarked) {
-                    grid.cell[this._c].setColor(grid.c2);
-                }
-                //its painted
-                else {
-                    //set as active color the genCol
-                    grid.cell[this._c].setColor(grid.cell[this._c].genColor);
-                }
-
-                this._c = z;
-                //next cell hasnt been painted
-                if (!grid.cell[this._c].isMarked) {
-                    this.markedArea += (1 / (cellsCntX * cellsCntY)) * 100;
-                    //parse color to genColor for backup purpose
-                    grid.cell[this._c].genColor = color.genetaHSLColor_Angle([
-                        {
-                            minAngle: 320,
-                            maxAngle: 359
-                        },
-                        {
-                            minAngle: 0,
-                            maxAngle: 40
-                        },
-                        {
-                            minAngle: 70,
-                            maxAngle: 160
-                        }
-                    ]);
-                    grid.cell[this._c].isMarked = true; //mark the cell as painted
-                }
-                grid.cell[this._c].setColor(this.color);
-                grid.cell[this._c].setCellType('Actor');
-
-            }
-        } else if(SkipStack.hasBounds === false){
+            // do nothing
+        } else if (SkipStack.hasBounds === false) {
             switch (dir) {
                 //Handle Up Swap
                 case 'up':
-                    grid.cell[this._c].setColor(grid.c2);
-
-                    this._c += cellsCntX*cellsCntY-cellsCntX;
-                    grid.cell[this._c].setColor(this.color);
-                    grid.cell[this._c].setCellType('Actor');
-
+                    z = this._c + cellsCntX * cellsCntY - cellsCntX;
                     break;
                     //Handle Down Swap
                 case 'down':
-                    grid.cell[this._c].setColor(grid.c2);
-
-                    this._c -= cellsCntX*cellsCntY-cellsCntX;
-                    grid.cell[this._c].setColor(this.color);
-                    grid.cell[this._c].setCellType('Actor');
-
+                    z = this._c - cellsCntX * cellsCntY + cellsCntX;
                     break;
                     //Handle Left Swap
                 case 'left':
-                    grid.cell[this._c].setColor(grid.c2);
-
-                    this._c += cellsCntX-1;
-                    grid.cell[this._c].setColor(this.color);
-                    grid.cell[this._c].setCellType('Actor');
-
+                    z = this._c + cellsCntX - 1;
                     break;
                     //Handle Right Swap
                 case 'right':
-                    grid.cell[this._c].setColor(grid.c2);
-
-                    this._c -= cellsCntX-1;
-                    grid.cell[this._c].setColor(this.color);
-                    grid.cell[this._c].setCellType('Actor');
-
+                    z = this._c - cellsCntX + 1;
                     break;
                 default:
+
                     break;
             }
+        }
+
+        if (grid.cell[z].type === 'Enemy') {
+            for (var i = 0; i < enemy.length; i++) {
+                if (enemy[i]._c === z) {
+                    // if is ! the last enemy
+                    if (enemy.length != 0 && SkipStack.soundsOn) {
+                        hit_sfx[getRandomInt(0, hit_sfx.length)].play();
+                    }
+                    //enemy[i].isDead = true;
+                    enemy.splice(i, 1);
+                    enemyMove.splice(i, 1);
+                    break;
+                }
+            }
+        }
+        //set currecnt cell type as normal
+        grid.cell[this._c].setCellType('Normal');
+        //any game type except Paintstack
+        if (GameType !== 'PaintStack') {
+            grid.cell[this._c].setColor(grid.c2);
+
+            this._c = z;
+            grid.cell[this._c].setColor(this.color);
+            grid.cell[this._c].setCellType('Actor');
+
+        }
+        //PaintStack game type exclusive
+        //@ToDo
+        else {
+
+            //current cell hasnt been painted
+            if (!grid.cell[this._c].isMarked) {
+                grid.cell[this._c].setColor(grid.c2);
+            }
+            //its painted
+            else {
+                //set as active color the genCol
+                grid.cell[this._c].setColor(grid.cell[this._c].genColor);
+            }
+
+            this._c = z;
+            //next cell hasnt been painted
+            if (!grid.cell[this._c].isMarked) {
+                this.markedArea += (1 / (cellsCntX * cellsCntY)) * 100;
+                //parse color to genColor for backup purpose
+                grid.cell[this._c].genColor = color.genetaHSLColor_Angle([
+                    {
+                        minAngle: 320,
+                        maxAngle: 359
+                        },
+                    {
+                        minAngle: 0,
+                        maxAngle: 40
+                        },
+                    {
+                        minAngle: 70,
+                        maxAngle: 160
+                        }
+                    ]);
+                grid.cell[this._c].isMarked = true; //mark the cell as painted
+            }
+            grid.cell[this._c].setColor(this.color);
+            grid.cell[this._c].setCellType('Actor');
+
         }
     },
 
