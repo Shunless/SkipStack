@@ -32,28 +32,24 @@ var SkipStack = SkipStack || {
 
     /**
      * Indicates if sound is on or off
-     * @constant
      * @type {boolean}
      */
     soundsOn: true,
 
     /**
      * stored total score for each game mode.
-     * @constant
      * @type {Array<number>}
      */
     TotalScore: [0, 0, 0, 0],
 
     /**
      * current score
-     * @constant
      * @type {number}
      */
     CurrentScore: 0,
 
     /**
      * isPaused
-     * @constant
      * @type {boolean}
      */
     isPaused: true,
@@ -74,6 +70,18 @@ var SkipStack = SkipStack || {
 
 };
 
+/**
+ * when time goes beyond this value in endless mod,
+ * additional enemies ll be spawned
+ * @type {number}
+ */
+var EndlessOutspreadT;
+/**
+ * indicates how many times user has gone beyond 'EndlessOutspreadT'
+ * @type {number}
+ */
+var EndlessOutspreadC;
+
 //
 var filter;
 
@@ -84,7 +92,7 @@ var isfilterEnabled = false;
 var GameType; // = gamemode[0];
 
 //beat refresh rate (number)
-var beatRate = 1000;
+var beatRate;
 
 //beat interval in %[0-Min, 100 Max] (number)
 var beatInterval = 0;
@@ -157,17 +165,24 @@ var cursors, WASDcursor;
 
 //$ preload function $
 function preload() {
-    console.log('Preload Function');
+    console.log('SkipStack version: ' + SkipStack.version + '\n' +
+        'Grid Scale: ' + cellsCntX + ', ' + cellsCntY + '\n' +
+        'GameType: ' + GameType);
     //Reset Arrays
     enemy = enemyMove = [];
 
+    if (GameType === 'Endless') {
+        EndlessOutspreadC = 0;
+        EndlessOutspreadT = 5;
+    }
+
+    beatRate = 1000;
     movesHaveBeenStored = false;
     cellWidth = (Editor_Width - (border * 2 * cellsCntX + border * 2)) / (cellsCntX);
     cellHeight = (Editor_Width - (border * 2 * cellsCntY + border * 2)) / (cellsCntY);
 }
 //$ create function $
 function create() {
-    console.log('Create Function');
     filter = new Phaser.Filter(game, null, get_loadingShader2());
     filter.setResolution(Editor_Width, Editor_Height);
 
@@ -241,12 +256,15 @@ function create() {
                             text.text = "";
                             sprite.destroy(); // Destroy background filter
                             console.clear(); // Clear console
+                            console.log('SkipStack version: ' + SkipStack.version + '\n' +
+                                'Grid Scale: ' + cellsCntX + ', ' + cellsCntY + '\n' +
+                                'GameType: ' + GameType);
                             SkipStack.isCountdownEnabled = false;
-                        }, 1000);
-                    }, 1000);
-                }, 1000);
-            }, 1000);
-        }, 1000);
+                        }, 500);
+                    }, 500);
+                }, 500);
+            }, 500);
+        }, 500);
 
     }
 
@@ -296,33 +314,7 @@ function create() {
     //+++++++++++++++++++++++++++++
 
     if (isMultiplayerEnabled === false) {
-        var x = '',
-            i;
-        for (i = 0; i < 3 + gameStateRestarts; i++) {
-            if (randomBoolean[0]() === true) {
-                if (randomBoolean[0]() === true) {
-                    x = '0-' + getRandomInt(0, cellsCntY);
-                } else {
-                    x = getRandomInt(0, cellsCntX) + '-0';
-                }
-            } else {
-                if (randomBoolean[0]() === true) {
-                    x = (cellsCntX - 1) + '-' + getRandomInt(0, cellsCntY);
-                } else {
-                    x = getRandomInt(0, cellsCntX) + '-' + (cellsCntY - 1);
-                }
-            }
-
-            if (grid.cell[grid.getCell(x)].type === 'Normal') {
-                enemy.push(new Enemy(enemiesColor, x));
-            } else {
-                i--;
-            }
-        }
-
-        for (x = 0; x < enemy.length; x++) {
-            enemy[x].init();
-        }
+        AppendEnem(3 + gameStateRestarts);
     }
 
     EnemyMoveTimeout = game.time.time + beatRate;
@@ -382,11 +374,29 @@ function update() {
 
     if (!isMultiplayerEnabled) {
 
-        if (GameType === 'Normal' || GameType === 'Endless') {
+        if (GameType === 'Normal') {
             //if user has killed all the enemies.
             if (enemy.length === 0) {
                 expand();
             }
+        } else if (GameType === 'Endless') {
+            if (timeSinceLevelLoad > EndlessOutspreadT) {
+                console.log('Adding more enemies!');
+
+                if (EndlessOutspreadC < 0.45) {
+                    EndlessOutspreadC += 0.05;
+                    EndlessOutspreadT *= 1.55 - EndlessOutspreadC;
+                    AppendEnem(1);
+                } else {
+                    EndlessOutspreadC += 0.5;
+                    EndlessOutspreadT *= 1.1;
+                    AppendEnem(Math.round(EndlessOutspreadC));
+                }
+                beatRate -= 10;
+            }
+            //            else if (enemy.length === 0){
+            //                AppendEnem(Math.round(cellsCntX/3));
+            //            }
         } else if (GameType === 'SkipSmash') {
             if (enemy.length === 1) {
                 expand();
@@ -438,7 +448,7 @@ function update() {
 
     updateUi();
     // total cost is 2%
-    // render();
+    render();
 
 }
 
@@ -465,12 +475,14 @@ function render() {
     }
 
 }
-//$ game over $
-//every game type has the same game over :)
+
+/**
+ * Invoke when user has lost
+ * @method expand
+ */
 function gameOver() {
 
-    // clear console
-    console.clear();
+    console.clear(); // clear console
 
     // turn justLost flag to true
     justLost = true;
@@ -514,8 +526,13 @@ function gameOver() {
 
 }
 
-//$ expand " grid " $
+/**
+ * Invoke when user is ready to get to the next level
+ * @method expand
+ */
 function expand() {
+
+    console.clear(); // clear console
 
     var qq = Math.ceil(cellsCntX + timesExpanded * cellsCntX / 2);
 
@@ -551,16 +568,6 @@ function expand() {
         }
 
     }
-    //ENDLESS GAME TYPE
-    else if (GameType === 'Endless') {
-
-        // expand grid by 1 cell if enemies > Math.ceil(cellsCntX + timesExpanded * cellsCntX / 2)
-        if ((3 + gameStateRestarts) > qq) {
-            cellsCntY = cellsCntX += 2;
-            justLost = true;
-        }
-
-    }
     //PAINTSTACK GAME TYPE
     else if (GameType === 'PaintStack') {
         justLost = true;
@@ -577,5 +584,39 @@ function expand() {
 
     // "Restart" the game
     game.state.start(game.state.current);
+
+}
+
+/**
+ * Append to the enemies array
+ * @method AppendEnem
+ * @param {number} count - enemies to append
+ */
+function AppendEnem(count) {
+
+    var x = '',
+        i;
+    for (i = 0; i < count; i++) {
+        if (randomBoolean[0]() === true) {
+            if (randomBoolean[0]() === true) {
+                x = '0-' + getRandomInt(0, cellsCntY);
+            } else {
+                x = getRandomInt(0, cellsCntX) + '-0';
+            }
+        } else {
+            if (randomBoolean[0]() === true) {
+                x = (cellsCntX - 1) + '-' + getRandomInt(0, cellsCntY);
+            } else {
+                x = getRandomInt(0, cellsCntX) + '-' + (cellsCntY - 1);
+            }
+        }
+
+        if (grid.cell[grid.getCell(x)].type === 'Normal') {
+            enemy.push(new Enemy(enemiesColor, x));
+        } else {
+            i--;
+        }
+        enemy[enemy.length - 1].init();
+    }
 
 }

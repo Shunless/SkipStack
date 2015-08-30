@@ -49,7 +49,7 @@ Enemy.prototype = {
      */
     move: function (SwipeType) {
 
-        var z;
+        var z = 0;
         switch (SwipeType) {
             case 'up':
 
@@ -79,6 +79,10 @@ Enemy.prototype = {
                 break;
         }
 
+        if (!z) {
+            return;
+        }
+
         grid.cell[this._c].setCellType('Normal');
         grid.cell[this._c].setColor(grid.c2);
 
@@ -106,13 +110,13 @@ Enemy.prototype = {
             ColumnInt = Math.round(grid.getColumn(actor._c) - grid.getColumn(this._c));
 
         // Game Over
-        if (CellsInt === 0) {
+        if (!CellsInt) {
             return gameOver();
         }
 
-        if (RowsInt > 0 && randomBoolean[0]() === true) {
+        if (RowsInt > 0 && randomBoolean[0]()) {
             return ('down');
-        } else if (RowsInt < 0 && randomBoolean[0]() === true) {
+        } else if (RowsInt < 0 && randomBoolean[0]()) {
             return ('up');
         } else {
             if (ColumnInt > 0) {

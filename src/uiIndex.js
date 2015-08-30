@@ -40,16 +40,19 @@ function createGame(callback) {
     //Inject gamemode first value to GameType variable
     GameType = gamemode[0];
 
-    if (gamemode[0] === 'PaintStack') {
+    if (GameType === 'PaintStack') {
         indicator = new uiCell(2, '2-1', 'enemies', 'en', function () {
             return Math.floor(actor.markedArea) + '%';
+        });
+    } else if (GameType === 'Endless') {
+        indicator = new uiCell(2, '2-1', 'enemies', 'en', function () {
+            return Math.round(timeSinceLevelLoad) + ' s';
         });
     } else {
         indicator = new uiCell(2, '2-1', 'enemies', 'en', function () {
             return SkipStack.CurrentScore;
         });
     }
-
 
     //Make a flipcard div spanning 4-1 and 10-7 including areas
     var a = selectComplex('4-1', '10-7', 'SkipStack', ['.preview', '.prev', '.next', '.modeselector']);
