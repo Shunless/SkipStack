@@ -484,6 +484,10 @@ function gameOver() {
 
     console.clear(); // clear console
 
+    if (SkipStack.soundsOn) {
+        gameover[getRandomInt(0, gameover.length)].play();
+    }
+
     // turn justLost flag to true
     justLost = true;
 
