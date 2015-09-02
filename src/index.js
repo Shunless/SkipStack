@@ -34,7 +34,7 @@ var SkipStack = SkipStack || {
      * Indicates if sound is on or off
      * @type {boolean}
      */
-    soundsOn: true,
+    soundsOn: false,
 
     /**
      * stored total score for each game mode.
@@ -69,6 +69,25 @@ var SkipStack = SkipStack || {
     hasBounds: false
 
 };
+
+/**
+ * the percentage of the area that has to be marked in order to win and
+ * get to the next level in PaintStack gametype
+ * @type {number}
+ */
+var PaintStackMarkedAreaPercentage = 60;
+
+/**
+ * all available difficulties
+ * @type {Array<string>}
+ */
+var difficulties = ['Easy', 'Normal', 'Hard', 'Insane'];
+
+/**
+ * selected difficulty
+ * @type {string}
+ */
+var difficulty = difficulties[0];
 
 /**
  * when time goes beyond this value in endless mod,
@@ -167,7 +186,8 @@ var cursors, WASDcursor;
 function preload() {
     console.log('SkipStack version: ' + SkipStack.version + '\n' +
         'Grid Scale: ' + cellsCntX + ', ' + cellsCntY + '\n' +
-        'GameType: ' + GameType);
+        'GameType: ' + GameType + '\n' +
+        'Difficulty: ' + difficulty);
     //Reset Arrays
     enemy = enemyMove = [];
 
@@ -176,7 +196,32 @@ function preload() {
         EndlessOutspreadT = 5;
     }
 
-    beatRate = 1000;
+    // Easy difficulty
+    if (difficulty === difficulties[0]) {
+        beatRate = 1000;
+        PaintStackMarkedAreaPercentage = 60;
+    }
+    // Normal difficulty
+    else if (difficulty === difficulties[1]) {
+        beatRate = 800;
+        PaintStackMarkedAreaPercentage = 65;
+    }
+    // Hard difficulty
+    else if (difficulty === difficulties[2]) {
+        beatRate = 600;
+        PaintStackMarkedAreaPercentage = 70;
+    }
+    // Insane difficulty
+    else if (difficulty === difficulties[3]) {
+        beatRate = 500;
+        PaintStackMarkedAreaPercentage = 80;
+    }
+    else{
+        console.error('Something went terribly wrong! \n Couldnt find the selected difficulty. Setting default seetings.');
+        beatRate = 1000;
+        PaintStackMarkedAreaPercentage = 60;
+    }
+
     movesHaveBeenStored = false;
     cellWidth = (Editor_Width - (border * 2 * cellsCntX + border * 2)) / (cellsCntX);
     cellHeight = (Editor_Width - (border * 2 * cellsCntY + border * 2)) / (cellsCntY);
@@ -258,7 +303,8 @@ function create() {
                             console.clear(); // Clear console
                             console.log('SkipStack version: ' + SkipStack.version + '\n' +
                                 'Grid Scale: ' + cellsCntX + ', ' + cellsCntY + '\n' +
-                                'GameType: ' + GameType);
+                                'GameType: ' + GameType + '\n' +
+                                'Difficulty: ' + difficulty);
                             SkipStack.isCountdownEnabled = false;
                         }, 500);
                     }, 500);
@@ -404,7 +450,7 @@ function update() {
 
         } else if (GameType === 'PaintStack') {
             //expand grid when over 70% of it is marked
-            if (Math.floor(actor.markedArea) > 70) {
+            if (Math.floor(actor.markedArea) > PaintStackMarkedAreaPercentage) {
                 expand();
             } else if (enemy.length === 0) {
 
