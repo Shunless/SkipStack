@@ -116,7 +116,7 @@ Cell.prototype = {
                 break;
             case 'down':
                 //if > CellsCountX*CellsCountY-CellsCountX
-                if (_currentPos > (cellsCntX * grid.cellsCountY) - cellsCntX) {
+                if (_currentPos >= (cellsCntX * cellsCntY) - cellsCntX) {
                     result = false;
                 } else {
                     result = true;
@@ -142,7 +142,7 @@ Cell.prototype = {
                 break;
             case 'right':
 
-                for (i = 0; i < cellsCntX; i++) {
+                for (i = 1; i <= cellsCntX; i++) {
                     if (_currentPos === (cellsCntX * i - 1)) {
                         result = false;
                     }
