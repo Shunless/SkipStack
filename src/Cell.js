@@ -28,6 +28,7 @@ Cell = function (_posX, _posY, _name, _color) {
      * $    1-Normal    $
      * $    2-Enemy     $
      * $    3-Actor     $
+     * $    4-Obstacle  $
      * Default value is normal
      */
     this.type = 'Normal';
@@ -56,8 +57,8 @@ Cell.prototype = {
      * @param {string} _type - Type of the cell.
      */
     setCellType: function (_type) {
-        if (_type != 'Normal' && _type != 'Enemy' && _type != 'Actor') {
-            alert('type can only be "Enemy","Normal","Actor"');
+        if (_type !== 'Normal' && _type !== 'Enemy' && _type !== 'Actor' && _type !== 'Obstacle') {
+            alert('type can only be "Enemy","Normal","Actor","Obstacle"');
         }
         this.type = _type;
     },

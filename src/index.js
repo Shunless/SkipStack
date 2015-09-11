@@ -126,40 +126,41 @@ var cellsCntX = 7,
 //cell scale in pixels (number)
 var cellWidth, cellHeight;
 
-//the color of the enemies (string)
-var enemiesColor = '#b50000';
-
 //indicates how many times game has been restared. (number)
 var gameStateRestarts = 0;
 
-//-----$*********$-----
-//-----$ CLASSES $-----
-//-----$*********$-----
-
-//color class instance
+//color class @instance
 var color;
 
-//grid class instance
+//grid class @instance
 var grid;
 
-//main actor instance
+//main actor @instance
 var actor;
 
-//second actor instance
+//second actor @instance
 var actor1;
 
-//enemy class instance
+//the color of the actor (HexColor)
+var actorColor = "#006400";
+
+//enemy class @instance
 var enemy;
 
-/*~~~~~$*********$~~~~~*/
-/*~~~~~$ CLASSES $~~~~~*/
-/*~~~~~$*********$~~~~~*/
+//the color of the enemies (HexColor)
+var enemiesColor = '#b50000';
 
 //indicates what s the next move gonna be. (sring)
 var enemyMove;
 
 //
 var movesHaveBeenStored;
+
+//obstacle class @instance
+var obstacle;
+
+//the color of the enemies (HexColor)
+var obstacleColor = '#000000';
 
 //indicates the time that the game actually started.(number)*ms
 var LoadTime;
@@ -337,18 +338,18 @@ function create() {
 
     //multiplayer is enabed
     if (isMultiplayerEnabled === true) {
-        actor = new Actor('#006400', '0-' + Math.floor(cellsCntY / 2));
+        actor = new Actor(actorColor, '0-' + Math.floor(cellsCntY / 2));
 
-        actor1 = new Actor('#006400', (cellsCntX - 1) + '-' + Math.ceil(cellsCntY / 2));
+        actor1 = new Actor(actorColor, (cellsCntX - 1) + '-' + Math.ceil(cellsCntY / 2));
 
         actor.init();
         actor1.init();
     } else {
         if (justLost === true) {
-            actor = new Actor('#006400');
+            actor = new Actor(actorColor);
         } else {
             var bl = actor._c;
-            actor = new Actor('#006400', grid.cell[bl].HashId);
+            actor = new Actor(actorColor, grid.cell[bl].HashId);
         }
         actor.init();
     }
