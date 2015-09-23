@@ -11,9 +11,18 @@
  * @param enemy's cell HashId  (string)
  */
 Enemy = function (_color1, blockID) {
-    //the color of the Enemy
-    this.color = _color1;
-    //
+
+    //Enemy's color
+    this.color;
+
+    if (typeof (_color1) === 'undefined') {
+        console.error('You gotta give a color! \n Setting default color for now!');
+        this.color = enemiesColor;
+    } else {
+        this.color = _color1;
+    }
+
+    //Enemy's HashId
     if (typeof (blockID) === 'undefined') {
         alert('Error : "blockID" is undefined');
 

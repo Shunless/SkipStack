@@ -11,8 +11,17 @@
  * @param Obstacle's cell HashId (string)
  */
 Obstacle = function (_color1, blockID) {
+
     //Obstacle's color
-    this.color = _color1;
+    this.color;
+
+    if (typeof (_color1) === 'undefined') {
+        console.error('You gotta give a color! \n Setting default color for now!');
+        this.color = obstacleColor;
+    } else {
+        this.color = _color1;
+    }
+
     //Obstacle's HashId
     if (typeof (blockID) === 'undefined') {
         this.block = Math.floor(cellsCntX / 2) + '-' + Math.floor(cellsCntX / 2);

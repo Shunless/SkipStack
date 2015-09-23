@@ -11,9 +11,18 @@
  * @param actor's cell HashId (string)
  */
 Actor = function (_color1, blockID) {
-    //actor's color
-    this.color = _color1;
-    //actor's HashId
+
+    //Actor's color
+    this.color;
+
+    if (typeof (_color1) === 'undefined') {
+        console.error('You gotta give a color! \n Setting default color for now!');
+        this.color = actorColor;
+    } else {
+        this.color = _color1;
+    }
+
+    //Actor's HashId
     if (typeof (blockID) === 'undefined') {
         this.block = Math.floor(cellsCntX / 2) + '-' + Math.floor(cellsCntX / 2);
 
