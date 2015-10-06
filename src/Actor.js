@@ -12,9 +12,11 @@
  */
 Actor = function (_color1, blockID) {
 
-    //Actor's color
+    /**
+     * Actor's color
+     * @type {WebColor}
+     */
     this.color;
-
     if (typeof (_color1) === 'undefined') {
         console.error('You gotta give a color! \n Setting default color for now!');
         this.color = actorColor;
@@ -22,7 +24,10 @@ Actor = function (_color1, blockID) {
         this.color = _color1;
     }
 
-    //Actor's HashId
+    /**
+     * Actor's HashId
+     * @type {number}
+     */
     if (typeof (blockID) === 'undefined') {
         this.block = Math.floor(cellsCntX / 2) + '-' + Math.floor(cellsCntX / 2);
 
@@ -30,13 +35,28 @@ Actor = function (_color1, blockID) {
         this.block = blockID;
     }
 
-    //actor's position in grid.cell
+    /**
+     * consecutives forceflips
+     * @type {number}
+     */
+    this.consecutiveForceflips = 0;
+
+    /**
+     * actor's position in grid.cell
+     * @type {number}
+     */
     this._c = 0;
 
-    //enemies killed
+    /**
+     * enemies killed till now
+     * @type {number}
+     */
     this.enemiesKilled = 0;
 
-    //indicates how much of the grid has been marked %
+    /**
+     * indicates how much of the grid has been marked %
+     * @type {number}
+     */
     this.markedArea = 0;
 };
 
@@ -69,27 +89,27 @@ Actor.prototype = {
 
             switch (SwipeType) {
                 //Handle Up Swap
-                case 'up':
-                    this.makeMove(SwipeType, this._c - cellsCntX);
+            case 'up':
+                this.makeMove(SwipeType, this._c - cellsCntX);
 
-                    break;
-                    //Handle Down Swap
-                case 'down':
-                    this.makeMove(SwipeType, this._c + cellsCntX);
+                break;
+                //Handle Down Swap
+            case 'down':
+                this.makeMove(SwipeType, this._c + cellsCntX);
 
-                    break;
-                    //Handle Left Swap
-                case 'left':
-                    this.makeMove(SwipeType, this._c - 1);
+                break;
+                //Handle Left Swap
+            case 'left':
+                this.makeMove(SwipeType, this._c - 1);
 
-                    break;
-                    //Handle Right Swap
-                case 'right':
-                    this.makeMove(SwipeType, this._c + 1);
+                break;
+                //Handle Right Swap
+            case 'right':
+                this.makeMove(SwipeType, this._c + 1);
 
-                    break;
-                default:
-                    break;
+                break;
+            default:
+                break;
             }
         }
         //////////////////////////////////////////////////////////////////////////////
@@ -99,27 +119,27 @@ Actor.prototype = {
 
             switch (SwipeType) {
                 //Handle Up Swap
-                case 'up':
-                    this.thrustEnemy(SwipeType, this._c - cellsCntX);
+            case 'up':
+                this.thrustEnemy(SwipeType, this._c - cellsCntX);
 
-                    break;
-                    //Handle Down Swap
-                case 'down':
-                    this.thrustEnemy(SwipeType, this._c + cellsCntX);
+                break;
+                //Handle Down Swap
+            case 'down':
+                this.thrustEnemy(SwipeType, this._c + cellsCntX);
 
-                    break;
-                    //Handle Left Swap
-                case 'left':
-                    this.thrustEnemy(SwipeType, this._c - 1);
+                break;
+                //Handle Left Swap
+            case 'left':
+                this.thrustEnemy(SwipeType, this._c - 1);
 
-                    break;
-                    //Handle Right Swap
-                case 'right':
-                    this.thrustEnemy(SwipeType, this._c + 1);
+                break;
+                //Handle Right Swap
+            case 'right':
+                this.thrustEnemy(SwipeType, this._c + 1);
 
-                    break;
-                default:
-                    break;
+                break;
+            default:
+                break;
             }
         }
     },
@@ -136,28 +156,31 @@ Actor.prototype = {
         } else if (SkipStack.hasBounds === false) {
             switch (dir) {
                 //Handle Up Swap
-                case 'up':
-                    z = this._c + cellsCntX * cellsCntY - cellsCntX;
-                    break;
-                    //Handle Down Swap
-                case 'down':
-                    z = this._c - cellsCntX * cellsCntY + cellsCntX;
-                    break;
-                    //Handle Left Swap
-                case 'left':
-                    z = this._c + cellsCntX - 1;
-                    break;
-                    //Handle Right Swap
-                case 'right':
-                    z = this._c - cellsCntX + 1;
-                    break;
-                default:
+            case 'up':
+                z = this._c + cellsCntX * cellsCntY - cellsCntX;
+                break;
+                //Handle Down Swap
+            case 'down':
+                z = this._c - cellsCntX * cellsCntY + cellsCntX;
+                break;
+                //Handle Left Swap
+            case 'left':
+                z = this._c + cellsCntX - 1;
+                break;
+                //Handle Right Swap
+            case 'right':
+                z = this._c - cellsCntX + 1;
+                break;
+            default:
 
-                    break;
+                break;
             }
         }
 
         if (grid.cell[z].type === 'Enemy') {
+            SkipStack.CurrentScore += 100 * (1 + this.consecutiveForceflips + beatInterval / 100);
+            this.consecutiveForceflips++;
+
             for (var i = 0; i < enemy.length; i++) {
                 if (enemy[i]._c === z) {
                     // if is ! the last enemy
@@ -170,7 +193,13 @@ Actor.prototype = {
                     break;
                 }
             }
+
+            console.error("Snap! Couldn't find the enemy");
+        } else {
+            //reset if actor moves towards an empty stack.
+            this.consecutiveForceflips = 0;
         }
+
         //set currecnt cell type as normal
         grid.cell[this._c].setCellType('Normal');
         //any game type except Paintstack

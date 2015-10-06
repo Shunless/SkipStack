@@ -192,6 +192,8 @@ function preload() {
     //Reset Arrays
     enemy = enemyMove = [];
 
+    UpdateTotalScore();
+
     if (GameType === 'Endless') {
         EndlessOutspreadC = 0;
         EndlessOutspreadT = 5;
@@ -216,8 +218,7 @@ function preload() {
     else if (difficulty === difficulties[3]) {
         beatRate = 500;
         PaintStackMarkedAreaPercentage = 80;
-    }
-    else{
+    } else {
         console.error('Something went terribly wrong! \n Couldnt find the selected difficulty. Setting default seetings.');
         beatRate = 1000;
         PaintStackMarkedAreaPercentage = 60;
@@ -516,7 +517,8 @@ function render() {
     game.debug.text('beat rate: ' + beatRate + ' ms', 3, 40, '#b1ff00');
     game.debug.text('Interval: ' + beatInterval + ' %', 3, 53, beatInterval < 20 ? '#ff0000' : '#00ff27');
     game.debug.text('time: ' + timeSinceLevelLoad + ' s', 3, 66, '#b1ff00');
-    game.debug.text('Level: ' + SkipStack.CurrentScore, 3, 79, '#b1ff00');
+    game.debug.text('Current Score: ' + SkipStack.CurrentScore, 3, 79, '#b1ff00');
+    game.debug.text('Total Score: ' + SkipStack.TotalScore, 3, 92, '#b1ff00');
     if (GameType === 'PaintStack') {
         game.debug.text('marked area: ' + Math.floor(actor.markedArea) + '%', 3, 92, '#b1ff00');
     }
@@ -544,28 +546,6 @@ function gameOver() {
     // Refresh LoadTIme
     LoadTime = game.time.now;
 
-    if (GameType === 'Normal') {
-
-        // Update Normal gametype total score
-        SkipStack.TotalScore[0] += SkipStack.CurrentScore;
-
-    } else if (GameType === 'SkipSmash') {
-
-        // Update SkipSmash gametype total score
-        SkipStack.TotalScore[2] += SkipStack.CurrentScore;
-
-    } else if (GameType === 'Endless') {
-
-        // Update Endless gametype total score
-        SkipStack.TotalScore[1] += SkipStack.CurrentScore;
-
-    } else if (GameType === 'PaintStack') {
-
-        // Update PaintStack gametype total score
-        SkipStack.TotalScore[3] += SkipStack.CurrentScore;
-
-    }
-
     // Reset $gameStateRestarts, $timesExpanded back to 0
     SkipStack.CurrentScore = gameStateRestarts = timesExpanded = 0;
 
@@ -577,6 +557,28 @@ function gameOver() {
 
 }
 
+function UpdateTotalScore() {
+    // Update Normal gametype total score
+    if (GameType === 'Normal') {
+        SkipStack.TotalScore[0] += SkipStack.CurrentScore;
+
+    }
+    // Update SkipSmash gametype total score
+    else if (GameType === 'SkipSmash') {
+        SkipStack.TotalScore[2] += SkipStack.CurrentScore;
+
+    }
+    // Update Endless gametype total score
+    else if (GameType === 'Endless') {
+        SkipStack.TotalScore[1] += SkipStack.CurrentScore;
+
+    }
+    // Update PaintStack gametype total score
+    else if (GameType === 'PaintStack') {
+        SkipStack.TotalScore[3] += SkipStack.CurrentScore;
+
+    }
+}
 /**
  * Invoke when user is ready to get to the next level
  * @method expand
@@ -594,8 +596,7 @@ function expand() {
 
     justExpandedGrid = true;
 
-    // increase current score and gamerestarts by 1
-    SkipStack.CurrentScore = ++gameStateRestarts;
+    gameStateRestarts++;
 
     //NORMAL TYPE
     if (GameType === 'Normal') {

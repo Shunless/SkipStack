@@ -49,8 +49,9 @@ function createGame(callback) {
             return Math.round(timeSinceLevelLoad) + ' s';
         });
     } else {
-        indicator = new uiCell(2, '2-1', 'enemies', 'en', function () {
-            return SkipStack.CurrentScore;
+        var ll = SkipStack.CurrentScore.toString().length > 3 ? SkipStack.CurrentScore.toString().length - 1 : 2;
+        indicator = new uiCell(ll, '2-1', 'enemies', 'en', function () {
+            return Math.round(SkipStack.CurrentScore);
         });
     }
 
