@@ -34,7 +34,7 @@ var SkipStack = SkipStack || {
      * Indicates if sound is on or off
      * @type {boolean}
      */
-    soundsOn: false,
+    soundsOn: true,
 
     /**
      * stored total score for each game mode.

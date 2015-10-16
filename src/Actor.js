@@ -184,7 +184,7 @@ Actor.prototype = {
             for (var i = 0; i < enemy.length; i++) {
                 if (enemy[i]._c === z) {
                     // if is ! the last enemy
-                    if (enemy.length != 0 && SkipStack.soundsOn) {
+                    if (enemy.length && SkipStack.soundsOn) {
                         hit_sfx[getRandomInt(0, hit_sfx.length)].play();
                     }
                     //enemy[i].isDead = true;
@@ -192,9 +192,12 @@ Actor.prototype = {
                     enemyMove.splice(i, 1);
                     break;
                 }
+
+                if (i === enemy.length - 1) {
+                    console.error("Snap! Couldn't find the enemy");
+                }
             }
 
-            console.error("Snap! Couldn't find the enemy");
         } else {
             //reset if actor moves towards an empty stack.
             this.consecutiveForceflips = 0;
