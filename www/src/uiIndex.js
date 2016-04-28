@@ -3,7 +3,7 @@
  * @copyright 2015 Shunless Studio.
  */
 
-$(document).ready(function () {
+window.onload = function () {
     compareSize();
     gridBuilder('1-1', '13-7');
     prepGame();
@@ -23,7 +23,7 @@ $(document).ready(function () {
         console.log('Loaded Scripts');
     }
     createModeSelector();
-});
+};
 
 function prepGame() {
     //Visually prepares the game area
